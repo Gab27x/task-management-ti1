@@ -8,9 +8,6 @@ public class HashTable<K,V> {
 	private int size;
 
 
-
-
-
 	private int size;
 
 	public HashTable() {
@@ -35,31 +32,27 @@ public class HashTable<K,V> {
 	 * @param value
 	 */
 
-	public void add(K key, V value){
-		HashEntry newEntry= new HashEntry(key, value);
-		add(key,newEntry);
-
-	}
-
 
 
 	/**
 	 *
-	 * @param newHashEntry
+	 * @param key
+	 * @param value
 	 */
-	public void add(K key,HashEntry newHashEntry) {
-		int index=hashFunction(key);
-		ArrayList<HashEntry<K, V>> bucket = table[index];
+	public void add(K key,V value) {
+		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
+		int index = hashFunction(key);
 
 		for (HashEntry<K, V> entry : bucket) {
 			if (entry.getKey().equals(key)) {
-				entry.setValue(newHashEntry.getValue());
+				entry.s = value; // Actualizar el valor si la clave ya existe
 				return;
 			}
 		}
 
 		bucket.add(new Entry<>(key, value));
 		size++;
+
 
 
 	}
