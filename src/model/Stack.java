@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Stack<T> {
 
-	private ArrayList<T> stack;
+	private StackNode<T> top;
 	private int size;
 
 	public Stack() {
-		this.stack=new ArrayList<T>();
+		this.top=null;
 		this.size=0;
 	}
 
@@ -15,24 +15,43 @@ public class Stack<T> {
 	 * @param element
 	 */
 	public void push(T element) {
-		stack.add(0,element);
+		StackNode<T> created=new StackNode<T>(element);
+		if(top==null) {
+			top = created;
+		}else{
+			top.setTop(created);
+			created.setBottom(top);
+			top=created;
+		}
 		size++;
 	}
 
 	public T pop() {
-		T output=stack.get(0);
-		stack.remove(0);
-		size--;
-		return output;
+		if(top==null) {
+			return null;
+		}else {
+			T output = top.getContent();
+			StackNode<T> newKing = top.getBottom();
+			if (newKing != null)
+				newKing.setTop(null);
 
+			top.setBottom(null);
+			top = newKing;
+			size--;
+			return output;
+		}
 	}
 
 	public T peek() {
-		return stack.get(0);
+		return top.getContent();
 	}
 
 	public boolean isEmpty() {
-        return size == 0;
+		return top==null;
+	}
+
+	public int getSize() {
+		return this.size;
 	}
 
 }
