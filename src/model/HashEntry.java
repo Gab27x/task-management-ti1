@@ -3,12 +3,14 @@ public class HashEntry<K,V> {
 
 	private K key;
 	private V value;
+	private DoubleLinkedList<HashEntry<K,V>> list;
 
 
 	public HashEntry(K key, V value) {
 
 		this.key = key;
 		this.value = value;
+		DoubleLinkedList<HashEntry<K,V>> list;
 
 	}
 
@@ -29,5 +31,11 @@ public class HashEntry<K,V> {
 		this.value = value;
 	}
 
+	public DoubleLinkedList<HashEntry<K, V>> getList() {
+		return list;
+	}
 
+	public void setList(DoubleLinkedList<HashEntry<K, V>> list) {
+		this.list = list;
+	}
 }

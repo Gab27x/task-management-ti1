@@ -135,6 +135,26 @@ public class DoubleLinkedList<T> {
         }
         return null;
     }
+    public void removeFind(T objective) {
+        NodeDoubleLinkedList<T> current = head;
+        while (current != null) {
+            if (current.getData().equals(objective)) {
+                if(current== this.head){
+                    removeFirst();
+                }else if(current==this.tail){
+                    removeLast();
+                }else{
+                    current.getPrev().setNext(current.getNext());
+                    current.getNext().setPrev(current.getPrev());
+                    size--;
+                }
+
+            }
+            current = current.getNext();
+        }
+
+    }
+
 
 
 }
