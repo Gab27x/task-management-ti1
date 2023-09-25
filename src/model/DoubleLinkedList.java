@@ -38,9 +38,7 @@ public class DoubleLinkedList<T> {
     }
 
     public void add(int index, T data) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
+
 
         if (index == 0) {
             addFirst(data);
@@ -108,7 +106,7 @@ public class DoubleLinkedList<T> {
     }
 
     public T get(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
@@ -124,7 +122,7 @@ public class DoubleLinkedList<T> {
     }
 
     private Node<T> getNodeAtIndex(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 ) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
@@ -133,6 +131,24 @@ public class DoubleLinkedList<T> {
             current = current.next;
         }
         return current;
+    }
+
+    private Node<T> getNodeByData(T data) {
+        Node<T> objective = new Node<>(data);
+        return getNodeByData(data, objective, this.head);
+    }
+
+    private Node<T> getNodeByData(T data, Node<T> objective, Node<T> current){
+        if(objective==this.head){
+            return head;
+        }else if(objective==this.tail){
+            return tail;
+        }else if(current==objective){
+            return current;
+        }
+
+        return (data, objective, current.next);
+
     }
 }
 

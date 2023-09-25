@@ -4,11 +4,9 @@ import java.util.List;
 public class HashTable<K,V> {
 
 
-	private ArrayList<HashEntry<K,V>> table;
+	private ArrayList<DoubleLinkedList<HashEntry<K,V>>> table;
 	private int size;
 
-
-	private int size;
 
 	public HashTable() {
 		this.table= new ArrayList<>();
@@ -26,44 +24,47 @@ public class HashTable<K,V> {
 
 	}
 
-	/**
-	 * 	Method designed to add  a new hash entry into the table
-	 * @param key
-	 * @param value
-	 */
-
 
 
 	/**
-	 *
+	 *Method created to add a new hash entry into the hash table, managing collisions
 	 * @param key
 	 * @param value
 	 */
 	public void add(K key,V value) {
 		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
 		int index = hashFunction(key);
-
-		for (HashEntry<K, V> entry : bucket) {
-			if (entry.getKey().equals(key)) {
-				entry.s = value; // Actualizar el valor si la clave ya existe
-				return;
-			}
+		//Si la lista esta vacia entonces lo añada al principio
+		if(table.get(index).isEmpty()){
+			table.get(index).addFirst(newEntry);
+			size++;
+		}else if(!table.get(index).isEmpty()){ //en caso de que ya este llena lo añade al final
+			table.get(index).addLast(newEntry);
+			size++;
 		}
-
-		bucket.add(new Entry<>(key, value));
-		size++;
-
-
 
 	}
 
 	/**
-	 *
+	 *Method designed to search an element in the hash table
 	 * @param key
+	 * @param value
+	 *
 	 */
-	public HashEntry search(T key) {
-		// TODO - implement HashTable.search
-		throw new UnsupportedOperationException();
+	public HashEntry search(K key, V value) {
+		int index= hashFunction(key);
+		if(table.isEmpty()){
+			return null;
+		}else if(table.get(index).isEmpty()){
+			return null;
+		}else if(table.get(index).get(1)==null){
+			return table.get(index).get(0);
+		}
+
+
+
+
+
 	}
 
 	/**
