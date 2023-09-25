@@ -43,7 +43,7 @@ public class Stack<T> {
 	}
 
 	public T peek() {
-		return top.getContent();
+		return top!=null? top.getContent(): null;
 	}
 
 	public boolean isEmpty() {
