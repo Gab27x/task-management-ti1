@@ -53,13 +53,7 @@ public class HashTable<K,V> {
 	 */
 	public HashEntry search(K key, V value) {
 		int index= hashFunction(key);
-		if(table.isEmpty()){
-			return null;
-		}else if(table.get(index).isEmpty()){
-			return null;
-		}else if(table.get(index).get(1)==null){
-			return table.get(index).get(0);
-		}
+		table.get(index).getNodeByValue(value);
 
 
 

@@ -1,56 +1,48 @@
 public class DoubleLinkedList<T> {
-    private Node<T> head;
-    private Node<T> tail;
+    private NodeDoubleLinkedList<T> head;
+    private NodeDoubleLinkedList<T> tail;
     private int size;
 
-    private static class Node<T> {
-        T data;
-        Node<T> prev;
-        Node<T> next;
-
-        Node(T data) {
-            this.data = data;
-        }
-    }
-
     public void addFirst(T data) {
-        Node<T> newNode = new Node<>(data);
+        NodeDoubleLinkedList<T> newNode = new NodeDoubleLinkedList<>(data);
         if (isEmpty()) {
             head = tail = newNode;
         } else {
-            newNode.next = head;
-            head.prev = newNode;
+            newNode.setNext(head);
+            head.setPrev(newNode);
             head = newNode;
         }
         size++;
     }
 
     public void addLast(T data) {
-        Node<T> newNode = new Node<>(data);
+        NodeDoubleLinkedList<T> newNode = new NodeDoubleLinkedList<>(data);
         if (isEmpty()) {
             head = tail = newNode;
         } else {
-            newNode.prev = tail;
-            tail.next = newNode;
+            newNode.setPrev(tail);
+            tail.setNext(newNode);
             tail = newNode;
         }
         size++;
     }
 
     public void add(int index, T data) {
-
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
 
         if (index == 0) {
             addFirst(data);
         } else if (index == size) {
             addLast(data);
         } else {
-            Node<T> newNode = new Node<>(data);
-            Node<T> current = getNodeAtIndex(index);
-            newNode.prev = current.prev;
-            newNode.next = current;
-            current.prev.next = newNode;
-            current.prev = newNode;
+            NodeDoubleLinkedList<T> newNode = new NodeDoubleLinkedList<>(data);
+            NodeDoubleLinkedList<T> current = getNodeAtIndex(index);
+            newNode.setPrev(current.getPrev());
+            newNode.setNext(current);
+            current.getPrev().setNext(newNode);
+            current.setPrev(newNode);
             size++;
         }
     }
@@ -60,12 +52,12 @@ public class DoubleLinkedList<T> {
             throw new IllegalStateException("List is empty");
         }
 
-        T data = head.data;
+        T data = head.getData();
         if (size == 1) {
             head = tail = null;
         } else {
-            head = head.next;
-            head.prev = null;
+            head = head.getNext();
+            head.setPrev(null);
         }
         size--;
         return data;
@@ -76,12 +68,12 @@ public class DoubleLinkedList<T> {
             throw new IllegalStateException("List is empty");
         }
 
-        T data = tail.data;
+        T data = tail.getData();
         if (size == 1) {
             head = tail = null;
         } else {
-            tail = tail.prev;
-            tail.next = null;
+            tail = tail.getPrev();
+            tail.setNext(null);
         }
         size--;
         return data;
@@ -97,20 +89,20 @@ public class DoubleLinkedList<T> {
         } else if (index == size - 1) {
             return removeLast();
         } else {
-            Node<T> current = getNodeAtIndex(index);
-            current.prev.next = current.next;
-            current.next.prev = current.prev;
+            NodeDoubleLinkedList<T> current = getNodeAtIndex(index);
+            current.getPrev().setNext(current.getNext());
+            current.getNext().setPrev(current.getPrev());
             size--;
-            return current.data;
+            return current.getData();
         }
     }
 
     public T get(int index) {
-        if (index < 0) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
-        return getNodeAtIndex(index).data;
+        return getNodeAtIndex(index).getData();
     }
 
     public int size() {
@@ -121,34 +113,31 @@ public class DoubleLinkedList<T> {
         return size == 0;
     }
 
-    private Node<T> getNodeAtIndex(int index) {
-        if (index < 0 ) {
+    private NodeDoubleLinkedList<T> getNodeAtIndex(int index) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
-        Node<T> current = head;
+        NodeDoubleLinkedList<T> current = head;
         for (int i = 0; i < index; i++) {
-            current = current.next;
+            current = current.getNext();
         }
         return current;
     }
 
-    private Node<T> getNodeByData(T data) {
-        Node<T> objective = new Node<>(data);
-        return getNodeByData(data, objective, this.head);
-    }
+    private NodeDoubleLinkedList<T> getNodeByValue(T data) {
 
-    private Node<T> getNodeByData(T data, Node<T> objective, Node<T> current){
-        if(objective==this.head){
-            return head;
-        }else if(objective==this.tail){
-            return tail;
-        }else if(current==objective){
-            return current;
+        NodeDoubleLinkedList<T> current = head;
+        for (int i = 0; i <=size; i++) {
+            if(current.getData().equals(data)){
+                return current;
+            }
+            current = current.getNext();
         }
-
-        return (data, objective, current.next);
-
+        return current;
     }
+
+
 }
+
 
