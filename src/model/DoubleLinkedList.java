@@ -125,16 +125,15 @@ public class DoubleLinkedList<T> {
         return current;
     }
 
-    private NodeDoubleLinkedList<T> getNodeByValue(T data) {
-
+    public NodeDoubleLinkedList<T> find(T objective) {
         NodeDoubleLinkedList<T> current = head;
-        for (int i = 0; i <=size; i++) {
-            if(current.getData().equals(data)){
+        while (current != null) {
+            if (current.getData().equals(objective)) {
                 return current;
             }
             current = current.getNext();
         }
-        return current;
+        return null;
     }
 
 

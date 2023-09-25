@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class HashTable<K,V> {
 
@@ -46,18 +45,15 @@ public class HashTable<K,V> {
 	}
 
 	/**
-	 *Method designed to search an element in the hash table
+	 * Method designed to search an element in the hash table
+	 *
 	 * @param key
 	 * @param value
-	 *
 	 */
-	public HashEntry search(K key, V value) {
+	public NodeDoubleLinkedList search(K key, V value) {
+		HashEntry objective= new HashEntry<>(key, value);
 		int index= hashFunction(key);
-		table.get(index).getNodeByValue(value);
-
-
-
-
+		return table.get(index).find(objective);
 
 	}
 
