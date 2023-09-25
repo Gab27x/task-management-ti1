@@ -1,44 +1,60 @@
-public class Queue {
+import java.util.ArrayList;
 
-	private Activity[] elements;
+public class Queue<T> {
+	private ArrayList<T> queue;
 	private int size;
 
 	public Queue() {
-		// TODO - implement Queue.Queue
-		throw new UnsupportedOperationException();
+		this.queue = new ArrayList<T>();
+		this.size = 0;
 	}
 
-	/**
-	 * 
-	 * @param element
-	 */
-	public void add(Activity element) {
-		// TODO - implement Queue.add
-		throw new UnsupportedOperationException();
+	public void add(T element){
+		queue.add(element);
+		size ++;
 	}
 
-	public void removeFirst() {
-		// TODO - implement Queue.removeFirst
-		throw new UnsupportedOperationException();
+	public T poll(){
+		if(isEmpty()){
+			return null;
+		}
+		else {
+			T firstOut = queue.get(0);
+			queue.remove(0);
+			size --;
+			return firstOut;
+
+		}
 	}
 
-	public Activity pull() {
-		// TODO - implement Queue.pull
-		throw new UnsupportedOperationException();
+	public T peek(){
+		return queue.get(0);
 	}
 
-	public Activity peek() {
-		// TODO - implement Queue.peek
-		throw new UnsupportedOperationException();
+	public boolean isEmpty(){
+		return size == 0;
 	}
 
-	public boolean isEmpty() {
-		// TODO - implement Queue.isEmpty
-		throw new UnsupportedOperationException();
+	public ArrayList<T> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(ArrayList<T> queue) {
+		this.queue = queue;
 	}
 
 	public int getSize() {
-		return this.size;
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 }
+
+
+
+
+
+
