@@ -48,6 +48,7 @@ public class Queue<T> {
 			size--;
 			return firstOut;
 		}
+
 	}
 
 
