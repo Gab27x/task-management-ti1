@@ -1,8 +1,10 @@
+
+import java.util.Calendar;
 public class Activity {
 
 	private String Id;
 	private String description;
-	private Date dueDate;
+	private Calendar dueDate;
 	private String location;
 
 	/**
@@ -12,7 +14,7 @@ public class Activity {
 	 * @param dueDate
 	 * @param location
 	 */
-	public Activity(String id, String description, Date dueDate, String location) {
+	public Activity(String id, String description, Calendar dueDate, String location) {
 		// TODO - implement Activity.Activity
 		throw new UnsupportedOperationException();
 	}
