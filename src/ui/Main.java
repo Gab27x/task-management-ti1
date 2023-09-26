@@ -1,4 +1,5 @@
 package ui;
+import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Controller;
@@ -83,23 +84,67 @@ public class Main {
 
     // Case 1
     public void addActivity(){
+        String id ,description ,location ;
+        Calendar dueDate;
+
+        System.out.println("Enter the id");
+        id = cin.nextLine();
+        System.out.println("Enter the description");
+        description = cin.nextLine();
+        System.out.println("Enter the location");
+        location = cin.nextLine();
+        System.out.println("Enter the due date");
+        dueDate = Calendar.getInstance();
+
+        controller.addActivity(id, description, dueDate, location);
 
     }
     // Case 2
     public void deleteActivity(){
+        System.out.println("Enter the id of the activity to delete");
+        String id = cin.nextLine();
+        controller.deleteActivity(id);
 
     }
 
     // Case 3
     public void modifyActivity(){
+        System.out.println("Enter the id of the activity to modify");
+        String id = cin.nextLine();
+        System.out.println("Enter the option to modify");
+        int option = cin.nextInt();
+
+        switch (option){
+            case 1 ->{
+                System.out.println("Enter the new loaction");
+                String location = cin.nextLine();
+                controller.modifyActivityLocation(id, location);
+
+            }
+            case 2 ->{
+                System.out.println("Enter the new description");
+                String description = cin.nextLine();
+                controller.modifyActivityDescription(id, description);
+
+            }
+            case 3 ->{
+                System.out.println("Enter the new due date");
+                Calendar newDate = Calendar.getInstance();
+                controller.modifyActivityDate(id, newDate);
+
+            }
+
+        }
 
     }
     // Case 4
     public void showActivities(){
+        System.out.println(controller.showActivities());
 
     }
     // Case 5
     public void undo(){
+        controller.undo();
 
     }
 
