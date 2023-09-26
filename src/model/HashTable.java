@@ -58,11 +58,25 @@ public class HashTable<K,V> {
 	public void delete(K key, V value){
 		HashEntry objective= new HashEntry<>(key, value);
 		int index= hashFunction(key);
-		HashEntry
+		HashEntry current= table[index];
 
-		if(table[index].getValue().equals(value)){
-
-
+		if(current.getValue()==objective){
+			current.getNext().setPrev(null);
+			current.setNext(null);
+		}else{
+			while(current!=null){
+				if(current.getValue()==objective && current.getNext()!=null){
+					current.getPrev().setNext(current.getNext());
+					current.getNext().setPrev(current.getPrev());
+					current.setNext(null);
+					current.setPrev(null);
+				}else if(current.getValue()==objective && current.getNext()==null){
+					current.getPrev().setNext(null);
+					current.setPrev(null);
+					
+				}
+				current=current.getNext();
+			}
 		}
 
 	}
