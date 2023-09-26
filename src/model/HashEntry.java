@@ -1,53 +1,30 @@
-package model;
-public class HashEntry<K,V> {
+public class HashEntry {
 
-	private K key;
-	private V value;
-	private HashEntry next;
-	private HashEntry prev;
+	private T key;
+	private K value;
 
-
-
-
-	public HashEntry(K key, V value) {
-		this.key = key;
-		this.value = value;
-		this.next=null;
-		this.prev=null;
+	public K getValue() {
+		return this.value;
 	}
 
-
-
-	public K getKey() {
-		return key;
-	}
-
-
-	public void setKey(K key) {
-		this.key = key;
-	}
-
-	public V getValue() {
-		return value;
-	}
-
-	public void setValue(V value) {
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setValue(K value) {
 		this.value = value;
 	}
 
-	public HashEntry getNext() {
-		return next;
+	public T getKey() {
+		return this.key;
 	}
 
-	public void setNext(HashEntry next) {
-		this.next = next;
+	/**
+	 * 
+	 * @param key
+	 */
+	public void setKey(T key) {
+		this.key = key;
 	}
 
-	public HashEntry getPrev() {
-		return prev;
-	}
-
-	public void setPrev(HashEntry prev) {
-		this.prev = prev;
-	}
 }

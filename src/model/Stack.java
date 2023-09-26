@@ -1,35 +1,57 @@
-public class Stack {
+import java.util.ArrayList;
 
-	private Actions[] elements;
+public class Stack<T> {
+
+	private StackNode<T> top;
 	private int size;
 
 	public Stack() {
-		// TODO - implement Stack.Stack
-		throw new UnsupportedOperationException();
+		this.top=null;
+		this.size=0;
 	}
 
 	/**
 	 * 
-	 * @param lastAction
+	 * @param element
 	 */
-	public void push(Action lastAction) {
-		// TODO - implement Stack.push
-		throw new UnsupportedOperationException();
+	public void push(T element) {
+		StackNode<T> created=new StackNode<T>(element);
+		if(top==null) {
+			top = created;
+		}else{
+			top.setTop(created);
+			created.setBottom(top);
+			top=created;
+		}
+		size++;
 	}
 
-	public Action pop() {
-		// TODO - implement Stack.pop
-		throw new UnsupportedOperationException();
+	public T pop() {
+		if(top==null) {
+			return null;
+		}else {
+			T output = top.getContent();
+			StackNode<T> newKing = top.getBottom();
+			if (newKing != null)
+				newKing.setTop(null);
+
+			top.setBottom(null);
+			top = newKing;
+			size--;
+			return output;
+		}
 	}
 
-	public Action peek() {
-		// TODO - implement Stack.peek
-		throw new UnsupportedOperationException();
+	public T peek() {
+		return top!=null? top.getContent(): null;
 	}
 
 	public boolean isEmpty() {
-		// TODO - implement Stack.isEmpty
-		throw new UnsupportedOperationException();
+		return top==null;
+	}
+
+	public int getSize() {
+		return this.size;
 	}
 
 }

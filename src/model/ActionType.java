@@ -1,5 +1,5 @@
 public enum ActionType {
-	-ADD,
-	-MODIFY,
-	-DELETE
+	ADD,
+	MODIFY,
+	DELETE
 }
