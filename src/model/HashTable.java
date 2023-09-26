@@ -6,7 +6,8 @@ public class HashTable<K,V> {
 
 	private static final int defaultSize=200;
 	public HashTable(){
-		table= new HashEntry<K,V>[defaultSize];
+		table = new HashEntry[defaultSize];
+
 		this.existingNodes=0;
 	}
 
