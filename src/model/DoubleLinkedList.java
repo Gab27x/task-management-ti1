@@ -1,3 +1,5 @@
+package model;
+
 public class DoubleLinkedList<T> {
     private NodeDoubleLinkedList<T> head;
     private NodeDoubleLinkedList<T> tail;

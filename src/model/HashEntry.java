@@ -1,18 +1,23 @@
-import java.util.ArrayList;
+package model;
 public class HashEntry<K,V> {
 
 	private K key;
 	private V value;
-	private DoubleLinkedList<HashEntry<K,V>> list;
+	private HashEntry next;
+	private HashEntry prev;
+
+	private int size;
+
 
 
 	public HashEntry(K key, V value) {
-
 		this.key = key;
 		this.value = value;
-		DoubleLinkedList<HashEntry<K,V>> list;
-
+		this.next=null;
+		this.prev=null;
 	}
+
+
 
 	public K getKey() {
 		return key;
@@ -31,11 +36,19 @@ public class HashEntry<K,V> {
 		this.value = value;
 	}
 
-	public DoubleLinkedList<HashEntry<K, V>> getList() {
-		return list;
+	public HashEntry getNext() {
+		return next;
 	}
 
-	public void setList(DoubleLinkedList<HashEntry<K, V>> list) {
-		this.list = list;
+	public void setNext(HashEntry next) {
+		this.next = next;
+	}
+
+	public HashEntry getPrev() {
+		return prev;
+	}
+
+	public void setPrev(HashEntry prev) {
+		this.prev = prev;
 	}
 }

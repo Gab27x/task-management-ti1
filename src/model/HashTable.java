@@ -1,5 +1,5 @@
 
-
+package model;
 public class HashTable<K,V> {
 
 
@@ -18,22 +18,55 @@ public class HashTable<K,V> {
 		return Math.abs(hashCode) % table.length;
 	}
 	public void add(K key, V value){
+		int index= hashFunction(key);
 		HashEntry newEntry= new HashEntry<>(key, value);
-		int index=hashFunction(key);
-		if(table[index]==null){
+		 HashEntry current=table[index];
+		if(current==null){
 			table[index]=newEntry;
-			existingNodes++1,
 		}else{
-			table[index].getList().addLast(newEntry);
-			existingNodes++;
-
+			while(current!=null){
+				if(current.getNext()==null){
+					current.setNext(newEntry);
+					newEntry.setPrev(current);
+				}
+				current=current.getNext();
+			}
 		}
+
 	}
 	public HashEntry getFirst(K key){
-		int index=hashFunction(key);
+		int index= hashFunction(key);
 		return table[index];
+
 	}
 
-	
+	public HashEntry find(K key, V value){
+		int index= hashFunction(key);
+		HashEntry current=table[index];
+		while(current!=null){
+			if(current.getValue().equals(value)){
+				return current;
+			}
+			current=current.getNext();
+		}
+
+		return null;
+
+
+	}
+
+	public void delete(K key, V value){
+		HashEntry objective= new HashEntry<>(key, value);
+		int index= hashFunction(key);
+		HashEntry
+
+		if(table[index].getValue().equals(value)){
+
+
+		}
+
+	}
+
+
 
 }
