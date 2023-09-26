@@ -1,3 +1,4 @@
+package model;
 public class StackNode<T> {
 
     StackNode<T> top;
