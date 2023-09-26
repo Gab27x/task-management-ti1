@@ -1,4 +1,4 @@
-
+package model;
 import java.util.Calendar;
 public class Activity {
 

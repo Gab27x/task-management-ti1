@@ -1,3 +1,4 @@
+package model;
 public class Queue<T> {
 	private QueueNode<T> top;
 	private QueueNode<T> last;

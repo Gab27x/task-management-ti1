@@ -1,5 +1,5 @@
 
-
+package model;
 public class Stack<T> {
 
 	private StackNode<T> top;
