@@ -23,11 +23,13 @@ public class HashTable<K,V> {
 		 HashEntry current=table[index];
 		if(current==null){
 			table[index]=newEntry;
+			existingNodes++;
 		}else{
 			while(current!=null){
 				if(current.getNext()==null){
 					current.setNext(newEntry);
 					newEntry.setPrev(current);
+					existingNodes++;
 				}
 				current=current.getNext();
 			}

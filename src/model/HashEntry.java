@@ -6,7 +6,6 @@ public class HashEntry<K,V> {
 	private HashEntry next;
 	private HashEntry prev;
 
-	private int size;
 
 
 
