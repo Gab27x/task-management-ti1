@@ -1,7 +1,7 @@
 public class StackNode<T> {
 
-    StackNode top;
-    StackNode bottom;
+    StackNode<T> top;
+    StackNode<T> bottom;
     T content;
 
     public StackNode(T content){
