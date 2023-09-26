@@ -73,12 +73,27 @@ public class HashTable<K,V> {
 				}else if(current.getValue()==objective && current.getNext()==null){
 					current.getPrev().setNext(null);
 					current.setPrev(null);
-					
+
 				}
 				current=current.getNext();
 			}
 		}
 
+	}
+
+	public boolean isEmpty(){
+		int counter=0;
+		for(int i=0; i< table.length;i++){
+			if (table[i]==null){
+				counter++;
+			}
+
+		}
+		if(counter== table.length){
+			return true;
+		}
+
+		return false;
 	}
 
 
