@@ -19,6 +19,7 @@ public class HashTableTesting {
     @Test
     public void testConstructorMethodEmptyList(){
         setUp();
+
         assertTrue(hashTableTest.isEmpty());
     }
     @Test
