@@ -1,3 +1,4 @@
+package model;
 public class Queue<T> {
 	private QueueNode<T> top;
 	private QueueNode<T> last;
@@ -10,7 +11,7 @@ public class Queue<T> {
 	}
 
 	public void add(T element){
-		QueueNode<T> newNode = new QueueNode<T>(element);
+		QueueNode<T> newNode = new QueueNode<>(element);
 		// The list is empty
 		if(top == null){
 			top = newNode;
@@ -48,6 +49,7 @@ public class Queue<T> {
 			size--;
 			return firstOut;
 		}
+
 	}
 
 
@@ -60,11 +62,17 @@ public class Queue<T> {
 	}
 
 	public String showQueue(){
-		return showQueue(top);
+		if(this.top == null){
+			return "Queue is empty";
+		}
+		else{
+			return showQueue(top);
+		}
+
 	}
 	private String showQueue(QueueNode<T> node){
 		if(node == null){
-			return "Queue is empty";
+			return "";
 		}
 		else{
 			return "\n" + node.getContent() + "\n" + showQueue(node.getNext());
@@ -80,6 +88,21 @@ public class Queue<T> {
 		this.size = size;
 	}
 
+	public QueueNode<T> getTop() {
+		return top;
+	}
+
+	public void setTop(QueueNode<T> top) {
+		this.top = top;
+	}
+
+	public QueueNode<T> getLast() {
+		return last;
+	}
+
+	public void setLast(QueueNode<T> last) {
+		this.last = last;
+	}
 }
 
 

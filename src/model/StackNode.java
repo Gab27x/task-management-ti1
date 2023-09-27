@@ -1,3 +1,4 @@
+package model;
 public class StackNode<T> {
 
     StackNode<T> top;
@@ -33,6 +34,7 @@ public class StackNode<T> {
     public void setContent(T content){
         this.content=content;
     }
+
 
 
 }

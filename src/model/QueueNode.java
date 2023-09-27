@@ -1,3 +1,4 @@
+package model;
 public class QueueNode<T> {
     // Double linked list
         QueueNode<T> next;
