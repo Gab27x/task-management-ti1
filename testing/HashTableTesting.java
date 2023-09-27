@@ -45,31 +45,27 @@ public class HashTableTesting {
 
     public void setUp2(){
         HashTableTesting();
-        hashTableTest.add(1,1);
-        hashTableTest.add(1,2);
-        hashTableTest.add(2,1);
-        hashTableTest.add(2,2);
-        hashTableTest.add(3,1);
-        hashTableTest.add(3,2);
+        hashTableTest.add(240,1);
+        hashTableTest.add(40,2);
+        hashTableTest.add(8,1);
+        hashTableTest.add(7,2);
     }
 
 
     @Test
     void findValueTest() {
         setUp2();
-        Integer result=hashTableTest.findValue(1,2);
+        Integer result=hashTableTest.findValue(40);
         assertEquals(2,result);
     }
 
     @Test
     void findTest(){
         setUp2();
-
-        HashEntry<Integer,Integer> result = hashTableTest.find(1,2);
+        HashEntry<Integer,Integer> result = hashTableTest.find(240);
         Integer resultValue=result.getValue();
-        Integer expectedResult=2;
-
-        assertEquals(2, resultValue);
+        Integer expectedResult=1;
+        assertEquals(expectedResult, resultValue);
     }
     @Test
     void deleteTest(){

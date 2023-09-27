@@ -5,7 +5,7 @@ public class HashTable<K,V> {
 	private HashEntry<K,V>[] table;
 	private int existingNodes;
 
-	private  int defaultSize=200;
+	private  int defaultSize=10;
 	public HashTable(){
 		table = new HashEntry[defaultSize];
 
@@ -19,7 +19,7 @@ public class HashTable<K,V> {
 	}
 
 	public int hashFunction(K key){
-		int hashCode= key.hashCode();
+		Integer hashCode= key.hashCode();
 		return Math.abs(hashCode) % table.length;
 	}
 	public void add(K key, V value){
@@ -30,14 +30,13 @@ public class HashTable<K,V> {
 			table[index]=newEntry;
 			existingNodes++;
 		}else{
-			while(current!=null){
-				if(current.getNext()==null){
-					current.setNext(newEntry);
-					newEntry.setPrev(current);
-					existingNodes++;
-				}
+			while(current.getNext()!=null){
 				current=current.getNext();
 			}
+			current.setNext(newEntry);
+			newEntry.setPrev(current);
+			newEntry.setNext(null);
+			existingNodes++;
 		}
 
 	}
@@ -59,15 +58,12 @@ public class HashTable<K,V> {
 
 	}
 
-	public HashEntry<K,V> find(K key, V value){
+	public HashEntry<K,V> find(K key){
 
-		if(table==null){
-			return null;
-		}
 		int index= hashFunction(key);
 		HashEntry<K,V> current=table[index];
 		while(current!=null){
-			if(current.getValue().equals(value)){
+			if(current.getKey().equals(key)){
 				return current;
 			}
 			current=current.getNext();
@@ -78,12 +74,12 @@ public class HashTable<K,V> {
 
 	}
 
-	public V findValue(K key, V value){
+	public V findValue(K key){
 		int index= hashFunction(key);
 		HashEntry<K,V> current=table[index];
 		while(current!=null){
-			if(current.getValue().equals(value)){
-				return  current.getValue();
+			if(current.getKey().equals(key)){
+				return current.getValue();
 			}
 			current=current.getNext();
 		}
