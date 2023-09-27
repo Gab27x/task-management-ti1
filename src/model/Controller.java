@@ -47,8 +47,25 @@ public class Controller {
 
     }
     // Case 5
-    public void undo(){
-
+    public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
+        //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
+        Action lastAction=actionsStack.pop();
+        if(lastAction!=null){
+            Activity activity=lastAction.getActivity();
+            switch(lastAction.getType()){
+                case ADD:
+                    deleteActivity(activity.getId());
+                    break;
+                case MODIFY:
+                    modifyActivityLocation(activity.getId(),activity.getLocation());
+                    modifyActivityDescription(activity.getId(),activity.getDescription());
+                    modifyActivityDate(activity.getId(),activity.getDueDate());
+                    break;
+                case DELETE:
+                    addActivity(activity.getId(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    break;
+            }
+        }
 
     }
 }
