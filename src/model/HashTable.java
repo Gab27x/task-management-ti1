@@ -1,14 +1,21 @@
 package model;
+
 public class HashTable<K,V> {
 
 	private HashEntry<K,V>[] table;
 	private int existingNodes;
 
-	private static final int defaultSize=200;
+	private  int defaultSize=200;
 	public HashTable(){
 		table = new HashEntry[defaultSize];
 
 		this.existingNodes=0;
+	}
+
+	public HashTable(int size){
+		defaultSize=size;
+		table = new HashEntry[defaultSize];
+
 	}
 
 	public int hashFunction(K key){
@@ -35,12 +42,19 @@ public class HashTable<K,V> {
 
 	}
 	public HashEntry getFirst(K key){
+		if(table==null){
+			return null;
+		}
 		int index= hashFunction(key);
 		return table[index];
 
 	}
 
 	public HashEntry find(K key, V value){
+
+		if(table==null){
+			return null;
+		}
 		int index= hashFunction(key);
 		HashEntry current=table[index];
 		while(current!=null){
@@ -94,6 +108,22 @@ public class HashTable<K,V> {
 		}
 
 		return false;
+	}
+
+	public int getDefaultSize() {
+		return defaultSize;
+	}
+
+	public void setDefaultSize(int defaultSize) {
+		this.defaultSize = defaultSize;
+	}
+
+	public int getExistingNodes() {
+		return existingNodes;
+	}
+
+	public void setExistingNodes(int existingNodes) {
+		this.existingNodes = existingNodes;
 	}
 
 	/*
