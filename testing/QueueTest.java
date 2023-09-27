@@ -1,6 +1,6 @@
+
 import model.Queue;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -170,7 +170,7 @@ public class QueueTest {
         String expected = "Queue is empty";
 
         // Assert
-        assertEquals(expected,result );
+        assertEquals(expected,result);
 
     }
 
