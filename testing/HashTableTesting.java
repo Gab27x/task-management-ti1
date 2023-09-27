@@ -139,7 +139,7 @@ public class HashTableTesting {
 
     @Test
     public void deletionMethodIndexWithUniqueElement(){
-        setUp3();
+        setUp4();
         hashTableTest.delete(1,1);
         assertNull(hashTableTest.getFirst(1));
 
@@ -154,6 +154,22 @@ public class HashTableTesting {
         assertNotNull(hashTableTest.getFirst(1));
         assertEquals(4, hashTableTest.getFirst(1).getValue());
 
+    }
+
+    @Test
+    public void deletionNotExistingElementIndexWithUniqueElement(){
+        setUp4();
+        hashTableTest.delete(1,2);
+        assertNotNull(hashTableTest.getFirst(1));
+        assertEquals(1, hashTableTest.getFirst(1).getValue());
+    }
+
+    @Test
+    public void deletionNotExistingElementCollisions(){
+        setUp3();
+        hashTableTest.delete(1,5);
+        assertNotNull(hashTableTest.getFirst(1));
+        assertEquals(1, hashTableTest.getFirst(1).getValue());
     }
 
 
