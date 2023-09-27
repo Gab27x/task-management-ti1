@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 
+package model;
 public class Stack<T> {
 
 	private StackNode<T> top;
@@ -54,4 +54,15 @@ public class Stack<T> {
 		return this.size;
 	}
 
+	public StackNode<T> getTop() {
+		return top;
+	}
+
+	public void setTop(StackNode<T> top) {
+		this.top = top;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
 }

@@ -1,6 +1,7 @@
+package model;
 public enum Importance {
-	-HIGH IMPORTANT ,
-	-MEDIUM ,
-	-IMPORTANT,
-	-NON PRIORITARY
+	HIGH_IMPORTANT ,
+	MEDIUM ,
+	IMPORTANT,
+	NON_PRIORITARY
 }

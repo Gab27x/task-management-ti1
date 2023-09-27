@@ -1,8 +1,10 @@
+package model;
+import java.util.Calendar;
 public class Activity {
 
-	private String Id;
+	private String id;
 	private String description;
-	private Date dueDate;
+	private Calendar dueDate;
 	private String location;
 
 	/**
@@ -12,9 +14,44 @@ public class Activity {
 	 * @param dueDate
 	 * @param location
 	 */
-	public Activity(String id, String description, Date dueDate, String location) {
-		// TODO - implement Activity.Activity
-		throw new UnsupportedOperationException();
+
+
+	public Activity(String id, String description, Calendar dueDate, String location) {
+		this.id = id;
+		this.description = description;
+		this.dueDate = dueDate;
+		this.location = location;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Calendar getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Calendar dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 }

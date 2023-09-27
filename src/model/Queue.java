@@ -1,47 +1,84 @@
-import java.util.ArrayList;
-
+package model;
 public class Queue<T> {
-	private ArrayList<T> queue;
+	private QueueNode<T> top;
+	private QueueNode<T> last;
 	private int size;
 
 	public Queue() {
-		this.queue = new ArrayList<T>();
+		this.top = null;
+		this.last = null;
 		this.size = 0;
 	}
 
 	public void add(T element){
-		queue.add(element);
-		size ++;
+		QueueNode<T> newNode = new QueueNode<>(element);
+		// The list is empty
+		if(top == null){
+			top = newNode;
+        }
+		else{
+			this.last.setNext(newNode);
+			newNode.setPrevious(this.last);
+        }
+
+        last = newNode;
+        size++;
 	}
 
 	public T poll(){
-		if(isEmpty()){
+		if(top == null){
 			return null;
 		}
 		else {
-			T firstOut = queue.get(0);
-			queue.remove(0);
-			size --;
-			return firstOut;
+			T firstOut = top.getContent();
 
+			if(top == last){
+				top = null;
+				last = null;
+			}
+			else {
+				QueueNode<T> newTop = top.getNext();
+
+				newTop.setPrevious(null);
+				top.setNext(null);
+
+				top = newTop;
+
+			}
+
+			size--;
+			return firstOut;
 		}
+
 	}
 
+
 	public T peek(){
-		return queue.get(0);
+		return top.getContent();
 	}
 
 	public boolean isEmpty(){
 		return size == 0;
 	}
 
-	public ArrayList<T> getQueue() {
-		return queue;
+	public String showQueue(){
+		if(this.top == null){
+			return "Queue is empty";
+		}
+		else{
+			return showQueue(top);
+		}
+
+	}
+	private String showQueue(QueueNode<T> node){
+		if(node == null){
+			return "";
+		}
+		else{
+			return "\n" + node.getContent() + "\n" + showQueue(node.getNext());
+		}
 	}
 
-	public void setQueue(ArrayList<T> queue) {
-		this.queue = queue;
-	}
 
 	public int getSize() {
 		return size;
@@ -51,6 +88,21 @@ public class Queue<T> {
 		this.size = size;
 	}
 
+	public QueueNode<T> getTop() {
+		return top;
+	}
+
+	public void setTop(QueueNode<T> top) {
+		this.top = top;
+	}
+
+	public QueueNode<T> getLast() {
+		return last;
+	}
+
+	public void setLast(QueueNode<T> last) {
+		this.last = last;
+	}
 }
 
 
