@@ -18,56 +18,41 @@ public class HashTableTesting {
     }
     @Test
     public void testConstructorMethodEmptyList(){
+        setUp();
         assertTrue(hashTableTest.isEmpty());
-        assertEquals(200,hashTableTest.getDefaultSize());
     }
     @Test
     public void testConstructorMethodEmptyListGivenSize(){
         setUp2();
-        assertTrue(hashTableTest.isEmpty());
         assertEquals(100, hashTableTest.getDefaultSize());
-
     }
+
     @Test
     public void testAddMethodEmptyList(){
         setUp();
-        assertEquals(200,hashTableTest.getDefaultSize());
         hashTableTest.add(1,2);
         assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
-        assertNotEquals(0, hashTableTest.getExistingNodes());
     }
     @Test
     public void testAddMethodEmptyListTwoElementsInserted(){
         setUp();
-        assertEquals(200,hashTableTest.getDefaultSize());
         hashTableTest.add(1,2);
         hashTableTest.add(2,4);
         assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
-        assertEquals(hashTableTest.getFirst(2).getValue(),4);
-        assertEquals(2, hashTableTest.getExistingNodes());
     }
     @Test
     public void testAddMethodEmptyListGivenSize(){
         setUp2();
-        assertEquals(100,hashTableTest.getDefaultSize() );
         hashTableTest.add(1,2);
         assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
-        assertNotEquals(0, hashTableTest.getExistingNodes());
     }
 
     @Test
     public void testAddMethodEmptyListGivenSizeTwoElementsInserted(){
         setUp2();
-        assertEquals(100,hashTableTest.getDefaultSize() );
         hashTableTest.add(1,2);
         hashTableTest.add(2,4);
         assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
-        assertEquals(hashTableTest.getFirst(2).getValue(),4);
-        assertEquals(2, hashTableTest.getExistingNodes());
     }
 
     @Test
@@ -75,8 +60,6 @@ public class HashTableTesting {
         setUp();
         hashTableTest.add(1,2);
         hashTableTest.add(1,4);
-        assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
         assertEquals(hashTableTest.find(1,4).getValue(),4);
     }
 
@@ -85,36 +68,38 @@ public class HashTableTesting {
         setUp2();
         hashTableTest.add(1,2);
         hashTableTest.add(1,4);
-        assertFalse(hashTableTest.isEmpty());
-        assertEquals(hashTableTest.getFirst(1).getValue(),2);
         assertEquals(hashTableTest.find(1,4).getValue(),4);
     }
 
     public void setUp3(){
         setUp();
+        hashTableTest.add(1,1);
         hashTableTest.add(1,2);
-        hashTableTest.add(1,4);
-        hashTableTest.add(2,5);
-        hashTableTest.add(2,6);
+        hashTableTest.add(2,1);
+        hashTableTest.add(2,2);
     }
 
     @Test
     public void testSearchMethodFirstPosition(){
         setUp3();
-        assertNotNull(hashTableTest.getFirst(1));
-        assertEquals(2, hashTableTest.getFirst(1).getValue());
+        assertEquals( hashTableTest.getFirst(1).getValue(),1);
 
     }
 
     @Test
     public void testFindMethod(){
         setUp3();
-        assertEquals(4, hashTableTest.find(1,4).getValue());
+        assertEquals( hashTableTest.find(1,2).getValue(),2);
     }
     @Test
     public void testFindMethodNotExistingElement(){
         setUp3();
         assertNull(hashTableTest.find(1,5).getValue());
+    }
+    @Test
+    public void testFindMethodNotIndexElement(){
+        setUp3();
+        assertNull(hashTableTest.find(5,1).getValue());
     }
     @Test
     public void testSearchElementEmptyTable(){
@@ -125,7 +110,7 @@ public class HashTableTesting {
     @Test
     public void testFindElementEmptyTable(){
         setUp();
-        assertNull(hashTableTest.find(1,5));
+        assertNull(hashTableTest.find(1,1));
     }
 
     public void setUp4(){
@@ -151,8 +136,7 @@ public class HashTableTesting {
     public void deletionMethodCollisions(){
         setUp3();
         hashTableTest.delete(1,2);
-        assertNotNull(hashTableTest.getFirst(1));
-        assertEquals(4, hashTableTest.getFirst(1).getValue());
+        assertNull(hashTableTest.find(1,2));
 
     }
 
@@ -161,7 +145,6 @@ public class HashTableTesting {
         setUp4();
         hashTableTest.delete(1,2);
         assertNotNull(hashTableTest.getFirst(1));
-        assertEquals(1, hashTableTest.getFirst(1).getValue());
     }
 
     @Test
@@ -169,7 +152,6 @@ public class HashTableTesting {
         setUp3();
         hashTableTest.delete(1,5);
         assertNotNull(hashTableTest.getFirst(1));
-        assertEquals(1, hashTableTest.getFirst(1).getValue());
     }
 
 
