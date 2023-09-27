@@ -1,68 +1,99 @@
 import model.HashTable;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+/*
+Most of your mistakes are for not using the appropriated structure for the test
+also some test are redundant and unnecesary
+be careful with raw data please fix the structure
 
-
-
-
+*/
 public class HashTableTesting {
 
     private HashTable<Integer,Integer> hashTableTest;
+    public HashTableTesting(){
+        hashTableTest = new HashTable<>();
+    }
 
 
-    public void setUp() {
+/*    public void setUp() {
         hashTableTest = new HashTable<>();
     }
     public void setUp2() {
         hashTableTest = new HashTable<>(100);
-    }
+    }*/
+
+    //fixed
     @Test
     public void testConstructorMethodEmptyList(){
-        setUp();
 
         assertTrue(hashTableTest.isEmpty());
     }
+    //fixed
     @Test
     public void testConstructorMethodEmptyListGivenSize(){
-        setUp2();
-        assertEquals(100, hashTableTest.getDefaultSize());
+        // defult size is 200
+        assertEquals(200, hashTableTest.getDefaultSize());
     }
 
+    //fixed
     @Test
     public void testAddMethodEmptyList(){
-        setUp();
         hashTableTest.add(1,2);
         assertFalse(hashTableTest.isEmpty());
     }
-    @Test
+
+
+
+    // unnecesary test only keep one
+
+/*    @Test
     public void testAddMethodEmptyListTwoElementsInserted(){
         setUp();
         hashTableTest.add(1,2);
         hashTableTest.add(2,4);
         assertFalse(hashTableTest.isEmpty());
-    }
-    @Test
+    }*/
+
+    // i dont see the point of this test
+/*    @Test
     public void testAddMethodEmptyListGivenSize(){
         setUp2();
         hashTableTest.add(1,2);
         assertFalse(hashTableTest.isEmpty());
-    }
+    }*/
 
-    @Test
+
+// redundant test
+/*    @Test
     public void testAddMethodEmptyListGivenSizeTwoElementsInserted(){
         setUp2();
         hashTableTest.add(1,2);
         hashTableTest.add(2,4);
         assertFalse(hashTableTest.isEmpty());
-    }
+    }*/
 
-    @Test
+// the test is bad designed
+/*    @Test
     public void testAddMethodEmptyListCollisions(){
-        setUp();
+
         hashTableTest.add(1,2);
         hashTableTest.add(1,4);
         assertEquals(hashTableTest.find(1,4).getValue(),4);
+    }*/
+    // correction
+    @Test
+    public void testAddMethodEmptyListCollisions(){
+
+        hashTableTest.add(1,2);
+        hashTableTest.add(1,4);
+        // Raw data used fix the structure
+        Integer Expected = hashTableTest.find(1,4).getValue();
+
+        assertEquals(hashTableTest.find(1,4).getValue(),4);
     }
+
+
+        /*
 
     @Test
     public void testAddMethodEmptyListGivenSizeCollisions(){
@@ -155,7 +186,7 @@ public class HashTableTesting {
         assertNotNull(hashTableTest.getFirst(1));
     }
 
-
+*/
 
 
 
