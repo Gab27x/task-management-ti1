@@ -70,6 +70,7 @@ public class HashTable<K,V> {
 	}
 
 	public void delete(K key, V value){
+
 		HashEntry objective= new HashEntry<>(key, value);
 		int index= hashFunction(key);
 		HashEntry current= table[index];
