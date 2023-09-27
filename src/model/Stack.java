@@ -54,4 +54,15 @@ public class Stack<T> {
 		return this.size;
 	}
 
+	public StackNode<T> getTop() {
+		return top;
+	}
+
+	public void setTop(StackNode<T> top) {
+		this.top = top;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
 }
