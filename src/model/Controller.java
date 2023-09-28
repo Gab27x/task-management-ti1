@@ -31,10 +31,15 @@ public class Controller {
     }
     // Case 2
     public void deleteActivity(String id){
-        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad
+        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
         //y meterla al stack
         int key= Integer.parseInt(id);
-        activities.delete(key,activities.findValue(key));
+        Activity deleted=activities.findValue(key);
+        if(deleted!=null){
+            actionsStack.push(new Action(deleted,3));
+            activities.delete(key,activities.findValue(key));
+        }
+
     }
 
     // Case 3
@@ -42,7 +47,11 @@ public class Controller {
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
         int key= Integer.parseInt(id);
-        activities.findValue(key).setLocation(newLocation);
+        Activity modified=activities.findValue(key);
+        if(modified!=null){
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(key).setLocation(newLocation);
+        }
 
 
 
@@ -51,13 +60,26 @@ public class Controller {
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
         int key= Integer.parseInt(id);
-        activities.findValue(key).setDescription(newDescription);
+        Activity modified=activities.findValue(key);
+        if(modified!=null){
+            Action last=new Action(modified,2);
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(key).setDescription(newDescription);
+        }
+
     }
     public void modifyActivityDate(String id, Calendar newDueDate){
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
         int key= Integer.parseInt(id);
-        activities.findValue(key).setDueDate(newDueDate);
+        Activity modified=activities.findValue(key);
+        if(modified!=null){
+            Action last=new Action(modified,2);
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(key).setDueDate(newDueDate);
+        }
+
+
     }
 
 
