@@ -21,29 +21,65 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(String id, String description, Calendar dueDate, String location){
+    public void addActivity(Integer id, String description, Calendar dueDate, String location){
+
         //FIXME hay que meter esa actividad creada a la estructura correspondiente
         Activity created=new Activity(id,description,dueDate,location);//created this activity
         actionsStack.push(new Action(created,1));//created an action and added it to the stack
+        //Integer key= Integer.parseInt(id);
+        activities.add(id,created);
     }
     // Case 2
-    public void deleteActivity(String id){
-        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad
+    public void deleteActivity(Integer id){
+        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
         //y meterla al stack
+       // int key= Integer.parseInt(id);
+        Activity deleted=activities.findValue(id);
+        if(deleted!=null){
+            actionsStack.push(new Action(deleted,3));
+            activities.delete(id,activities.findValue(id));
+        }
+
     }
 
     // Case 3
-    public void modifyActivityLocation(String id, String newLocation){
+    public void modifyActivityLocation(Integer id, String newLocation){
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
+        //int key= Integer.parseInt(id);
+        Activity modified=activities.findValue(id);
+        if(modified!=null){
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(id).setLocation(newLocation);
+        }
+
+
+
     }
-    public void modifyActivityDescription(String id, String newDescription){
+    public void modifyActivityDescription(Integer id, String newDescription){
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
+        //int key= Integer.parseInt(id);
+        Activity modified=activities.findValue(id);
+        if(modified!=null){
+            Action last=new Action(modified,2);
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(id).setDescription(newDescription);
+        }
+
     }
-    public void modifyActivityDate(String id, Calendar newDueDate){
+    public void modifyActivityDate(Integer id, Calendar newDueDate){
         //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
         //, crear con eso un action y meterla al stack
+        //int key= Integer.parseInt(id);
+        Activity modified=activities.findValue(id);
+        if(modified!=null){
+            Action last=new Action(modified,2);
+            actionsStack.push(new Action(modified,2));
+            activities.findValue(id).setDueDate(newDueDate);
+        }
+
+
     }
 
 
