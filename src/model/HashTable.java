@@ -31,6 +31,7 @@ public class HashTable<K,V> {
 			existingNodes++;
 		}else{
 			while(current.getNext()!=null){
+
 				current=current.getNext();
 			}
 			current.setNext(newEntry);
