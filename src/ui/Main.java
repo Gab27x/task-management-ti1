@@ -96,14 +96,14 @@ public class Main {
         System.out.println("Enter the due date");
         dueDate = Calendar.getInstance();
 
-        controller.addActivity(id, description, dueDate, location);
-
+        /*controller.addActivity(id, description, dueDate, location);
+*/
     }
     // Case 2
     public void deleteActivity(){
         System.out.println("Enter the id of the activity to delete");
         String id = cin.nextLine();
-        controller.deleteActivity(id);
+/*        controller.deleteActivity(id);*/
 
     }
 
@@ -118,19 +118,19 @@ public class Main {
             case 1 ->{
                 System.out.println("Enter the new loaction");
                 String location = cin.nextLine();
-                controller.modifyActivityLocation(id, location);
+                /*controller.modifyActivityLocation(id, location);*/
 
             }
             case 2 ->{
                 System.out.println("Enter the new description");
                 String description = cin.nextLine();
-                controller.modifyActivityDescription(id, description);
+                /*controller.modifyActivityDescription(id, description);*/
 
             }
             case 3 ->{
                 System.out.println("Enter the new due date");
                 Calendar newDate = Calendar.getInstance();
-                controller.modifyActivityDate(id, newDate);
+                /*controller.modifyActivityDate(id, newDate);*/
 
             }
 
