@@ -8,7 +8,6 @@ public class HashTable<K,V> {
 	private  int defaultSize=10;
 	public HashTable(){
 		table = new HashEntry[defaultSize];
-
 		this.existingNodes=0;
 	}
 
@@ -19,7 +18,8 @@ public class HashTable<K,V> {
 	}
 
 	public int hashFunction(K key){
-		Integer hashCode= key.hashCode();
+		int hashCode;
+		hashCode = key.hashCode();
 		return Math.abs(hashCode) % table.length;
 	}
 	public void add(K key, V value){
@@ -127,6 +127,8 @@ public class HashTable<K,V> {
 		}
 
 		return false;
+
+		return this.existingNodes;
 	}
 
 	public int getDefaultSize() {
@@ -145,6 +147,11 @@ public class HashTable<K,V> {
 		this.existingNodes = existingNodes;
 	}
 
+	public HashEntry<K, V>[] getTable() {
+		return table;
+	}
 
-
+	public void setTable(HashEntry<K, V>[] table) {
+		this.table = table;
+	}
 }
