@@ -50,4 +50,13 @@ public class HashEntry<K,V> {
 	public void setPrev(HashEntry<K,V> prev) {
 		this.prev = prev;
 	}
+
+
+	@Override
+	public String toString() {
+		return "HashEntry{" +
+				"key=" + key +
+				", value=" + value.toString() +
+				'}';
+	}
 }
