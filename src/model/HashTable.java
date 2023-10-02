@@ -2,24 +2,25 @@ package model;
 
 public class HashTable<K,V> {
 
+
 	private HashEntry<K,V>[] table;
 	private int existingNodes;
 
-	private  int defaultSize=10;
+	public static int DEFAULT_SIZE=10;
 	public HashTable(){
-		table = new HashEntry[defaultSize];
-
+		table = new HashEntry[DEFAULT_SIZE];
 		this.existingNodes=0;
 	}
 
 	public HashTable(int size){
-		defaultSize=size;
-		table = new HashEntry[defaultSize];
+		setDefaultSize(size);
+		table = new HashEntry[DEFAULT_SIZE];
 
 	}
 
 	public int hashFunction(K key){
-		Integer hashCode= key.hashCode();
+		int hashCode;
+		hashCode = key.hashCode();
 		return Math.abs(hashCode) % table.length;
 	}
 	public void add(K key, V value){
@@ -127,14 +128,34 @@ public class HashTable<K,V> {
 		}
 
 		return false;
+
+		//return this.existingNodes;
+	}
+
+	public String toString(){
+		int index=0;
+		StringBuilder elements= new StringBuilder();
+
+		for(int i=0;i< table.length;i++){
+			elements.append(table[index].toString()).append(" /n ");
+			while(table[index].getNext()!=null){
+				table[index]=table[index].getNext();
+				elements.append(table[index].toString()).append(" /n ");
+
+			}
+
+		}
+
+
+		return elements.toString();
 	}
 
 	public int getDefaultSize() {
-		return defaultSize;
+		return DEFAULT_SIZE;
 	}
 
 	public void setDefaultSize(int defaultSize) {
-		this.defaultSize = defaultSize;
+		this.DEFAULT_SIZE = defaultSize;
 	}
 
 	public int getExistingNodes() {
@@ -145,6 +166,11 @@ public class HashTable<K,V> {
 		this.existingNodes = existingNodes;
 	}
 
+	public HashEntry<K, V>[] getTable() {
+		return table;
+	}
 
-
+	public void setTable(HashEntry<K, V>[] table) {
+		this.table = table;
+	}
 }
