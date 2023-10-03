@@ -49,8 +49,14 @@ public class Main {
                 \t║    WELCOME TO TASK MANAGER   ║
                 \t╚══════════════════════════════╝
                 """);
-        System.out.println("\t" + controller.getActivities().isEmpty());
+
+        System.out.println("""
+                ╔══════════════╗
+                ║   MY TASKS   ║
+                ╚══════════════╝
+                """);
         showHashTable();
+        System.out.println("\t" + controller.getActivities().isEmpty());
 
         System.out.println("""
                 \t╔══════════════════════════════╗
@@ -66,8 +72,6 @@ public class Main {
                       
                 """
         );
-
-
 
     }
 
@@ -167,29 +171,31 @@ public class Main {
         System.out.print("\tENTER THE LOCATION: ");
         location = cin.nextLine();
 
-
         System.out.print("\tENTER THE ID: ");
         id = cin.nextInt();
-        cin.nextLine();
 
-        
+/*        cin.nextLine();*/
+
         System.out.println("\n\t\tENTER THE DUE DATE \n");
 
-
-        // FIXME ADD DATE
         dueDate = createdate();
-        System.out.println(convDateFormat(dueDate));
-
-    /* Calendar.getInstance();*/
 
         controller.addActivity(id,title ,description, dueDate, location);
     }
+
     // Case 2
     public void deleteActivity(){
         System.out.print("\tENTER THE ID: ");
 
         Integer id = cin.nextInt();
-        controller.deleteActivity(id);
+        if(controller.deleteActivity(id)){
+            System.out.println();
+
+        }
+        else{
+            System.out.println();
+
+        }
 
     }
 
@@ -201,10 +207,10 @@ public class Main {
         System.out.println("""
                 \t╔══════════════════════════════╗
                 \t║            MENU              ║
-                \t║      1. LOCATION             ║
-                \t║      2. DESCRIPTION          ║
-                \t║      3. DUE DATE             ║
-                \t║      4. ¿TITLE?              ║
+                \t║       1. TITLE               ║
+                \t║       2. LOCATION            ║
+                \t║       3. DESCRIPTION         ║
+                \t║       4. DUE DATE            ║
                 \t╚══════════════════════════════╝
                       
                 """
@@ -216,24 +222,40 @@ public class Main {
         switch (option){
             case 1 ->{
                 cin.nextLine();
+                System.out.print("\tENTER THE NEW TITLE: ");
+                String title = cin.nextLine();
+/*
+                controller.modifyActivityLocation(id, title);
+*/
+
+            }
+            case 2 ->{
+                cin.nextLine();
                 System.out.print("\tENTER THE NEW LOCATION: ");
                 String location = cin.nextLine();
                 controller.modifyActivityLocation(id, location);
 
             }
-            case 2 ->{
+            case 3 ->{
                 cin.nextLine();
                 System.out.print("\tENTER THE NEW DESCRIPTION: ");
                 String description = cin.nextLine();
                 controller.modifyActivityDescription(id, description);
 
             }
-            case 3 ->{
+            case 4 ->{
                 System.out.print("\tENTER THE NEW DUE DATE: ");
-                // FIXME ADD DATE
                 Calendar newDate = createdate();
-                System.out.println(convDateFormat(newDate));
                 controller.modifyActivityDate(id, newDate);
+
+            }
+
+            default -> {
+                System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║         INVALID OPTION       ║
+                \t╚══════════════════════════════╝
+                """);
 
             }
 
@@ -290,7 +312,7 @@ public class Main {
 
         }while(year < minYear);
 
-        if (! (year == minYear)) {
+        if (!(year == minYear)) {
             System.out.print("\tENTER MONTH (1-12): ");
             do{
                 month = (cin.nextInt()) - 1;
@@ -328,8 +350,9 @@ public class Main {
 
 
             if(minMonth == month){
-                System.out.print("\tENTER DAY: ");
+
                 do{
+                    System.out.print("\tENTER DAY: ");
                     day = cin.nextInt();
                     if(day < minDay || day > 31){
                         System.out.println("Enter a valid input");
