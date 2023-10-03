@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class QueueTest {
+public class QueueTesting {
     private Queue<Integer> queueTest;
 
-    public QueueTest(){
+    public QueueTesting(){
         queueTest =  new Queue<>();
     }
 

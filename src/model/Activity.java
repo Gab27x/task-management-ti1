@@ -2,7 +2,8 @@ package model;
 import java.util.Calendar;
 public class Activity {
 
-	private String id;
+	private Integer id;
+	private String title;
 	private String description;
 	private Calendar dueDate;
 	private String location;
@@ -16,18 +17,27 @@ public class Activity {
 	 */
 
 
-	public Activity(String id, String description, Calendar dueDate, String location) {
+	public Activity(Integer id,String title ,String description, Calendar dueDate, String location) {
 		this.id = id;
+		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
 	}
 
-	public String getId() {
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
