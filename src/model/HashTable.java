@@ -135,7 +135,7 @@ public class HashTable<K,V> {
 	public String toString(){
 		int index=0;
 		StringBuilder elements= new StringBuilder();
-
+		// Fixme NULL POINTER EXEPTION
 		for(int i=0;i< table.length;i++){
 			elements.append(table[index].toString()).append(" /n ");
 			while(table[index].getNext()!=null){

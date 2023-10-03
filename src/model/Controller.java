@@ -21,10 +21,10 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(Integer id, String description, Calendar dueDate, String location){
+    public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
 
         //FIXME hay que meter esa actividad creada a la estructura correspondiente
-        Activity created=new Activity(id,description,dueDate,location);//created this activity
+        Activity created=new Activity(id,title,description,dueDate,location);//created this activity
         actionsStack.push(new Action(created,1));//created an action and added it to the stack
         //Integer key= Integer.parseInt(id);
         activities.add(id,created);
@@ -104,10 +104,15 @@ public class Controller {
                     modifyActivityDate(activity.getId(),activity.getDueDate());
                     break;
                 case DELETE:
-                    addActivity(activity.getId(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    addActivity(activity.getId(),activity.getTitle(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
                     break;
             }
         }
 
+    }
+
+
+    public String showHashTable(){
+        return activities.toString();
     }
 }

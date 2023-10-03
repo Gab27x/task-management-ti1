@@ -3,6 +3,7 @@ import java.util.Calendar;
 public class Activity {
 
 	private Integer id;
+	private String title;
 	private String description;
 	private Calendar dueDate;
 	private String location;
@@ -16,11 +17,20 @@ public class Activity {
 	 */
 
 
-	public Activity(Integer id, String description, Calendar dueDate, String location) {
+	public Activity(Integer id,String title ,String description, Calendar dueDate, String location) {
 		this.id = id;
+		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Integer getId() {
