@@ -1,4 +1,5 @@
 package model;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 public class Activity {
 
@@ -8,6 +9,7 @@ public class Activity {
 	private Calendar dueDate;
 	private String location;
 
+	private SimpleDateFormat simpleDateFormat;
 	/**
 	 * 
 	 * @param id
@@ -23,6 +25,7 @@ public class Activity {
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
+		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	public String getTitle() {
@@ -63,5 +66,23 @@ public class Activity {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+
+	public String convDateFormat(Calendar date){
+
+		return simpleDateFormat.format(date.getTime());
+
+	}
+	@Override
+	public String toString() {
+
+
+		return "\n\tTitle: " + this.title +
+				"\n\tId: " + this.id +
+				"\n\tDescription: "+ this.description +
+				"\n\tLocation: " + this.location +
+				"\n\tDue Date: "+ convDateFormat(this.dueDate);
+
 	}
 }

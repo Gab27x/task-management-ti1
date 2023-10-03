@@ -108,6 +108,7 @@ public class HashTable<K,V> {
 				}
 				current.setNext(null);
 				current.setPrev(null);
+				this.existingNodes --;
 				return;
 			}
 			current = current.getNext();
@@ -116,38 +117,35 @@ public class HashTable<K,V> {
 
 
 	public boolean isEmpty(){
-		int counter=0;
-        for (HashEntry<K, V> kvHashEntry : table) {
-            if (kvHashEntry == null) {
-                counter++;
-            }
-
-        }
-		if(counter==table.length){
-			return true;
-		}
-
-		return false;
-
-		//return this.existingNodes;
+		return this.existingNodes == 0;
 	}
 
-	public String toString(){
-		int index=0;
-		StringBuilder elements= new StringBuilder();
-		// Fixme NULL POINTER EXEPTION
-		for(int i=0;i< table.length;i++){
-			elements.append(table[index].toString()).append(" /n ");
-			while(table[index].getNext()!=null){
-				table[index]=table[index].getNext();
-				elements.append(table[index].toString()).append(" /n ");
+	public String showTable(){
+		StringBuilder elements = new StringBuilder();
+
+		for(int i=0;i< table.length;i++) {
+			if (table[i] != null) {
+				elements.append("\t").append(table[i].getValue().toString()).append("\n");
+				while (table[i].getNext() != null) {
+					table[i] = table[i].getNext();
+					elements.append("\t").append(table[i].getValue().toString()).append("\n");
+				}
 
 			}
+		}
+		if(elements.toString().isEmpty()){
+			return """
+            \t╔════════════════════╗
+            \t║   ANY TASKS ADDED  ║
+            \t╚════════════════════╝
+            """;
 
+		}
+		else {
+			return elements.toString();
 		}
 
 
-		return elements.toString();
 	}
 
 	public int getDefaultSize() {
