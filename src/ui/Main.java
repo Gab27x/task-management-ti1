@@ -223,11 +223,8 @@ public class Main {
             case 1 ->{
                 cin.nextLine();
                 System.out.print("\tENTER THE NEW TITLE: ");
-                String title = cin.nextLine();
-/*
-                controller.modifyActivityLocation(id, title);
-*/
-
+                String newTitle = cin.nextLine();
+                controller.modifyActivityTitle(id,newTitle);
             }
             case 2 ->{
                 cin.nextLine();

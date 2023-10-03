@@ -30,8 +30,6 @@ public class Controller {
 
     // Case 2
     public boolean deleteActivity(Integer id){
-        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
-        //y meterla al stack
         Activity deleted = activities.findValue(id);
         if(deleted != null){
             actionsStack.push(new Action(deleted,3));
@@ -45,40 +43,54 @@ public class Controller {
     }
 
     // Case 3
+
+    // Modify 1
+    public void modifyActivityTitle(Integer id, String newTitle){
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
+        if(modified!=null){
+
+            modified.setTitle(newTitle);
+        }
+
+    }
+
+
+    // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setLocation(newLocation);
+
+            modified.setLocation(newLocation);
         }
 
-
-
     }
+
+
+    // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDescription(newDescription);
+
+            modified.setDescription(newDescription);
         }
 
     }
+
+
+    // Modify 4
     public void modifyActivityDate(Integer id, Calendar newDueDate){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDueDate(newDueDate);
+
+            modified.setDueDate(newDueDate);
         }
 
 
