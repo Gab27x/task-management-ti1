@@ -18,26 +18,28 @@ public class Controller {
 
     }
 
-
-
     // Case 1
     public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
 
-        //FIXME hay que meter esa actividad creada a la estructura correspondiente
-        Activity created=new Activity(id,title,description,dueDate,location);//created this activity
-        actionsStack.push(new Action(created,1));//created an action and added it to the stack
-        //Integer key= Integer.parseInt(id);
-        activities.add(id,created);
+        Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
+
+        actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
+
+        activities.add(id,newActivity);
     }
+
     // Case 2
-    public void deleteActivity(Integer id){
+    public boolean deleteActivity(Integer id){
         //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
         //y meterla al stack
-       // int key= Integer.parseInt(id);
-        Activity deleted=activities.findValue(id);
-        if(deleted!=null){
+        Activity deleted = activities.findValue(id);
+        if(deleted != null){
             actionsStack.push(new Action(deleted,3));
-            activities.delete(id,activities.findValue(id));
+            activities.delete(id,deleted);
+            return true;
+        }
+        else{
+            return false;
         }
 
     }
@@ -113,7 +115,7 @@ public class Controller {
 
 
     public String showHashTable(){
-        return activities.toString();
+        return activities.showTable();
     }
 
 
