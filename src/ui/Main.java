@@ -49,8 +49,8 @@ public class Main {
                 \t║    WELCOME TO TASK MANAGER   ║
                 \t╚══════════════════════════════╝
                 """);
-
-/*        showHashTable();*/
+        System.out.println("\t" + controller.getActivities().isEmpty());
+        showHashTable();
 
         System.out.println("""
                 \t╔══════════════════════════════╗
@@ -264,39 +264,96 @@ public class Main {
     public Calendar createdate(){
         Calendar newDate =  Calendar.getInstance();
 
-        System.out.print("\tENTER YEAR: ");
+        int minYear = newDate.get(Calendar.YEAR);
+        System.out.println(minYear);
+
+        int minMonth = newDate.get(Calendar.MONTH);
+        System.out.println(minMonth);
+
+        int minDay = newDate.get(Calendar.DATE);
+        System.out.println(minDay);
+        System.out.println(convDateFormat(newDate));
+
+
         int year = 0;
-
-        do{
-            year = cin.nextInt();
-            if(year<2023){
-                System.out.println("Enter a valid input");
-            }
-
-        }while(year<2023);
-
-        System.out.print("\tENTER MONTH (1-12): ");
         int month = 0;
+        int day = 0;
+
+
+
         do{
-            month = (cin.nextInt()) - 1;
-            if(month<0 || month>11){
-                System.out.println("Enter a valid input ");
-            }
-
-
-        }while(!(month>=0 && month<=11));
-
-
-        System.out.print("\tENTER DAY: ");
-        int day =0;
-        do{
-            day = cin.nextInt();
-            if(day<1 || day>31){
+            System.out.print("\tENTER YEAR: ");
+            year = cin.nextInt();
+            if(year < minYear){
                 System.out.println("Enter a valid input");
             }
 
-        }while(!(day>=1 && day<=31));
+        }while(year < minYear);
 
+        if (! (year == minYear)) {
+            System.out.print("\tENTER MONTH (1-12): ");
+            do{
+                month = (cin.nextInt()) - 1;
+                if(month < 0 || month > 11){
+                    System.out.println("Enter a valid input ");
+                }
+
+
+            }while(!(month >= 0 && month <= 11));
+
+
+
+
+            do{
+                System.out.print("\tENTER DAY: ");
+                day = cin.nextInt();
+                if(day < 1 || day > 31){
+                    System.out.println("Enter a valid input");
+                }
+
+            }while(!(day >= 1 && day <= 31));
+
+
+        } else {
+            do{
+                System.out.print("\tENTER MONTH (1-12): ");
+                month = (cin.nextInt()) - 1;
+                if(month < minMonth || month > 11){
+                    System.out.println("Enter a valid input ");
+                }
+
+
+            }while(!(month >= minMonth && month <= 11));
+
+
+
+            if(minMonth == month){
+                System.out.print("\tENTER DAY: ");
+                do{
+                    day = cin.nextInt();
+                    if(day < minDay || day > 31){
+                        System.out.println("Enter a valid input");
+                    }
+
+                }while(!(day >= minDay && day <= 31));
+
+
+            }else{
+                do{
+                    System.out.print("\tENTER DAY: ");
+                    day = cin.nextInt();
+                    if(day < 1 || day > 31){
+                        System.out.println("Enter a valid input");
+                    }
+
+                }while(!(day >= 1 && day <= 31));
+
+
+
+            }
+
+
+        }
 
         newDate.set(year, month, day);
 

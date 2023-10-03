@@ -64,4 +64,15 @@ public class Activity {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	@Override
+	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", dueDate=" + dueDate +
+				", location='" + location + '\'' +
+				'}';
+	}
 }

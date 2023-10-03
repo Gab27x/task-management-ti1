@@ -116,7 +116,7 @@ public class HashTable<K,V> {
 
 
 	public boolean isEmpty(){
-		int counter=0;
+/*		int counter=0;
         for (HashEntry<K, V> kvHashEntry : table) {
             if (kvHashEntry == null) {
                 counter++;
@@ -127,21 +127,26 @@ public class HashTable<K,V> {
 			return true;
 		}
 
-		return false;
+		return false;*/
 
 		//return this.existingNodes;
+		return this.existingNodes == 0;
 	}
 
 	public String toString(){
 		int index=0;
 		StringBuilder elements= new StringBuilder();
-		// Fixme NULL POINTER EXEPTION
-		for(int i=0;i< table.length;i++){
-			elements.append(table[index].toString()).append(" /n ");
-			while(table[index].getNext()!=null){
-				table[index]=table[index].getNext();
-				elements.append(table[index].toString()).append(" /n ");
 
+		for(int i=0;i< table.length;i++){
+			if(table[index] != null){
+				elements.append("\t").append(table[index].getValue().toString()).append("\n");
+				while(table[index].getNext()!=null){
+					table[index]=table[index].getNext();
+					elements.append("\t").append(table[index].getValue().toString()).append("\n");
+				}
+
+			}else{
+				elements.append("\tWARNING: it's empty!").append("\n");
 			}
 
 		}

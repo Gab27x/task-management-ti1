@@ -115,4 +115,29 @@ public class Controller {
     public String showHashTable(){
         return activities.toString();
     }
+
+
+    public HashTable<Integer, Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(HashTable<Integer, Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Stack<Action> getActionsStack() {
+        return actionsStack;
+    }
+
+    public void setActionsStack(Stack<Action> actionsStack) {
+        this.actionsStack = actionsStack;
+    }
+
+    public Queue<Activity> getActivitiesQueue() {
+        return activitiesQueue;
+    }
+
+    public void setActivitiesQueue(Queue<Activity> activitiesQueue) {
+        this.activitiesQueue = activitiesQueue;
+    }
 }
