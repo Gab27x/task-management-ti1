@@ -57,6 +57,8 @@ public class Main {
                 """);
         showHashTable();
         System.out.println("\t" + controller.getActivities().isEmpty());
+        System.out.println("\t" + controller.getActivities().getExistingNodes());
+        showArray();
 
         System.out.println("""
                 \t╔══════════════════════════════╗
@@ -94,6 +96,7 @@ public class Main {
                 """);
 
                 addActivity();
+
 /*                showHashTable();*/
 
            }
@@ -278,27 +281,24 @@ public class Main {
 
     }
 
+    public void showArray(){
+        System.out.println(controller.showArray());
+    }
+
+
+
     // Calendar methods
 
     public Calendar createdate(){
         Calendar newDate =  Calendar.getInstance();
 
         int minYear = newDate.get(Calendar.YEAR);
-        System.out.println(minYear);
-
         int minMonth = newDate.get(Calendar.MONTH);
-        System.out.println(minMonth);
-
         int minDay = newDate.get(Calendar.DATE);
-        System.out.println(minDay);
-        System.out.println(convDateFormat(newDate));
-
 
         int year = 0;
         int month = 0;
         int day = 0;
-
-
 
         do{
             System.out.print("\tENTER YEAR: ");

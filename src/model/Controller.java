@@ -124,7 +124,9 @@ public class Controller {
         }
 
     }
-
+    public String showArray(){
+        return activities.showArray();
+    }
 
     public String showHashTable(){
         return activities.showTable();
