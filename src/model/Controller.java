@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class Controller {
@@ -11,12 +13,25 @@ public class Controller {
 
 
 
+
+
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
 
     }
+    public void saveToJson() throws Exception{
+        FileManager<?> fileManager = FileManager.getInstance();
+
+    }
+
+    public void loadFromJson(){
+        FileManager<?> fileManager = FileManager.getInstance();
+
+
+    }
+
 
     // Case 1
     public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
