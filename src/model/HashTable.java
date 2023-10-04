@@ -29,18 +29,18 @@ public class HashTable<K,V> {
 		HashEntry<K,V> current=table[index];
 		if(current==null){
 			table[index]=newEntry;
-			existingNodes++;
+
 		}else{
 			while(current.getNext()!=null){
 
 				current=current.getNext();
 			}
+
 			current.setNext(newEntry);
 			newEntry.setPrev(current);
 			newEntry.setNext(null);
-			existingNodes++;
 		}
-
+		existingNodes++;
 	}
 	public HashEntry<K,V> getFirst(K key){
 		if(table==null){
@@ -126,9 +126,12 @@ public class HashTable<K,V> {
 		for(int i=0;i< table.length;i++) {
 			if (table[i] != null) {
 				elements.append("\t").append(table[i].getValue().toString()).append("\n");
-				while (table[i].getNext() != null) {
-					table[i] = table[i].getNext();
-					elements.append("\t").append(table[i].getValue().toString()).append("\n");
+				HashEntry<K,V> current = table[i].getNext();
+
+				while (current != null) {
+
+					elements.append("\t").append(current.getValue().toString()).append("\n");
+					current = current.getNext();
 				}
 
 			}
@@ -147,6 +150,61 @@ public class HashTable<K,V> {
 
 
 	}
+	public ArrayNode<V>[] getElementsAsArray(){
+
+		ArrayNode<V>[] allElements = new ArrayNode[this.existingNodes];
+		int j = 0;
+		for(int i = 0; i < table.length; i++) {
+			if (table[i] != null) {
+				allElements[j] = new ArrayNode<>(table[i].getValue());
+				j++;
+				HashEntry<K,V> current = table[i].getNext();
+				while (current != null) {
+
+					allElements[j] = new ArrayNode<>(current.getValue());
+					current = current.getNext();
+
+					j++;
+				}
+
+			}
+
+		}
+
+		return allElements;
+	}
+
+
+
+	public String showArray(){
+		String msg = "";
+
+		ArrayNode<V>[] allElements = getElementsAsArray();
+
+		if(allElements.length != 0) {
+			for(ArrayNode<V> element : allElements){
+				if(element != null){
+					msg += "\n\t" + element.getValue().toString() ;
+				}
+				else {
+					msg += "\n\n\tnull";
+
+				}
+
+			}
+
+		}
+		else {
+
+			msg += "\n\tEMPTY";
+		}
+		msg += "\n\t" + allElements.length;
+
+
+		return msg;
+
+	}
+
 
 	public int getDefaultSize() {
 		return DEFAULT_SIZE;
