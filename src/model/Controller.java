@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11,18 +12,16 @@ public class Controller {
     private Queue<Activity> activitiesQueue;
 
 
-
-
-
-
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
 
     }
-    public void saveToJson() throws Exception{
+    public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
+        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
+        fileManager.saveToJson(arr);
 
     }
 
@@ -141,6 +140,9 @@ public class Controller {
     }
     public String showArray(){
         return activities.showArray();
+    }
+    public String showArray2(){
+        return activities.showArray2();
     }
 
     public String showHashTable(){

@@ -4,25 +4,24 @@ public class HashTable<K,V> {
 
 
 	private HashEntry<K,V>[] table;
+
+
 	private int existingNodes;
 
 	public static int DEFAULT_SIZE=10;
 	public HashTable(){
 		table = new HashEntry[DEFAULT_SIZE];
 		this.existingNodes=0;
-	}
-
-	public HashTable(int size){
-		setDefaultSize(size);
-		table = new HashEntry[DEFAULT_SIZE];
 
 	}
+
 
 	public int hashFunction(K key){
 		int hashCode;
 		hashCode = key.hashCode();
 		return Math.abs(hashCode) % table.length;
 	}
+
 	public void add(K key, V value){
 		int index= hashFunction(key);
 		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
@@ -175,7 +174,6 @@ public class HashTable<K,V> {
 	}
 
 
-
 	public String showArray(){
 		String msg = "";
 
@@ -205,6 +203,61 @@ public class HashTable<K,V> {
 
 	}
 
+	public HashEntry<K,V>[] getElementsAsArray2(){
+
+		HashEntry<K,V>[]  allElements = new HashEntry[this.existingNodes];
+		int j = 0;
+		for(int i = 0; i < table.length; i++) {
+			if (table[i] != null) {
+
+				allElements[j] = new HashEntry<>(table[i].getKey(),table[i].getValue());
+				j++;
+				HashEntry<K,V> current = table[i].getNext();
+				while (current != null) {
+
+					allElements[j] = new HashEntry<>(current.getKey(),current.getValue());
+					current = current.getNext();
+
+					j++;
+				}
+
+			}
+
+		}
+
+		return allElements;
+	}
+
+	public String showArray2(){
+		String msg = "";
+
+		HashEntry<K,V>[] allElements = getElementsAsArray2();
+
+		if(allElements.length != 0) {
+			for(HashEntry<K,V> element : allElements){
+				if(element != null){
+					msg += "\n\t" + element.getValue().toString() ;
+				}
+				else {
+					msg += "\n\n\tnull";
+
+				}
+
+			}
+
+		}
+		else {
+
+			msg += "\n\tEMPTY";
+		}
+		msg += "\n\t" + allElements.length;
+
+
+		return msg;
+
+	}
+
+
 
 	public int getDefaultSize() {
 		return DEFAULT_SIZE;
@@ -229,4 +282,8 @@ public class HashTable<K,V> {
 	public void setTable(HashEntry<K, V>[] table) {
 		this.table = table;
 	}
+
+
 }
+
+

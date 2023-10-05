@@ -1,4 +1,6 @@
 package model;
+import com.google.gson.annotations.JsonAdapter;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 public class Activity {
@@ -6,10 +8,11 @@ public class Activity {
 	private Integer id;
 	private String title;
 	private String description;
+	@JsonAdapter(CalendarAdapter.class)
 	private Calendar dueDate;
 	private String location;
 
-	private SimpleDateFormat simpleDateFormat;
+/*	private SimpleDateFormat simpleDateFormat;*/
 	/**
 	 * 
 	 * @param id
@@ -25,7 +28,7 @@ public class Activity {
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
-		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+/*		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");*/
 	}
 
 	public String getTitle() {
@@ -69,20 +72,45 @@ public class Activity {
 	}
 
 
-	public String convDateFormat(Calendar date){
+	/*ublic String convDateFormat(Calendar date){
 
 		return simpleDateFormat.format(date.getTime());
 
 	}
+
 	@Override
 	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", dueDate=" + dueDate +
+				", location='" + location + '\'' +
+				", simpleDateFormat=" + simpleDateFormat +
+				'}';
+	}*/
 
+/*
+	@Override
+	public String toString() {
 
 		return "\n\tTitle: " + this.title +
 				"\n\tId: " + this.id +
 				"\n\tDescription: "+ this.description +
 				"\n\tLocation: " + this.location +
-				"\n\tDue Date: "+ convDateFormat(this.dueDate);
+				"\n\tDue Date: "+ this.dueDate;
 
+	}
+*/
+
+	@Override
+	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", dueDate=" + dueDate +
+				", location='" + location + '\'' +
+				'}';
 	}
 }
