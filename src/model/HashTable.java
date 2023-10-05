@@ -149,7 +149,6 @@ public class HashTable<K,V> {
 
 	}
 
-
 	public HashEntry<K,V>[] getElementsAsArray2(){
 
 		HashEntry<K,V>[]  allElements = new HashEntry[this.existingNodes];
