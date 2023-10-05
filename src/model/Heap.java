@@ -16,6 +16,10 @@ public class Heap<T extends Comparable<T>> {
         heapData = datos;
     }
 
+    private T[] getHeapData(){
+        return this.heapData;
+    }
+
     // create getParentPos() method that returns parent position for the node
     private int getParentPosition(int position)  {
         return (position - 1) / 2;
@@ -83,12 +87,13 @@ public class Heap<T extends Comparable<T>> {
     }
 
     // create displayHeap() method to print the data of the heap
-    public void displayHeap()  {
-        System.out.println("PARENT NODE" + "\t" + "LEFT CHILD NODE" + "\t" + "RIGHT CHILD NODE");
+    public String displayHeap()  {
+        String out="";
+        //System.out.println("PARENT NODE" + "\t" + "LEFT CHILD NODE" + "\t" + "RIGHT CHILD NODE");
         for (int k = 0; k <sizeOfHeap / 2; k++) {
-            System.out.print(" " + heapData[k] + "\t\t" + heapData[2 * k + 1] + "\t\t" + heapData[2 * k + 2]);
-            System.out.println();
+            out+=" " + heapData[k] + "\n" + heapData[2 * k + 1] + "\n" + heapData[2 * k + 2]+"\n";
         }
+        return out;
     }
 
     // create designMaxHeap() method to construct min heap
@@ -105,4 +110,5 @@ public class Heap<T extends Comparable<T>> {
         maxHeapify(FRONT);
         return popElement;
     }
+
 }
