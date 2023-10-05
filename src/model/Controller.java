@@ -1,6 +1,10 @@
 package model;
 
-import java.util.Calendar;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
@@ -9,74 +13,99 @@ public class Controller {
     private Queue<Activity> activitiesQueue;
 
 
-
-
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
 
     }
+    public void saveToJson() throws IOException {
+        FileManager<?> fileManager = FileManager.getInstance();
+        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
+        fileManager.saveToJson(arr);
 
+    }
+
+    public void loadFromJson(){
+        FileManager<?> fileManager = FileManager.getInstance();
+
+
+    }
 
 
     // Case 1
-    public void addActivity(Integer id, String description, Calendar dueDate, String location){
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location){
 
-        //FIXME hay que meter esa actividad creada a la estructura correspondiente
-        Activity created=new Activity(id,description,dueDate,location);//created this activity
-        actionsStack.push(new Action(created,1));//created an action and added it to the stack
-        //Integer key= Integer.parseInt(id);
-        activities.add(id,created);
+        Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
+
+        actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
+
+        activities.add(id,newActivity);
     }
+
     // Case 2
-    public void deleteActivity(Integer id){
-        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
-        //y meterla al stack
-       // int key= Integer.parseInt(id);
-        Activity deleted=activities.findValue(id);
-        if(deleted!=null){
+    public boolean deleteActivity(Integer id){
+        Activity deleted = activities.findValue(id);
+        if(deleted != null){
             actionsStack.push(new Action(deleted,3));
-            activities.delete(id,activities.findValue(id));
+            activities.delete(id,deleted);
+            return true;
+        }
+        else{
+            return false;
         }
 
     }
 
     // Case 3
+
+    // Modify 1
+    public void modifyActivityTitle(Integer id, String newTitle){
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
+        if(modified!=null){
+
+            modified.setTitle(newTitle);
+        }
+
+    }
+
+
+    // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setLocation(newLocation);
+
+            modified.setLocation(newLocation);
         }
 
-
-
     }
+
+
+    // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDescription(newDescription);
+
+            modified.setDescription(newDescription);
         }
 
     }
-    public void modifyActivityDate(Integer id, Calendar newDueDate){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+
+
+    // Modify 4
+    public void modifyActivityDate(Integer id, LocalDate newDueDate){
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDueDate(newDueDate);
+
+            modified.setDueDate(newDueDate);
         }
 
 
@@ -104,10 +133,45 @@ public class Controller {
                     modifyActivityDate(activity.getId(),activity.getDueDate());
                     break;
                 case DELETE:
-                    addActivity(activity.getId(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    addActivity(activity.getId(),activity.getTitle(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
                     break;
             }
         }
 
+    }
+    public String showArray(){
+        return activities.showArray();
+    }
+    public String showArray2(){
+        return activities.showArray2();
+    }
+
+    public String showHashTable(){
+        return activities.showTable();
+    }
+
+
+    public HashTable<Integer, Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(HashTable<Integer, Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Stack<Action> getActionsStack() {
+        return actionsStack;
+    }
+
+    public void setActionsStack(Stack<Action> actionsStack) {
+        this.actionsStack = actionsStack;
+    }
+
+    public Queue<Activity> getActivitiesQueue() {
+        return activitiesQueue;
+    }
+
+    public void setActivitiesQueue(Queue<Activity> activitiesQueue) {
+        this.activitiesQueue = activitiesQueue;
     }
 }
