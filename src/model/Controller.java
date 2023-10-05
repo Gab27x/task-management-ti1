@@ -35,13 +35,10 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location,int type){
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
         //FIXME complete method in  main
-        Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
-        if(type==1)
-            newActivity.setPriority(true);
-        else
-            newActivity.setPriority(false);
+        Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
+
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
         activities.add(id,newActivity);
@@ -157,9 +154,9 @@ public class Controller {
     // Case 5
     public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
         //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
-        Action lastAction=actionsStack.pop();
-        if(lastAction!=null){
-            Activity activity=lastAction.getActivity();
+        Action lastAction = actionsStack.pop();
+        if(lastAction != null){
+            Activity activity = lastAction.getActivity();
             switch(lastAction.getType()){
                 case ADD:
                     deleteActivity(activity.getId());
@@ -170,7 +167,8 @@ public class Controller {
                     modifyActivityDate(activity.getId(),activity.getDueDate());
                     break;
                 case DELETE:
-                    addActivity(activity.getId(),activity.getTitle(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    addActivity(activity.getId(), activity.getTitle(), activity.getDescription(),
+                            activity.getDueDate(), activity.getLocation(), activity.getPriority());
                     break;
             }
         }
