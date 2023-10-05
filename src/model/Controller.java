@@ -1,8 +1,10 @@
 package model;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
+
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
@@ -11,18 +13,16 @@ public class Controller {
     private Queue<Activity> activitiesQueue;
 
 
-
-
-
-
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
 
     }
-    public void saveToJson() throws Exception{
+    public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
+        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
+        fileManager.saveToJson(arr);
 
     }
 
@@ -34,7 +34,7 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location){
 
         Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
 
@@ -99,7 +99,7 @@ public class Controller {
 
 
     // Modify 4
-    public void modifyActivityDate(Integer id, Calendar newDueDate){
+    public void modifyActivityDate(Integer id, LocalDate newDueDate){
         //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
 
         Activity modified = activities.findValue(id);
@@ -141,6 +141,9 @@ public class Controller {
     }
     public String showArray(){
         return activities.showArray();
+    }
+    public String showArray2(){
+        return activities.showArray2();
     }
 
     public String showHashTable(){

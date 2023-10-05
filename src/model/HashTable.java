@@ -4,25 +4,23 @@ public class HashTable<K,V> {
 
 
 	private HashEntry<K,V>[] table;
+
 	private int existingNodes;
 
 	public static int DEFAULT_SIZE=10;
 	public HashTable(){
 		table = new HashEntry[DEFAULT_SIZE];
 		this.existingNodes=0;
-	}
-
-	public HashTable(int size){
-		setDefaultSize(size);
-		table = new HashEntry[DEFAULT_SIZE];
 
 	}
+
 
 	public int hashFunction(K key){
 		int hashCode;
 		hashCode = key.hashCode();
 		return Math.abs(hashCode) % table.length;
 	}
+
 	public void add(K key, V value){
 		int index= hashFunction(key);
 		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
@@ -40,7 +38,7 @@ public class HashTable<K,V> {
 			newEntry.setPrev(current);
 			newEntry.setNext(null);
 		}
-		existingNodes++;
+		this.existingNodes++;
 	}
 	public HashEntry<K,V> getFirst(K key){
 		if(table==null){
@@ -150,18 +148,21 @@ public class HashTable<K,V> {
 
 
 	}
-	public ArrayNode<V>[] getElementsAsArray(){
 
-		ArrayNode<V>[] allElements = new ArrayNode[this.existingNodes];
+
+	public HashEntry<K,V>[] getElementsAsArray2(){
+
+		HashEntry<K,V>[]  allElements = new HashEntry[this.existingNodes];
 		int j = 0;
 		for(int i = 0; i < table.length; i++) {
 			if (table[i] != null) {
-				allElements[j] = new ArrayNode<>(table[i].getValue());
+
+				allElements[j] = new HashEntry<>(table[i].getKey(),table[i].getValue());
 				j++;
 				HashEntry<K,V> current = table[i].getNext();
 				while (current != null) {
 
-					allElements[j] = new ArrayNode<>(current.getValue());
+					allElements[j] = new HashEntry<>(current.getKey(),current.getValue());
 					current = current.getNext();
 
 					j++;
@@ -174,15 +175,13 @@ public class HashTable<K,V> {
 		return allElements;
 	}
 
-
-
-	public String showArray(){
+	public String showArray2(){
 		String msg = "";
 
-		ArrayNode<V>[] allElements = getElementsAsArray();
+		HashEntry<K,V>[] allElements = getElementsAsArray2();
 
 		if(allElements.length != 0) {
-			for(ArrayNode<V> element : allElements){
+			for(HashEntry<K,V> element : allElements){
 				if(element != null){
 					msg += "\n\t" + element.getValue().toString() ;
 				}
@@ -204,6 +203,7 @@ public class HashTable<K,V> {
 		return msg;
 
 	}
+
 
 
 	public int getDefaultSize() {
@@ -229,4 +229,8 @@ public class HashTable<K,V> {
 	public void setTable(HashEntry<K, V>[] table) {
 		this.table = table;
 	}
+
+
 }
+
+
