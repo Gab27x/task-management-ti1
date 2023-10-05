@@ -5,7 +5,6 @@ public class HashTable<K,V> {
 
 	private HashEntry<K,V>[] table;
 
-
 	private int existingNodes;
 
 	public static int DEFAULT_SIZE=10;
@@ -39,7 +38,7 @@ public class HashTable<K,V> {
 			newEntry.setPrev(current);
 			newEntry.setNext(null);
 		}
-		existingNodes++;
+		this.existingNodes++;
 	}
 	public HashEntry<K,V> getFirst(K key){
 		if(table==null){
@@ -149,59 +148,7 @@ public class HashTable<K,V> {
 
 
 	}
-	public ArrayNode<V>[] getElementsAsArray(){
 
-		ArrayNode<V>[] allElements = new ArrayNode[this.existingNodes];
-		int j = 0;
-		for(int i = 0; i < table.length; i++) {
-			if (table[i] != null) {
-				allElements[j] = new ArrayNode<>(table[i].getValue());
-				j++;
-				HashEntry<K,V> current = table[i].getNext();
-				while (current != null) {
-
-					allElements[j] = new ArrayNode<>(current.getValue());
-					current = current.getNext();
-
-					j++;
-				}
-
-			}
-
-		}
-
-		return allElements;
-	}
-
-
-	public String showArray(){
-		String msg = "";
-
-		ArrayNode<V>[] allElements = getElementsAsArray();
-
-		if(allElements.length != 0) {
-			for(ArrayNode<V> element : allElements){
-				if(element != null){
-					msg += "\n\t" + element.getValue().toString() ;
-				}
-				else {
-					msg += "\n\n\tnull";
-
-				}
-
-			}
-
-		}
-		else {
-
-			msg += "\n\tEMPTY";
-		}
-		msg += "\n\t" + allElements.length;
-
-
-		return msg;
-
-	}
 
 	public HashEntry<K,V>[] getElementsAsArray2(){
 

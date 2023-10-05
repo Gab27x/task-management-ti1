@@ -6,17 +6,19 @@ import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Controller;
+
+
 import java.text.SimpleDateFormat;
 
 public class Main {
     private Scanner cin;
     private Controller controller;
-    private SimpleDateFormat simpleDateFormat;
+
 
     public Main() {
         cin = new Scanner(System.in);
         controller = new Controller();
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     }
 
     public static void main(String[] args) {
@@ -167,7 +169,7 @@ public class Main {
     public void addActivity() {
         int id;
         String title, description, location;
-        Calendar dueDate;
+        LocalDate dueDate;
 
         cin.nextLine();
 
@@ -187,7 +189,7 @@ public class Main {
 
         System.out.println("\n\t\tENTER THE DUE DATE \n");
 
-        dueDate = createdate();
+        dueDate = createdate2();
 
         controller.addActivity(id, title, description, dueDate, location);
     }
@@ -250,7 +252,7 @@ public class Main {
             }
             case 4 -> {
                 System.out.print("\tENTER THE NEW DUE DATE: ");
-                Calendar newDate = createdate();
+                LocalDate newDate = createdate2();
                 controller.modifyActivityDate(id, newDate);
 
             }
@@ -295,102 +297,88 @@ public class Main {
     }
 
 
-    // Calendar methods
 
-    public Calendar createdate() {
-        Calendar newDate = Calendar.getInstance();
+    public LocalDate createdate2() {
+        LocalDate today = LocalDate.now();
 
-        int minYear = newDate.get(Calendar.YEAR);
-        int minMonth = newDate.get(Calendar.MONTH);
-        int minDay = newDate.get(Calendar.DATE);
+
+        int minYear = today.getYear();
+        int minMonth = today.getMonthValue();
+        int minDay = today.getDayOfMonth();
 
         int year = 0;
         int month = 0;
         int day = 0;
 
         do {
-            System.out.print("\tENTER YEAR: ");
+            System.out.print("\n\tENTER YEAR: ");
             year = cin.nextInt();
-            if (year < minYear) {
-                System.out.println("Enter a valid input");
-            }
+
 
         } while (year < minYear);
 
-        if (!(year == minYear)) {
-            System.out.print("\tENTER MONTH (1-12): ");
+        if (year == minYear) {
             do {
-                month = (cin.nextInt()) - 1;
-                if (month < 0 || month > 11) {
-                    System.out.println("Enter a valid input ");
-                }
+                System.out.print("\n\tENTER MONTH: ");
+                month = cin.nextInt();
 
 
-            } while (!(month >= 0 && month <= 11));
+            } while (month < minMonth);
 
-
-            do {
-                System.out.print("\tENTER DAY: ");
-                day = cin.nextInt();
-                if (day < 1 || day > 31) {
-                    System.out.println("Enter a valid input");
-                }
-
-            } while (!(day >= 1 && day <= 31));
-
-
-        } else {
-            do {
-                System.out.print("\tENTER MONTH (1-12): ");
-                month = (cin.nextInt()) - 1;
-                if (month < minMonth || month > 11) {
-                    System.out.println("Enter a valid input ");
-                }
-
-
-            } while (!(month >= minMonth && month <= 11));
-
-
-            if (minMonth == month) {
-
+            if(month == minMonth){
                 do {
-                    System.out.print("\tENTER DAY: ");
+                    System.out.print("\n\tENTER DAY: ");
                     day = cin.nextInt();
-                    if (day < minDay || day > 31) {
-                        System.out.println("Enter a valid input");
-                    }
-
-                } while (!(day >= minDay && day <= 31));
 
 
-            } else {
+                } while (day < minDay);
+
+
+            }
+
+            else {
                 do {
-                    System.out.print("\tENTER DAY: ");
+                    System.out.print("\n\tENTER DAY: ");
                     day = cin.nextInt();
-                    if (day < 1 || day > 31) {
-                        System.out.println("Enter a valid input");
-                    }
 
-                } while (!(day >= 1 && day <= 31));
+
+                } while ( day < 1 || day > 31 );
 
 
             }
 
 
         }
+        else {
+            do {
+                System.out.print("\n\tENTER MONTH: ");
+                month = cin.nextInt();
 
-        newDate.set(year, month, day);
 
-        return newDate;
+            } while (month < 1 || month > 12);
+
+            do {
+                System.out.print("\n\tENTER DAY: ");
+                day = cin.nextInt();
+
+
+            } while ( day < 1 || day > 31 );
+
+
+
+
+        }
+
+
+
+
+
+        return LocalDate.of(year, month, day);
 
     }
 
 
-    public String convDateFormat(Calendar date) {
 
-        return simpleDateFormat.format(date.getTime());
-
-    }
 
     public void save() {
         try {

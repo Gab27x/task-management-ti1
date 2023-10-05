@@ -2,17 +2,18 @@ package model;
 import com.google.gson.annotations.JsonAdapter;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 public class Activity {
 
 	private Integer id;
 	private String title;
 	private String description;
-	@JsonAdapter(CalendarAdapter.class)
-	private Calendar dueDate;
+	@JsonAdapter(LocalDateAdapter.class)
+	private LocalDate dueDate;
 	private String location;
 
-/*	private SimpleDateFormat simpleDateFormat;*/
+
 	/**
 	 * 
 	 * @param id
@@ -22,13 +23,13 @@ public class Activity {
 	 */
 
 
-	public Activity(Integer id,String title ,String description, Calendar dueDate, String location) {
+	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
-/*		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");*/
+
 	}
 
 	public String getTitle() {
@@ -55,11 +56,11 @@ public class Activity {
 		this.description = description;
 	}
 
-	public Calendar getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Calendar dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -90,7 +91,6 @@ public class Activity {
 				'}';
 	}*/
 
-/*
 	@Override
 	public String toString() {
 
@@ -101,9 +101,8 @@ public class Activity {
 				"\n\tDue Date: "+ this.dueDate;
 
 	}
-*/
 
-	@Override
+/*	@Override
 	public String toString() {
 		return "Activity{" +
 				"id=" + id +
@@ -112,5 +111,5 @@ public class Activity {
 				", dueDate=" + dueDate +
 				", location='" + location + '\'' +
 				'}';
-	}
+	}*/
 }

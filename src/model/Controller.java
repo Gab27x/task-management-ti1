@@ -1,9 +1,10 @@
 package model;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
+
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
@@ -33,7 +34,7 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location){
 
         Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
 
@@ -98,7 +99,7 @@ public class Controller {
 
 
     // Modify 4
-    public void modifyActivityDate(Integer id, Calendar newDueDate){
+    public void modifyActivityDate(Integer id, LocalDate newDueDate){
         //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
 
         Activity modified = activities.findValue(id);
