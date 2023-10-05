@@ -25,12 +25,13 @@ public class Activity implements Comparable<Activity> {
 	 */
 
 
-	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location) {
+	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
+		this.priority = priority;
 
 	}
 
@@ -80,6 +81,10 @@ public class Activity implements Comparable<Activity> {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public boolean isPriority() {
+		return priority;
 	}
 
 	public int compareTo(Activity other){

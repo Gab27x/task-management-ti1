@@ -168,6 +168,7 @@ public class Main {
     // Case 1
     public void addActivity() {
         int id;
+        int priority = 0;
         String title, description, location;
         LocalDate dueDate;
 
@@ -185,13 +186,35 @@ public class Main {
         System.out.print("\tENTER THE ID: ");
         id = cin.nextInt();
 
+        do{
+
+            System.out.print("""
+                    
+                    \tSELECT PRIORITY
+                    \t1. PRIORITARY
+                    \t2. NON PRIORITARY
+                    """);
+
+            System.out.print("\tENTER THE PRIORITY: ");
+            priority = cin.nextInt();
+
+        } while (priority < 1 || priority > 3);
+
         /*        cin.nextLine();*/
 
-        System.out.println("\n\t\tENTER THE DUE DATE \n");
+        System.out.print("\n\t\tENTER THE DUE DATE \n");
 
         dueDate = createdate2();
 
-        controller.addActivity(id, title, description, dueDate, location);
+        if(priority == 1){
+            controller.addActivity(id, title, description, dueDate, location,true);
+
+        }else{
+            controller.addActivity(id, title, description, dueDate, location,false);
+
+        }
+
+
     }
 
     // Case 2
