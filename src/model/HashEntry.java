@@ -16,8 +16,6 @@ public class HashEntry<K,V> {
 		this.prev=null;
 	}
 
-
-
 	public K getKey() {
 		return key;
 	}
@@ -59,4 +57,6 @@ public class HashEntry<K,V> {
 				", value=" + value.toString() +
 				'}';
 	}
+
+
 }
