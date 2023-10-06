@@ -4,7 +4,7 @@ import com.google.gson.annotations.JsonAdapter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
-public class Activity {
+public class Activity implements Comparable<Activity> {
 
 	private Integer id;
 	private String title;
@@ -12,6 +12,8 @@ public class Activity {
 	@JsonAdapter(LocalDateAdapter.class)
 	private LocalDate dueDate;
 	private String location;
+
+	private boolean priority;
 
 
 	/**
@@ -23,12 +25,13 @@ public class Activity {
 	 */
 
 
-	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location) {
+	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
+		this.priority = priority;
 
 	}
 
@@ -42,6 +45,14 @@ public class Activity {
 
 	public Integer getId() {
 		return id;
+	}
+
+	public boolean getPriority() {
+		return priority;
+	}
+
+	public void setPriority(boolean priority) {
+		this.priority = priority;
 	}
 
 	public void setId(Integer id) {
@@ -71,6 +82,16 @@ public class Activity {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public boolean isPriority() {
+		return priority;
+	}
+
+	public int compareTo(Activity other){
+		return this.dueDate.compareTo(other.getDueDate());
+	}
+
+
 
 
 	/*ublic String convDateFormat(Calendar date){

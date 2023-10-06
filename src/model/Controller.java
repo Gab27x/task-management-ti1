@@ -11,6 +11,7 @@ public class Controller {
     private Stack<Action> actionsStack;
 
     private Queue<Activity> activitiesQueue;
+    private Heap<Activity> activitiesHeap;
 
 
     public Controller(){
@@ -34,13 +35,15 @@ public class Controller {
 
 
     // Case 1
-    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location){
-
-        Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
+        //FIXME complete method in  main
+        Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
 
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
         activities.add(id,newActivity);
+
+
     }
 
     // Case 2
@@ -111,6 +114,37 @@ public class Controller {
 
     }
 
+    public Activity[] listActivities() {
+        HashEntry<Integer, Activity>[] activitiesArray = activities.getElementsAsArray2();
+        Activity[] found = new Activity[activitiesArray.length];
+        int i = 0;
+        for (HashEntry<Integer, Activity> actividad : activitiesArray) {
+            Activity content = actividad.getValue();
+            if (content.getPriority()) {
+                found[i] = content;
+                i++;
+            }
+
+        }
+        return found;
+    }
+
+    public String showPriority() {
+        Activity[] found = listActivities();
+        String msg = "";
+        for (Activity activity : found) {
+            if (activity != null) {
+                msg += "\n" + activity.toString();
+            }
+        }
+        return msg;
+    }
+
+    public String showByDate(){
+        activitiesHeap = new Heap<Activity>(listActivities());
+        activitiesHeap.designMaxHeap();
+        return activitiesHeap.displayHeap();
+    }
 
     // Case 4
     public String showActivities(){
@@ -120,9 +154,9 @@ public class Controller {
     // Case 5
     public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
         //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
-        Action lastAction=actionsStack.pop();
-        if(lastAction!=null){
-            Activity activity=lastAction.getActivity();
+        Action lastAction = actionsStack.pop();
+        if(lastAction != null){
+            Activity activity = lastAction.getActivity();
             switch(lastAction.getType()){
                 case ADD:
                     deleteActivity(activity.getId());
@@ -133,14 +167,15 @@ public class Controller {
                     modifyActivityDate(activity.getId(),activity.getDueDate());
                     break;
                 case DELETE:
-                    addActivity(activity.getId(),activity.getTitle(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    addActivity(activity.getId(), activity.getTitle(), activity.getDescription(),
+                            activity.getDueDate(), activity.getLocation(), activity.getPriority());
                     break;
             }
         }
 
     }
     public String showArray(){
-        return activities.showArray();
+        return activities.showArray2();
     }
     public String showArray2(){
         return activities.showArray2();
