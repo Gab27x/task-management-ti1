@@ -1,32 +1,27 @@
 package ui;
 
-import java.io.IOException;
 import java.util.Calendar;
-import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Controller;
-
-
 import java.text.SimpleDateFormat;
 
 public class Main {
     private Scanner cin;
     private Controller controller;
-
-
-    public Main() {
+    private SimpleDateFormat simpleDateFormat;
+    public Main(){
         cin = new Scanner(System.in);
         controller = new Controller();
-
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     }
 
-    public static void main(String[] args) {
-        int option = -1;
+    public static void main(String[] args){
+        int option = -1 ;
         Main view = new Main();
 
-        do {
-            try {
+        do{
+            try{
                 view.menu();
 
                 System.out.print("\tSELECT OPTION: ");
@@ -34,24 +29,21 @@ public class Main {
 
                 view.executeOption(option);
 
-            } catch (InputMismatchException e) {
+            }
+            catch (InputMismatchException e){
                 view.cin.nextLine();
                 System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║    PLEASE ENTER AN INTEGER   ║
-                        \t╚══════════════════════════════╝
-                        """);
+                \t╔══════════════════════════════╗
+                \t║    PLEASE ENTER AN INTEGER   ║
+                \t╚══════════════════════════════╝
+                """);
             }
 
-        } while (option != 0);
-
-
-        view.save();
+        }while( option != 0);
 
     }
-
     //Menu
-    public void menu() {
+    public void menu(){
         System.out.println("""
                 \t╔══════════════════════════════╗
                 \t║    WELCOME TO TASK MANAGER   ║
@@ -64,10 +56,7 @@ public class Main {
                 ╚══════════════╝
                 """);
         showHashTable();
-        System.out.println("\tIs empty: " + controller.getActivities().isEmpty());
-        System.out.println("\tNum of Nodes " + controller.getActivities().getExistingNodes());
-/*        showArray();*/
-        showArray2();
+        System.out.println("\t" + controller.getActivities().isEmpty());
 
         System.out.println("""
                 \t╔══════════════════════════════╗
@@ -87,145 +76,123 @@ public class Main {
     }
 
     //Execute option
-    public void executeOption(int option) {
-        switch (option) {
-            case 0 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║              BYE             ║
-                        \t╚══════════════════════════════╝
-                        """);
+    public void executeOption(int option){
+       switch (option){
+           case 0 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║              BYE             ║
+                \t╚══════════════════════════════╝
+                """);
 
-            }
-            case 1 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║          ADD ACTIVITY        ║
-                        \t╚══════════════════════════════╝
-                        """);
+           }
+           case 1 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║          ADD ACTIVITY        ║
+                \t╚══════════════════════════════╝
+                """);
 
                 addActivity();
+/*                showHashTable();*/
+
+           }
+           case 2 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║         MODIFY ACTIVITY      ║
+                \t╚══════════════════════════════╝
+                """);
+
+               modifyActivity();
+           }
+           case 3 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║        DELETE ACTIVITY       ║
+                \t╚══════════════════════════════╝
+                """);
+
+               deleteActivity();
+           }
+           case 4 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║          FILTER       1      ║
+                \t╚══════════════════════════════╝
+                """);
 
 
-            }
-            case 2 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║         MODIFY ACTIVITY      ║
-                        \t╚══════════════════════════════╝
-                        """);
+           }
+           case 5 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║          FILTER      2       ║
+                \t╚══════════════════════════════╝
+                """);
 
-                modifyActivity();
-            }
-            case 3 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║        DELETE ACTIVITY       ║
-                        \t╚══════════════════════════════╝
-                        """);
-
-                deleteActivity();
-            }
-            case 4 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║          FILTER       1      ║
-                        \t╚══════════════════════════════╝
-                        """);
-
-
-            }
-            case 5 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║          FILTER      2       ║
-                        \t╚══════════════════════════════╝
-                        """);
-
-            }
-            case 6 -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║             UNDO             ║
-                        \t╚══════════════════════════════╝
-                        """);
+           }
+           case 6 ->{
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║             UNDO             ║
+                \t╚══════════════════════════════╝
+                """);
                 undo();
-            }
-            default -> {
-                System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║         INVALID OPTION       ║
-                        \t╚══════════════════════════════╝
-                        """);
+           }
+           default -> {
+               System.out.println("""
+                \t╔══════════════════════════════╗
+                \t║         INVALID OPTION       ║
+                \t╚══════════════════════════════╝
+                """);
 
-            }
+           }
 
-        }
+       }
 
 
     }
 
     // Case 1
-    public void addActivity() {
+    public void addActivity(){
         int id;
-        int priority = 0;
-        String title, description, location;
-        LocalDate dueDate;
+        String title,description ,location ;
+        Calendar dueDate;
 
         cin.nextLine();
-
+        
         System.out.print("\tENTER THE TITLE: ");
         title = cin.nextLine();
-
+        
         System.out.print("\tENTER THE DESCRIPTION: ");
         description = cin.nextLine();
-
+        
         System.out.print("\tENTER THE LOCATION: ");
         location = cin.nextLine();
 
         System.out.print("\tENTER THE ID: ");
         id = cin.nextInt();
 
-        do{
+/*        cin.nextLine();*/
 
-            System.out.print("""
-                    
-                    \tSELECT PRIORITY
-                    \t1. PRIORITARY
-                    \t2. NON PRIORITARY
-                    """);
+        System.out.println("\n\t\tENTER THE DUE DATE \n");
 
-            System.out.print("\tENTER THE PRIORITY: ");
-            priority = cin.nextInt();
+        dueDate = createdate();
 
-        } while (priority < 1 || priority > 3);
-
-        /*        cin.nextLine();*/
-
-        System.out.print("\n\t\tENTER THE DUE DATE \n");
-
-        dueDate = createdate2();
-
-        if(priority == 1){
-            controller.addActivity(id, title, description, dueDate, location,true);
-
-        }else{
-            controller.addActivity(id, title, description, dueDate, location,false);
-
-        }
-
-
+        controller.addActivity(id,title ,description, dueDate, location);
     }
 
     // Case 2
-    public void deleteActivity() {
+    public void deleteActivity(){
         System.out.print("\tENTER THE ID: ");
 
         Integer id = cin.nextInt();
-        if (controller.deleteActivity(id)) {
+        if(controller.deleteActivity(id)){
             System.out.println();
 
-        } else {
+        }
+        else{
             System.out.println();
 
         }
@@ -233,7 +200,7 @@ public class Main {
     }
 
     // Case 3
-    public void modifyActivity() {
+    public void modifyActivity(){
         System.out.print("\tENTER THE ID: ");
         Integer id = cin.nextInt();
 
@@ -252,40 +219,43 @@ public class Main {
         System.out.print("\tSELECT OPTION: ");
         int option = cin.nextInt();
 
-        switch (option) {
-            case 1 -> {
+        switch (option){
+            case 1 ->{
                 cin.nextLine();
                 System.out.print("\tENTER THE NEW TITLE: ");
-                String newTitle = cin.nextLine();
-                controller.modifyActivityTitle(id, newTitle);
+                String title = cin.nextLine();
+/*
+                controller.modifyActivityLocation(id, title);
+*/
+
             }
-            case 2 -> {
+            case 2 ->{
                 cin.nextLine();
                 System.out.print("\tENTER THE NEW LOCATION: ");
                 String location = cin.nextLine();
                 controller.modifyActivityLocation(id, location);
 
             }
-            case 3 -> {
+            case 3 ->{
                 cin.nextLine();
                 System.out.print("\tENTER THE NEW DESCRIPTION: ");
                 String description = cin.nextLine();
                 controller.modifyActivityDescription(id, description);
 
             }
-            case 4 -> {
+            case 4 ->{
                 System.out.print("\tENTER THE NEW DUE DATE: ");
-                LocalDate newDate = createdate2();
+                Calendar newDate = createdate();
                 controller.modifyActivityDate(id, newDate);
 
             }
 
             default -> {
                 System.out.println("""
-                        \t╔══════════════════════════════╗
-                        \t║         INVALID OPTION       ║
-                        \t╚══════════════════════════════╝
-                        """);
+                \t╔══════════════════════════════╗
+                \t║         INVALID OPTION       ║
+                \t╚══════════════════════════════╝
+                """);
 
             }
 
@@ -300,121 +270,131 @@ public class Main {
 
 
     // Case 6
-    public void undo() {
+    public void undo(){
         controller.undo();
 
     }
 
 
-    public void showHashTable() {
+    public void showHashTable(){
         System.out.println(controller.showHashTable());
 
     }
 
-    public void showArray() {
-        System.out.println(controller.showArray());
-    }
+    // Calendar methods
 
-    public void showArray2() {
-        System.out.println(controller.showArray2());
-    }
+    public Calendar createdate(){
+        Calendar newDate =  Calendar.getInstance();
 
+        int minYear = newDate.get(Calendar.YEAR);
+        System.out.println(minYear);
 
+        int minMonth = newDate.get(Calendar.MONTH);
+        System.out.println(minMonth);
 
-    public LocalDate createdate2() {
-        LocalDate today = LocalDate.now();
+        int minDay = newDate.get(Calendar.DATE);
+        System.out.println(minDay);
+        System.out.println(convDateFormat(newDate));
 
-
-        int minYear = today.getYear();
-        int minMonth = today.getMonthValue();
-        int minDay = today.getDayOfMonth();
 
         int year = 0;
         int month = 0;
         int day = 0;
 
-        do {
-            System.out.print("\n\tENTER YEAR: ");
+
+
+        do{
+            System.out.print("\tENTER YEAR: ");
             year = cin.nextInt();
-
-
-        } while (year < minYear);
-
-        if (year == minYear) {
-            do {
-                System.out.print("\n\tENTER MONTH: ");
-                month = cin.nextInt();
-
-
-            } while (month < minMonth);
-
-            if(month == minMonth){
-                do {
-                    System.out.print("\n\tENTER DAY: ");
-                    day = cin.nextInt();
-
-
-                } while (day < minDay);
-
-
+            if(year < minYear){
+                System.out.println("Enter a valid input");
             }
 
-            else {
-                do {
-                    System.out.print("\n\tENTER DAY: ");
-                    day = cin.nextInt();
+        }while(year < minYear);
+
+        if (!(year == minYear)) {
+            System.out.print("\tENTER MONTH (1-12): ");
+            do{
+                month = (cin.nextInt()) - 1;
+                if(month < 0 || month > 11){
+                    System.out.println("Enter a valid input ");
+                }
 
 
-                } while ( day < 1 || day > 31 );
+            }while(!(month >= 0 && month <= 11));
 
 
-            }
 
 
-        }
-        else {
-            do {
-                System.out.print("\n\tENTER MONTH: ");
-                month = cin.nextInt();
-
-
-            } while (month < 1 || month > 12);
-
-            do {
-                System.out.print("\n\tENTER DAY: ");
+            do{
+                System.out.print("\tENTER DAY: ");
                 day = cin.nextInt();
+                if(day < 1 || day > 31){
+                    System.out.println("Enter a valid input");
+                }
+
+            }while(!(day >= 1 && day <= 31));
 
 
-            } while ( day < 1 || day > 31 );
+        } else {
+            do{
+                System.out.print("\tENTER MONTH (1-12): ");
+                month = (cin.nextInt()) - 1;
+                if(month < minMonth || month > 11){
+                    System.out.println("Enter a valid input ");
+                }
 
 
+            }while(!(month >= minMonth && month <= 11));
+
+
+
+            if(minMonth == month){
+
+                do{
+                    System.out.print("\tENTER DAY: ");
+                    day = cin.nextInt();
+                    if(day < minDay || day > 31){
+                        System.out.println("Enter a valid input");
+                    }
+
+                }while(!(day >= minDay && day <= 31));
+
+
+            }else{
+                do{
+                    System.out.print("\tENTER DAY: ");
+                    day = cin.nextInt();
+                    if(day < 1 || day > 31){
+                        System.out.println("Enter a valid input");
+                    }
+
+                }while(!(day >= 1 && day <= 31));
+
+
+
+            }
 
 
         }
 
+        newDate.set(year, month, day);
+
+        return newDate;
+
+    }
 
 
 
+    public String convDateFormat(Calendar date){
 
-        return LocalDate.of(year, month, day);
+        return simpleDateFormat.format(date.getTime());
 
     }
 
 
 
 
-    public void save() {
-        try {
-            controller.saveToJson();
-        }catch(
-                IOException e)
-
-        {
-            e.printStackTrace();
-
-        }
-
-    }
 
 
 }

@@ -1,21 +1,15 @@
 package model;
-import com.google.gson.annotations.JsonAdapter;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
-public class Activity implements Comparable<Activity> {
+public class Activity {
 
 	private Integer id;
 	private String title;
 	private String description;
-	@JsonAdapter(LocalDateAdapter.class)
-	private LocalDate dueDate;
+	private Calendar dueDate;
 	private String location;
 
-	private boolean priority;
-
-
+	private SimpleDateFormat simpleDateFormat;
 	/**
 	 * 
 	 * @param id
@@ -25,14 +19,13 @@ public class Activity implements Comparable<Activity> {
 	 */
 
 
-	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority) {
+	public Activity(Integer id,String title ,String description, Calendar dueDate, String location) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
-		this.priority = priority;
-
+		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	public String getTitle() {
@@ -47,14 +40,6 @@ public class Activity implements Comparable<Activity> {
 		return id;
 	}
 
-	public boolean getPriority() {
-		return priority;
-	}
-
-	public void setPriority(boolean priority) {
-		this.priority = priority;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -67,11 +52,11 @@ public class Activity implements Comparable<Activity> {
 		this.description = description;
 	}
 
-	public LocalDate getDueDate() {
+	public Calendar getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(Calendar dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -83,54 +68,21 @@ public class Activity implements Comparable<Activity> {
 		this.location = location;
 	}
 
-	public boolean isPriority() {
-		return priority;
-	}
 
-	public int compareTo(Activity other){
-		return this.dueDate.compareTo(other.getDueDate());
-	}
-
-
-
-
-	/*ublic String convDateFormat(Calendar date){
+	public String convDateFormat(Calendar date){
 
 		return simpleDateFormat.format(date.getTime());
 
 	}
-
 	@Override
 	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", description='" + description + '\'' +
-				", dueDate=" + dueDate +
-				", location='" + location + '\'' +
-				", simpleDateFormat=" + simpleDateFormat +
-				'}';
-	}*/
 
-	@Override
-	public String toString() {
 
 		return "\n\tTitle: " + this.title +
 				"\n\tId: " + this.id +
 				"\n\tDescription: "+ this.description +
 				"\n\tLocation: " + this.location +
-				"\n\tDue Date: "+ this.dueDate;
+				"\n\tDue Date: "+ convDateFormat(this.dueDate);
 
 	}
-
-/*	@Override
-	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", description='" + description + '\'' +
-				", dueDate=" + dueDate +
-				", location='" + location + '\'' +
-				'}';
-	}*/
 }

@@ -16,35 +16,23 @@ public class Heap<T extends Comparable<T>> {
         heapData = datos;
     }
 
-    public int getMaxSize(){
-        return this.heapMaxSize;
-    }
-
-    public int getSize(){
-        return this.sizeOfHeap;
-    }
-
-    public T[] getHeapData(){
-        return this.heapData;
-    }
-
     // create getParentPos() method that returns parent position for the node
-    public int getParentPosition(int position)  {
+    private int getParentPosition(int position)  {
         return (position - 1) / 2;
     }
 
     // create getLeftChildPosition() method that returns the position of left child
-    public int getLeftChildPosition(int position)  {
+    private int getLeftChildPosition(int position)  {
         return (2 * position);
     }
 
     // create getRightChildPosition() method that returns the position of right child
-    public int getRightChildPosition(int position)  {
+    private int getRightChildPosition(int position)  {
         return (2 * position) + 1;
     }
 
     // checks whether the given node is leaf or not
-    public boolean checkLeaf(int position)  {
+    private boolean checkLeaf(int position)  {
         if (position > (sizeOfHeap / 2) && position <= sizeOfHeap) {
             return true;
         }
@@ -53,7 +41,7 @@ public class Heap<T extends Comparable<T>> {
 
     // create swapNodes() method that perform swapping of the given nodes of the heap
 // firstNode and secondNode are the positions of the nodes
-    public void swap(int firstNode, int secondNode)  {
+    private void swap(int firstNode, int secondNode)  {
         T temp;
         temp = heapData[firstNode];
         heapData[firstNode] = heapData[secondNode];
@@ -61,14 +49,14 @@ public class Heap<T extends Comparable<T>> {
     }
 
     // create maxHeapify() method to heapify the node for maintaining the heap property
-    public void maxHeapify(int position)  {
+    private void maxHeapify(int position)  {
 
         //check whether the given node is non-leaf and greater than its right and left child
         if (!checkLeaf(position)) {
-            if ((heapData[position].compareTo(heapData[getLeftChildPosition(position)]) <= -1 || (heapData[position].compareTo(heapData[getRightChildPosition(position)])) <= -1)) {
+            if ((heapData[position].compareTo(heapData[getLeftChildPosition(position)])<=-1 || (heapData[position].compareTo(heapData[getRightChildPosition(position)]))<=-1)) {
 
                 // swap with left child and then heapify the left child
-                if (heapData[getLeftChildPosition(position)].compareTo(heapData[getRightChildPosition(position)]) >= 1) {
+                if (heapData[getLeftChildPosition(position)].compareTo(heapData[getRightChildPosition(position)])>=1) {
                     swap(position, getLeftChildPosition(position));
                     maxHeapify(getLeftChildPosition(position));
                 }
@@ -80,11 +68,10 @@ public class Heap<T extends Comparable<T>> {
                 }
             }
         }
-
     }
 
     // create insertNode() method to insert element in the heap
-    public void addNode(T data)  {
+    public void insertNode(T data)  {
         heapData[sizeOfHeap] = data;
         int current = sizeOfHeap;
 
@@ -96,13 +83,12 @@ public class Heap<T extends Comparable<T>> {
     }
 
     // create displayHeap() method to print the data of the heap
-    public String displayHeap()  {
-        String out="";
-        //System.out.println("PARENT NODE" + "\t" + "LEFT CHILD NODE" + "\t" + "RIGHT CHILD NODE");
+    public void displayHeap()  {
+        System.out.println("PARENT NODE" + "\t" + "LEFT CHILD NODE" + "\t" + "RIGHT CHILD NODE");
         for (int k = 0; k <sizeOfHeap / 2; k++) {
-            out+=" " + heapData[k] + "\n" + heapData[2 * k + 1] + "\n" + heapData[2 * k + 2]+"\n";
+            System.out.print(" " + heapData[k] + "\t\t" + heapData[2 * k + 1] + "\t\t" + heapData[2 * k + 2]);
+            System.out.println();
         }
-        return out;
     }
 
     // create designMaxHeap() method to construct min heap
@@ -119,9 +105,4 @@ public class Heap<T extends Comparable<T>> {
         maxHeapify(FRONT);
         return popElement;
     }
-
-    public boolean isEmpty(){
-        return sizeOfHeap == 0;
-    }
-
 }
