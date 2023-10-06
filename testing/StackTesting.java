@@ -56,6 +56,19 @@ public class StackTesting {
     }
 
     @Test
+    public void popTest3(){
+        // set Up
+        setUp1();
+
+        // act
+        Integer top = stackTest.pop();
+
+        // Assert
+        assertEquals(1,top);
+
+    }
+
+    @Test
     public void popTest2(){
         // set Up
 
@@ -90,6 +103,19 @@ public class StackTesting {
         assertNull(top);
 
     }
+
+    @Test
+    public void peekTest3(){
+        //set Up
+        setUp1();
+
+        //act
+        Integer top = stackTest.peek();
+
+        //Assert
+        assertEquals(1,top);
+    }
+
     @Test
     public void isEmptyTest(){
         // set Up
@@ -101,6 +127,30 @@ public class StackTesting {
         // Assert
         assertTrue(isEmpty);
 
+    }
+
+    @Test
+    public void isEmptyTest2(){
+        // set Up
+        setUp1();
+
+        // act
+        Integer top = stackTest.pop();
+
+        //Assert
+        assertTrue(stackTest.isEmpty(),"Stack is not empty");
+    }
+
+    @Test
+    public void getSizeTest0(){
+        // set Up
+        setUp1();
+
+        // act
+        int size = stackTest.getSize();
+
+        // Assert
+        assertEquals(1,size);
     }
 
     @Test
