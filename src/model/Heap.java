@@ -16,27 +16,27 @@ public class Heap<T extends Comparable<T>> {
         heapData = datos;
     }
 
-    private T[] getHeapData(){
+    public T[] getHeapData(){
         return this.heapData;
     }
 
     // create getParentPos() method that returns parent position for the node
-    private int getParentPosition(int position)  {
+    public int getParentPosition(int position)  {
         return (position - 1) / 2;
     }
 
     // create getLeftChildPosition() method that returns the position of left child
-    private int getLeftChildPosition(int position)  {
+    public int getLeftChildPosition(int position)  {
         return (2 * position);
     }
 
     // create getRightChildPosition() method that returns the position of right child
-    private int getRightChildPosition(int position)  {
+    public int getRightChildPosition(int position)  {
         return (2 * position) + 1;
     }
 
     // checks whether the given node is leaf or not
-    private boolean checkLeaf(int position)  {
+    public boolean checkLeaf(int position)  {
         if (position > (sizeOfHeap / 2) && position <= sizeOfHeap) {
             return true;
         }
@@ -45,7 +45,7 @@ public class Heap<T extends Comparable<T>> {
 
     // create swapNodes() method that perform swapping of the given nodes of the heap
 // firstNode and secondNode are the positions of the nodes
-    private void swap(int firstNode, int secondNode)  {
+    public void swap(int firstNode, int secondNode)  {
         T temp;
         temp = heapData[firstNode];
         heapData[firstNode] = heapData[secondNode];
@@ -53,7 +53,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     // create maxHeapify() method to heapify the node for maintaining the heap property
-    private void maxHeapify(int position)  {
+    public void maxHeapify(int position)  {
 
         //check whether the given node is non-leaf and greater than its right and left child
         if (!checkLeaf(position)) {
@@ -75,7 +75,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     // create insertNode() method to insert element in the heap
-    public void insertNode(T data)  {
+    public void addNode(T data)  {
         heapData[sizeOfHeap] = data;
         int current = sizeOfHeap;
 
@@ -109,6 +109,10 @@ public class Heap<T extends Comparable<T>> {
         heapData[FRONT] = heapData[sizeOfHeap--];
         maxHeapify(FRONT);
         return popElement;
+    }
+
+    public boolean isEmpty(){
+        return sizeOfHeap == 0;
     }
 
 }

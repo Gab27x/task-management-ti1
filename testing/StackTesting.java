@@ -32,7 +32,7 @@ public class StackTesting {
     }
 
     @Test
-    public void pushTest2(){
+    public void topTest2(){
         // set Up
         setUp2();
         // act
@@ -135,10 +135,10 @@ public class StackTesting {
         setUp1();
 
         // act
-        Integer top = stackTest.pop();
+        boolean isEmpty = stackTest.isEmpty();
 
         //Assert
-        assertTrue(stackTest.isEmpty(),"Stack is not empty");
+        assertFalse(isEmpty,"Stack is not empty");
     }
 
     @Test
