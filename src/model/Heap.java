@@ -16,6 +16,14 @@ public class Heap<T extends Comparable<T>> {
         heapData = datos;
     }
 
+    public int getMaxSize(){
+        return this.heapMaxSize;
+    }
+
+    public int getSize(){
+        return this.sizeOfHeap;
+    }
+
     public T[] getHeapData(){
         return this.heapData;
     }
@@ -57,10 +65,10 @@ public class Heap<T extends Comparable<T>> {
 
         //check whether the given node is non-leaf and greater than its right and left child
         if (!checkLeaf(position)) {
-            if ((heapData[position].compareTo(heapData[getLeftChildPosition(position)])<=-1 || (heapData[position].compareTo(heapData[getRightChildPosition(position)]))<=-1)) {
+            if ((heapData[position].compareTo(heapData[getLeftChildPosition(position)]) <= -1 || (heapData[position].compareTo(heapData[getRightChildPosition(position)])) <= -1)) {
 
                 // swap with left child and then heapify the left child
-                if (heapData[getLeftChildPosition(position)].compareTo(heapData[getRightChildPosition(position)])>=1) {
+                if (heapData[getLeftChildPosition(position)].compareTo(heapData[getRightChildPosition(position)]) >= 1) {
                     swap(position, getLeftChildPosition(position));
                     maxHeapify(getLeftChildPosition(position));
                 }
@@ -72,6 +80,7 @@ public class Heap<T extends Comparable<T>> {
                 }
             }
         }
+
     }
 
     // create insertNode() method to insert element in the heap
