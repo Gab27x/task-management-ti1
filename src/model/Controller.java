@@ -1,14 +1,17 @@
 package model;
 
-import java.util.Calendar;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
     private Stack<Action> actionsStack;
 
     private Queue<Activity> activitiesQueue;
-
-
+    private Heap<Activity> activitiesHeap;
 
 
     public Controller(){
@@ -17,21 +20,34 @@ public class Controller {
         activitiesQueue = new Queue<Activity>();
 
     }
+    public void saveToJson() throws IOException {
+        FileManager<?> fileManager = FileManager.getInstance();
+        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
+        fileManager.saveToJson(arr);
+
+    }
+
+    public void loadFromJson(){
+        FileManager<?> fileManager = FileManager.getInstance();
+
+
+    }
+
 
     // Case 1
-    public void addActivity(Integer id,String title ,String description, Calendar dueDate, String location){
-
-        Activity newActivity=new Activity(id,title,description,dueDate,location);//created this activity
+    public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
+        //FIXME complete method in  main
+        Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
 
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
         activities.add(id,newActivity);
+
+
     }
 
     // Case 2
     public boolean deleteActivity(Integer id){
-        //FIXME antes de eliminar al actividad, necesitan crear una action con esa actividad.
-        //y meterla al stack
         Activity deleted = activities.findValue(id);
         if(deleted != null){
             actionsStack.push(new Action(deleted,3));
@@ -45,45 +61,90 @@ public class Controller {
     }
 
     // Case 3
+
+    // Modify 1
+    public void modifyActivityTitle(Integer id, String newTitle){
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
+        if(modified!=null){
+
+            modified.setTitle(newTitle);
+        }
+
+    }
+
+
+    // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setLocation(newLocation);
+
+            modified.setLocation(newLocation);
         }
 
-
-
     }
+
+
+    // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDescription(newDescription);
+
+            modified.setDescription(newDescription);
         }
 
     }
-    public void modifyActivityDate(Integer id, Calendar newDueDate){
-        //FIXME antes de modificar la actividad, necesitan crear una actividad con los mismos atributos
-        //, crear con eso un action y meterla al stack
-        //int key= Integer.parseInt(id);
-        Activity modified=activities.findValue(id);
+
+
+    // Modify 4
+    public void modifyActivityDate(Integer id, LocalDate newDueDate){
+        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+
+        Activity modified = activities.findValue(id);
         if(modified!=null){
-            Action last=new Action(modified,2);
-            actionsStack.push(new Action(modified,2));
-            activities.findValue(id).setDueDate(newDueDate);
+
+            modified.setDueDate(newDueDate);
         }
 
 
     }
 
+    public Activity[] listActivities() {
+        HashEntry<Integer, Activity>[] activitiesArray = activities.getElementsAsArray2();
+        Activity[] found = new Activity[activitiesArray.length];
+        int i = 0;
+        for (HashEntry<Integer, Activity> actividad : activitiesArray) {
+            Activity content = actividad.getValue();
+            if (content.getPriority()) {
+                found[i] = content;
+                i++;
+            }
+
+        }
+        return found;
+    }
+
+    public String showPriority() {
+        Activity[] found = listActivities();
+        String msg = "";
+        for (Activity activity : found) {
+            if (activity != null) {
+                msg += "\n" + activity.toString();
+            }
+        }
+        return msg;
+    }
+
+    public String showByDate(){
+        activitiesHeap = new Heap<Activity>(listActivities());
+        activitiesHeap.designMaxHeap();
+        return activitiesHeap.displayHeap();
+    }
 
     // Case 4
     public String showActivities(){
@@ -93,9 +154,9 @@ public class Controller {
     // Case 5
     public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
         //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
-        Action lastAction=actionsStack.pop();
-        if(lastAction!=null){
-            Activity activity=lastAction.getActivity();
+        Action lastAction = actionsStack.pop();
+        if(lastAction != null){
+            Activity activity = lastAction.getActivity();
             switch(lastAction.getType()){
                 case ADD:
                     deleteActivity(activity.getId());
@@ -106,13 +167,19 @@ public class Controller {
                     modifyActivityDate(activity.getId(),activity.getDueDate());
                     break;
                 case DELETE:
-                    addActivity(activity.getId(),activity.getTitle(),activity.getDescription(),activity.getDueDate(),activity.getLocation());
+                    addActivity(activity.getId(), activity.getTitle(), activity.getDescription(),
+                            activity.getDueDate(), activity.getLocation(), activity.getPriority());
                     break;
             }
         }
 
     }
-
+    public String showArray(){
+        return activities.showArray2();
+    }
+    public String showArray2(){
+        return activities.showArray2();
+    }
 
     public String showHashTable(){
         return activities.showTable();

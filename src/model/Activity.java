@@ -1,15 +1,21 @@
 package model;
+import com.google.gson.annotations.JsonAdapter;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
-public class Activity {
+public class Activity implements Comparable<Activity> {
 
 	private Integer id;
 	private String title;
 	private String description;
-	private Calendar dueDate;
+	@JsonAdapter(LocalDateAdapter.class)
+	private LocalDate dueDate;
 	private String location;
 
-	private SimpleDateFormat simpleDateFormat;
+	private boolean priority;
+
+
 	/**
 	 * 
 	 * @param id
@@ -19,13 +25,14 @@ public class Activity {
 	 */
 
 
-	public Activity(Integer id,String title ,String description, Calendar dueDate, String location) {
+	public Activity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
 		this.location = location;
-		this.simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		this.priority = priority;
+
 	}
 
 	public String getTitle() {
@@ -40,6 +47,14 @@ public class Activity {
 		return id;
 	}
 
+	public boolean getPriority() {
+		return priority;
+	}
+
+	public void setPriority(boolean priority) {
+		this.priority = priority;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -52,11 +67,11 @@ public class Activity {
 		this.description = description;
 	}
 
-	public Calendar getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Calendar dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -68,21 +83,54 @@ public class Activity {
 		this.location = location;
 	}
 
+	public boolean isPriority() {
+		return priority;
+	}
 
-	public String convDateFormat(Calendar date){
+	public int compareTo(Activity other){
+		return this.dueDate.compareTo(other.getDueDate());
+	}
+
+
+
+
+	/*ublic String convDateFormat(Calendar date){
 
 		return simpleDateFormat.format(date.getTime());
 
 	}
+
 	@Override
 	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", dueDate=" + dueDate +
+				", location='" + location + '\'' +
+				", simpleDateFormat=" + simpleDateFormat +
+				'}';
+	}*/
 
+	@Override
+	public String toString() {
 
 		return "\n\tTitle: " + this.title +
 				"\n\tId: " + this.id +
 				"\n\tDescription: "+ this.description +
 				"\n\tLocation: " + this.location +
-				"\n\tDue Date: "+ convDateFormat(this.dueDate);
+				"\n\tDue Date: "+ this.dueDate;
 
 	}
+
+/*	@Override
+	public String toString() {
+		return "Activity{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", dueDate=" + dueDate +
+				", location='" + location + '\'' +
+				'}';
+	}*/
 }
