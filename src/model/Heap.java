@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Heap<T extends Comparable<T>> {
 
     // declare array and variables
@@ -124,4 +127,26 @@ public class Heap<T extends Comparable<T>> {
         return sizeOfHeap == 0;
     }
 
+    public ArrayList<T> getOrder(){
+        ArrayList<T> result=new ArrayList<>();
+        for(int i=0;i<heapData.length;i++){
+            maxHeapify(i);
+            T top=removeRoot();
+            result.add(top);
+        }
+        return result;
+    }
+
+    public static void main(String[] args){
+        Heap<Integer> heap=new Heap<>(new Integer[6]);
+        Integer[] array={2,5,4,3,1};
+        for(int i=0;i<array.length;i++){
+            heap.addNode(array[i]);
+        }
+        heap.designMaxHeap();
+        Integer[] result=heap.getHeapData();
+        for(Integer actual: result){
+            System.out.println(actual);
+        }
+    }
 }

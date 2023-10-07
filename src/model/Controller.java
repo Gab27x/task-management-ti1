@@ -114,14 +114,14 @@ public class Controller {
 
     }
 
-    public Activity[] listActivities() {
+    public ArrayList<Activity> listActivities() {
         HashEntry<Integer, Activity>[] activitiesArray = activities.getElementsAsArray2();
-        Activity[] found = new Activity[activitiesArray.length];
+        ArrayList<Activity> found = new ArrayList<>();
         int i = 0;
         for (HashEntry<Integer, Activity> actividad : activitiesArray) {
             Activity content = actividad.getValue();
             if (content.getPriority()) {
-                found[i] = content;
+                found.add(content);
                 i++;
             }
 
@@ -130,7 +130,7 @@ public class Controller {
     }
 
     public String showPriority() {
-        Activity[] found = listActivities();
+        ArrayList<Activity> found= listActivities();
         String msg = "";
         for (Activity activity : found) {
             if (activity != null) {
@@ -141,9 +141,16 @@ public class Controller {
     }
 
     public String showByDate(){
-        activitiesHeap = new Heap<Activity>(listActivities());
-        activitiesHeap.designMaxHeap();
-        return activitiesHeap.displayHeap();
+        MaxHeap<Activity> heap=new MaxHeap<>();
+        heap.addElements(listActivities());
+        //activitiesHeap = new Heap<Activity>(listActivities());
+        //activitiesHeap.designMaxHeap();
+        Activity[] priority=heap.getSortedArray(Activity.class);
+        String msg="";
+        for(Activity actual: priority){
+            msg+="\n"+actual.toString();
+        }
+        return msg;
     }
 
     // Case 4
