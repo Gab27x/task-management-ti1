@@ -136,4 +136,17 @@ public class Heap<T extends Comparable<T>> {
         }
         return result;
     }
+
+    public static void main(String[] args){
+        Heap<Integer> heap=new Heap<>(new Integer[6]);
+        Integer[] array={2,5,4,3,1};
+        for(int i=0;i<array.length;i++){
+            heap.addNode(array[i]);
+        }
+        heap.designMaxHeap();
+        Integer[] result=heap.getHeapData();
+        for(Integer actual: result){
+            System.out.println(actual);
+        }
+    }
 }
