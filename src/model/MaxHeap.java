@@ -75,10 +75,8 @@ public class MaxHeap<T extends Comparable<T>> {
         return heap.isEmpty();
     }
 
-    public void addElements(T[] elements) {
+    public void addElements(ArrayList<T> elements) {
         for (T element : elements) {
-            if(element==null)
-                break;
             insert(element);
         }
     }
