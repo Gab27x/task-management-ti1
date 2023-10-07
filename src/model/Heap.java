@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Heap<T extends Comparable<T>> {
 
     // declare array and variables
@@ -122,6 +124,16 @@ public class Heap<T extends Comparable<T>> {
 
     public boolean isEmpty(){
         return sizeOfHeap == 0;
+    }
+
+    public ArrayList<T> getOrder(){
+        ArrayList<T> result=new ArrayList<>();
+        for(int i=0;i<heapData.length;i++){
+            maxHeapify(i);
+            T top=removeRoot();
+            result.add(top);
+        }
+        return result;
     }
 
 }
