@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Heap<T extends Comparable<T>> {
 
@@ -135,5 +136,4 @@ public class Heap<T extends Comparable<T>> {
         }
         return result;
     }
-
 }
