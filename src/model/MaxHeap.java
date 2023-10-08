@@ -29,7 +29,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public T extractMax() {
         if (heap.isEmpty()) {
-            throw new IllegalStateException("Heap is empty");
+            return null;
         }
 
         T max = heap.get(0);
@@ -66,7 +66,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public T peekMax() {
         if (heap.isEmpty()) {
-            throw new IllegalStateException("Heap is empty");
+            return null;
         }
         return heap.get(0);
     }
