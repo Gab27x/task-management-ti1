@@ -11,13 +11,15 @@ public class Controller {
     private Stack<Action> actionsStack;
 
     private Queue<Activity> activitiesQueue;
-    private Heap<Activity> activitiesHeap;
+
+    private MaxHeap<Activity> priorityActivities;
 
 
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
+        priorityActivities = new MaxHeap<Activity>();
 
     }
     public void saveToJson() throws IOException {
@@ -43,6 +45,12 @@ public class Controller {
 
         activities.add(id,newActivity);
 
+        if(priority){
+            priorityActivities.insert(newActivity);
+        }else{
+            activitiesQueue.add(newActivity);
+        }
+
 
     }
 
@@ -50,26 +58,76 @@ public class Controller {
     public boolean deleteActivity(Integer id){
         Activity deleted = activities.findValue(id);
         if(deleted != null){
-            actionsStack.push(new Action(deleted,3));
-            activities.delete(id,deleted);
-            return true;
+            boolean priority= deleted.getPriority();
+            if(priority && !priorityActivities.isEmpty()) {
+                if(priorityActivities.peekMax().getId().equals(id)){
+                    priorityActivities.extractMax();
+                    actionsStack.push(new Action(deleted,3));
+                    activities.delete(id,deleted);
+                    return true;
+                }else{
+                    return false;
+                }
+            }else if(!priority && !activitiesQueue.isEmpty()){
+                if(activitiesQueue.peek().getId().equals(id)){
+                    activitiesQueue.poll();
+                    actionsStack.push(new Action(deleted,3));
+                    activities.delete(id,deleted);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         }
         else{
             return false;
         }
+        return false;
 
     }
+
+    public boolean ableToModify(Integer id){
+        Activity modified = activities.findValue(id);
+        if(modified!=null) {
+            boolean priority = modified.getPriority();
+            if (priority && !priorityActivities.isEmpty()) {
+                if (priorityActivities.peekMax().getId().equals(id)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else if(!priority && !activitiesQueue.isEmpty()){
+                if(activitiesQueue.peek().getId().equals(id)){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+
+            } else {
+                return false;
+            }
+
+            return false;
+        }
+
 
     // Case 3
 
     // Modify 1
     public void modifyActivityTitle(Integer id, String newTitle){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setTitle(newTitle);
+            if(modified.getPriority()){
+                priorityActivities.peekMax().setTitle(newTitle);
+            }else{
+                activitiesQueue.peek().setTitle(newTitle);
+            }
         }
 
     }
@@ -77,12 +135,17 @@ public class Controller {
 
     // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setLocation(newLocation);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setLocation(newLocation);
+            }else{
+                activitiesQueue.peek().setLocation(newLocation);
+            }
         }
 
     }
@@ -90,12 +153,17 @@ public class Controller {
 
     // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setDescription(newDescription);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setDescription(newDescription);
+            }else{
+                activitiesQueue.peek().setDescription(newDescription);
+            }
         }
 
     }
@@ -103,12 +171,17 @@ public class Controller {
 
     // Modify 4
     public void modifyActivityDate(Integer id, LocalDate newDueDate){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setDueDate(newDueDate);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setDueDate(newDueDate);
+            }else{
+                activitiesQueue.peek().setDueDate(newDueDate);
+            }
         }
 
 
@@ -129,38 +202,37 @@ public class Controller {
         return found;
     }
 
-    public String showPriority() {
-        ArrayList<Activity> found= listActivities();
-        String msg = "";
-        for (Activity activity : found) {
-            if (activity != null) {
-                msg += "\n" + activity.toString();
-            }
-        }
-        return msg;
-    }
-
+    /**
+     * Returns a string with all the task sorted by date
+     * @return msg with all the activities sorted by date (only the priority ones, the non-priority ones are shown as they come)
+     */
     public String showByDate(){
         MaxHeap<Activity> heap=new MaxHeap<>();
-        heap.addElements(listActivities());
-        //activitiesHeap = new Heap<Activity>(listActivities());
-        //activitiesHeap.designMaxHeap();
         Activity[] priority=heap.getSortedArray(Activity.class);
         String msg="";
         for(Activity actual: priority){
             msg+="\n"+actual.toString();
         }
+        msg+="\n"+activitiesQueue.showQueue();
         return msg;
     }
 
-    // Case 4
-    public String showActivities(){
-        return activitiesQueue.showQueue();
-
+    /**
+     * Returns a string with all the task sorted by priority
+     * @return msg with all the activities sorted by priority (the prioriy ones first, then the non priority ones)
+     */
+    public String showByPriority(){
+        String msg="";
+        ArrayList<Activity> prioritarias=listActivities();
+        for(Activity actual: prioritarias){
+            msg+="\n"+actual.toString();
+        }
+        msg+="\n"+activitiesQueue.showQueue();
+        return msg;
     }
+
     // Case 5
     public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
-        //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
         Action lastAction = actionsStack.pop();
         if(lastAction != null){
             Activity activity = lastAction.getActivity();
