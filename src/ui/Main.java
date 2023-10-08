@@ -1,14 +1,12 @@
 package ui;
 
 import java.io.IOException;
-import java.util.Calendar;
+
 import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import model.Controller;
 
-
-import java.text.SimpleDateFormat;
 
 public class Main {
     private Scanner cin;
@@ -24,6 +22,8 @@ public class Main {
     public static void main(String[] args) {
         int option = -1;
         Main view = new Main();
+
+/*        view.controller.loadFromJson();*/
 
         do {
             try {
@@ -129,18 +129,21 @@ public class Main {
             case 4 -> {
                 System.out.println("""
                         \t╔══════════════════════════════╗
-                        \t║          FILTER       1      ║
+                        \t║       FILTER BY PRIORITY     ║
                         \t╚══════════════════════════════╝
                         """);
+                showByPriority();
 
 
             }
             case 5 -> {
                 System.out.println("""
                         \t╔══════════════════════════════╗
-                        \t║          FILTER      2       ║
+                        \t║      FILTER BY DUE DATE      ║
                         \t╚══════════════════════════════╝
                         """);
+
+                    showByDate();
 
             }
             case 6 -> {
@@ -294,9 +297,14 @@ public class Main {
     }
 
     // Case 4
-
+    public  void showByPriority(){
+        System.out.println(controller.showByPriority());
+    }
 
     // Case 5
+    public  void showByDate(){
+        System.out.println(controller.showByDate());
+    }
 
 
     // Case 6

@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,16 +26,39 @@ public class Controller {
     }
     public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
-        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
+        ArrayList<HashEntry<Integer,Activity>> arr = new ArrayList<>(Arrays.asList(activities.getElementsAsArray2()));
         fileManager.saveToJson(arr);
 
     }
 
-    public void loadFromJson(){
+/*    public void loadFromJson(){
         FileManager<?> fileManager = FileManager.getInstance();
 
+        try{
+            ArrayList<HashEntry> load = fileManager.loadFromJson(HashEntry.class);
 
-    }
+
+            if(load != null){
+                for (HashEntry entry: load) {
+
+
+
+            *//*        Activity newAct = new Activity(entry.getValue().ge);
+                    Integer key = newAct.getId();
+*//*
+
+                    addActivity(key,newAct);
+                }
+
+
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+    }*/
 
 
     // Case 1
@@ -49,6 +74,20 @@ public class Controller {
             priorityActivities.insert(newActivity);
         }else{
             activitiesQueue.add(newActivity);
+        }
+
+
+    }    public void addActivity(Integer key,Activity activity){
+        //FIXME complete method in  main
+
+        actionsStack.push(new Action(activity,1));//created an action and added it to the stack
+
+        activities.add(key,activity);
+
+        if(activity.getPriority()){
+            priorityActivities.insert(activity);
+        }else{
+            activitiesQueue.add(activity);
         }
 
 
@@ -207,14 +246,14 @@ public class Controller {
      * @return msg with all the activities sorted by date (only the priority ones, the non-priority ones are shown as they come)
      */
     public String showByDate(){
-        MaxHeap<Activity> heap=new MaxHeap<>();
-        Activity[] priority=heap.getSortedArray(Activity.class);
-        String msg="";
+        MaxHeap<Activity> heap = new MaxHeap<>();
+        Activity[] priority = heap.getSortedArray(Activity.class);
+        StringBuilder msg= new StringBuilder();
         for(Activity actual: priority){
-            msg+="\n"+actual.toString();
+            msg.append("\n\t").append(actual.toString());
         }
-        msg+="\n"+activitiesQueue.showQueue();
-        return msg;
+        msg.append("\n\t").append(activitiesQueue.showQueue());
+        return msg.toString();
     }
 
     /**
@@ -222,13 +261,13 @@ public class Controller {
      * @return msg with all the activities sorted by priority (the prioriy ones first, then the non priority ones)
      */
     public String showByPriority(){
-        String msg="";
-        ArrayList<Activity> prioritarias=listActivities();
+        StringBuilder msg= new StringBuilder();
+        ArrayList<Activity> prioritarias = listActivities();
         for(Activity actual: prioritarias){
-            msg+="\n"+actual.toString();
+            msg.append("\n\t").append(actual.toString());
         }
-        msg+="\n"+activitiesQueue.showQueue();
-        return msg;
+        msg.append("\n\t").append(activitiesQueue.showQueue());
+        return msg.toString();
     }
 
     // Case 5

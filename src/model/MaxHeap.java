@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaxHeap<T extends Comparable<T>> {
-    private List<T> heap;
+    private ArrayList<T> heap;
 
     public MaxHeap() {
         heap = new ArrayList<>();
@@ -83,6 +83,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
     public T[] getSortedArray(Class<T> clazz) {
         T[] sortedArray = (T[]) Array.newInstance(clazz, heap.size());
+
         int index = 0;
 
         MaxHeap<T> tempHeap = new MaxHeap<>();
