@@ -1,11 +1,13 @@
 package ui;
 
+import model.Controller;
+
 import java.io.IOException;
 
 import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import model.Controller;
+
 
 
 public class Main {
@@ -23,7 +25,7 @@ public class Main {
         int option = -1;
         Main view = new Main();
 
-/*        view.controller.loadFromJson();*/
+        view.controller.loadFromJson();
 
         do {
             try {
@@ -66,8 +68,8 @@ public class Main {
         showHashTable();
         System.out.println("\tIs empty: " + controller.getActivities().isEmpty());
         System.out.println("\tNum of Nodes " + controller.getActivities().getExistingNodes());
-/*        showArray();*/
-        showArray2();
+
+/*        showArray2();*/
 
         System.out.println("""
                 \t╔══════════════════════════════╗
