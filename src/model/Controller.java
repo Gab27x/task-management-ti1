@@ -218,13 +218,14 @@ public class Controller {
 
     public ArrayList<Activity> listActivities() {
         HashEntry<Integer, Activity>[] activitiesArray = activities.getElementsAsArray2();
+
         ArrayList<Activity> found = new ArrayList<>();
-        int i = 0;
+
         for (HashEntry<Integer, Activity> actividad : activitiesArray) {
             Activity content = actividad.getValue();
             if (content.getPriority()) {
                 found.add(content);
-                i++;
+
             }
 
         }
