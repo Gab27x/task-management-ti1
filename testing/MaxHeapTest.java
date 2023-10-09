@@ -1,5 +1,4 @@
-package model;
-
+import model.MaxHeap;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

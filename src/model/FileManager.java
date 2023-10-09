@@ -11,8 +11,8 @@ public class FileManager<T> {
     private static FileManager<?> instance;
 
 
-    private File dataFolder;
-    private File jsonFile;
+    private final File dataFolder;
+    private final File jsonFile;
 
     private FileManager() {
         // Obtiene la carpeta de datos en el directorio de usuario

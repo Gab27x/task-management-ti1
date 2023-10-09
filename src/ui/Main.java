@@ -1,9 +1,7 @@
 package ui;
 
 import model.Controller;
-
 import java.io.IOException;
-
 import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -11,8 +9,8 @@ import java.util.Scanner;
 
 
 public class Main {
-    private Scanner cin;
-    private Controller controller;
+    private final Scanner cin;
+    private final Controller controller;
 
 
     public Main() {
@@ -135,6 +133,9 @@ public class Main {
                         \t╚══════════════════════════════╝
                         """);
                 showByPriority();
+                System.out.print("\n\tENTER TO CONTINUE: ");
+                cin.nextLine();
+                String next = cin.nextLine();
 
 
             }
@@ -146,6 +147,9 @@ public class Main {
                         """);
 
                     showByDate();
+                System.out.print("\n\tENTER TO CONTINUE: ");
+                cin.nextLine();
+                String next = cin.nextLine();
 
             }
             case 6 -> {
@@ -211,13 +215,7 @@ public class Main {
 
         dueDate = createdate2();
 
-        if(priority == 1){
-            controller.addActivity(id, title, description, dueDate, location,true);
-
-        }else{
-            controller.addActivity(id, title, description, dueDate, location,false);
-
-        }
+        controller.addActivity(id, title, description, dueDate, location, priority == 1);
 
 
     }
@@ -403,14 +401,9 @@ public class Main {
         }
 
 
-
-
-
         return LocalDate.of(year, month, day);
 
     }
-
-
 
 
     public void save() {
@@ -428,44 +421,3 @@ public class Main {
 
 
 }
-/*    public Calendar createdate(){
-        Calendar newDate =  Calendar.getInstance();
-
-        System.out.println("Enter year:");
-        int year =0;
-        do{
-            year = cin.nextInt();
-            if(year<=0){
-                System.out.println("Enter a valid input");
-            }
-
-        }while(year<=0);
-
-        System.out.println("Enter month (1-12):");
-        int month = 0;
-        do{
-            month = (cin.nextInt()) - 1;
-            if(month<0 || month>11){
-                System.out.println("Enter a valid input");
-            }
-
-
-        }while(!(month>=0 && month<=11));
-
-
-        System.out.println("Enter day of the month:");
-        int day =0;
-        do{
-            day = cin.nextInt();
-            if(day<1 || day>31){
-                System.out.println("Enter a valid input");
-            }
-
-        }while(!(day>=1 && day<=31));
-
-
-        newDate.set(year, month, day);
-
-        return newDate;
-
-    }*/
