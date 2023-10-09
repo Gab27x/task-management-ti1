@@ -94,24 +94,6 @@ public class Activity implements Comparable<Activity> {
 
 
 
-	/*ublic String convDateFormat(Calendar date){
-
-		return simpleDateFormat.format(date.getTime());
-
-	}
-
-	@Override
-	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", description='" + description + '\'' +
-				", dueDate=" + dueDate +
-				", location='" + location + '\'' +
-				", simpleDateFormat=" + simpleDateFormat +
-				'}';
-	}*/
-
 	@Override
 	public String toString() {
 
@@ -119,18 +101,10 @@ public class Activity implements Comparable<Activity> {
 				"\n\tId: " + this.id +
 				"\n\tDescription: "+ this.description +
 				"\n\tLocation: " + this.location +
-				"\n\tDue Date: "+ this.dueDate;
+				"\n\tDue Date: "+ this.dueDate
+				+"\n\tIs prioritary: "+ this.priority;
 
 	}
 
-/*	@Override
-	public String toString() {
-		return "Activity{" +
-				"id=" + id +
-				", title='" + title + '\'' +
-				", description='" + description + '\'' +
-				", dueDate=" + dueDate +
-				", location='" + location + '\'' +
-				'}';
-	}*/
+
 }

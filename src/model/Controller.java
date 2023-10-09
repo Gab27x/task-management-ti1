@@ -1,12 +1,8 @@
 package model;
 
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
@@ -26,39 +22,33 @@ public class Controller {
     }
     public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
-        ArrayList<HashEntry<Integer,Activity>> arr = new ArrayList<>(Arrays.asList(activities.getElementsAsArray2()));
-        fileManager.saveToJson(arr);
+        HashEntry<Integer,Activity>[] arr = activities.getElementsAsArray2();
+        ArrayList<Activity> saveAct = new ArrayList<>();
+        for (HashEntry<Integer,Activity> entry: arr) {
+            saveAct.add(entry.getValue());
+        }
+
+        fileManager.saveToJson(saveAct);
 
     }
+    public void loadFromJson(){
 
-/*    public void loadFromJson(){
         FileManager<?> fileManager = FileManager.getInstance();
-
-        try{
-            ArrayList<HashEntry> load = fileManager.loadFromJson(HashEntry.class);
-
-
-            if(load != null){
-                for (HashEntry entry: load) {
-
-
-
-            *//*        Activity newAct = new Activity(entry.getValue().ge);
-                    Integer key = newAct.getId();
-*//*
-
-                    addActivity(key,newAct);
+        try {
+            ArrayList<Activity> loadAct = fileManager.loadFromJson(Activity.class);
+            if(loadAct != null){
+                for (Activity activity: loadAct) {
+                    addActivity(activity.getId(),activity);
                 }
-
 
             }
 
-        }catch (IOException e){
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
 
-
-    }*/
+    }
 
 
     // Case 1
