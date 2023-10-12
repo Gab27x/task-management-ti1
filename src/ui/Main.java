@@ -64,8 +64,8 @@ public class Main {
                 ╚══════════════╝
                 """);
         showHashTable();
-        System.out.println("\tIs empty: " + controller.getActivities().isEmpty());
-        System.out.println("\tNum of Nodes " + controller.getActivities().getExistingNodes());
+        //System.out.println("\tIs empty: " + controller.getActivities().isEmpty());
+        //System.out.println("\tNum of Nodes " + controller.getActivities().getExistingNodes());
 
 /*        showArray2();*/
 
