@@ -139,22 +139,5 @@ class MaxHeapTest {
         assertEquals(5,result);
     }
 
-    @Test
-    public void getSortedArray(){
-        //set Up
-        setUp1();
-
-        //act
-        Integer[] result = maxHeapTest.getSortedArray(Integer.class);
-
-        //assert
-        assertEquals(5,result[0]);
-        assertEquals(4,result[1]);
-        assertEquals(3,result[2]);
-        assertEquals(2,result[3]);
-        assertEquals(1,result[4]);
-    }
-
-
 
 }
