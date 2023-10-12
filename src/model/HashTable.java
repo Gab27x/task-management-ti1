@@ -10,7 +10,7 @@ public class HashTable<K,V> {
 	public static int DEFAULT_SIZE=10;
 	public HashTable(){
 		table = new HashEntry[DEFAULT_SIZE];
-		this.existingNodes=0;
+		this.existingNodes = 0 ;
 
 	}
 

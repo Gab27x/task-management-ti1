@@ -2,9 +2,10 @@ package model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MaxHeap<T extends Comparable<T>> {
-    private List<T> heap;
+    private ArrayList<T> heap;
 
     public MaxHeap() {
         heap = new ArrayList<>();
@@ -15,7 +16,7 @@ public class MaxHeap<T extends Comparable<T>> {
         int index = heap.size() - 1;
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
-            if (heap.get(index).compareTo(heap.get(parentIndex)) > 0) {
+            if (heap.get(index).compareTo(heap.get(parentIndex)) < 0) {
                 // Swap with parent
                 T temp = heap.get(index);
                 heap.set(index, heap.get(parentIndex));
@@ -27,14 +28,34 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
+
+    public T peekMax() {
+        if (heap.isEmpty()) {
+            return null;
+        }
+        return heap.get(0);
+    }
+
+    public boolean isEmpty() {
+        return heap.isEmpty();
+    }
+
+    public void addElements(ArrayList<T> elements) {
+        for (T element : elements) {
+            insert(element);
+        }
+    }
     public T extractMax() {
         if (heap.isEmpty()) {
-            throw new IllegalStateException("Heap is empty");
+            return null;
         }
 
         T max = heap.get(0);
+
         heap.set(0, heap.get(heap.size() - 1));
+
         heap.remove(heap.size() - 1);
+
         int index = 0;
 
         while (true) {
@@ -64,25 +85,9 @@ public class MaxHeap<T extends Comparable<T>> {
         return max;
     }
 
-    public T peekMax() {
-        if (heap.isEmpty()) {
-            throw new IllegalStateException("Heap is empty");
-        }
-        return heap.get(0);
-    }
-
-    public boolean isEmpty() {
-        return heap.isEmpty();
-    }
-
-    public void addElements(ArrayList<T> elements) {
-        for (T element : elements) {
-            insert(element);
-        }
-    }
-
-    public T[] getSortedArray(Class<T> clazz) {
+/*    public T[] getSortedArray(Class<T> clazz) {
         T[] sortedArray = (T[]) Array.newInstance(clazz, heap.size());
+
         int index = 0;
 
         MaxHeap<T> tempHeap = new MaxHeap<>();
@@ -93,6 +98,13 @@ public class MaxHeap<T extends Comparable<T>> {
         }
 
         return sortedArray;
+    }*/
+
+    public ArrayList<T> getHeap() {
+        return heap;
     }
 
+    public void setHeap(ArrayList<T> heap) {
+        this.heap = heap;
+    }
 }
