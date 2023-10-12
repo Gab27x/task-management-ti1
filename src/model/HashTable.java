@@ -22,23 +22,22 @@ public class HashTable<K,V> {
 	}
 
 	public void add(K key, V value){
-		int index= hashFunction(key); //O(1)
-		HashEntry<K,V> newEntry= new HashEntry<>(key, value); //O(1)
-		HashEntry<K,V> current=table[index]; //O(1)
-		if(current==null){//O(1)
-			table[index]=newEntry;//O(1)
+		int index= hashFunction(key);
+		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
+		HashEntry<K,V> current=table[index];
+		if(current==null){
+			table[index]=newEntry;
 
 		}else{
-			while(current.getNext()!=null){//O(n)
-
-				current=current.getNext(); //O(n-1)
+			while(current.getNext()!=null){
+				current=current.getNext();
 			}
 
-			current.setNext(newEntry);//O(1)
-			newEntry.setPrev(current);//O(1)
-			newEntry.setNext(null);//O(1)
+			current.setNext(newEntry);
+			newEntry.setPrev(current);
+			newEntry.setNext(null);
 		}
-		this.existingNodes++;//O(1)
+		this.existingNodes++;
 	}
 	public HashEntry<K,V> getFirst(K key){
 		if(table==null){
