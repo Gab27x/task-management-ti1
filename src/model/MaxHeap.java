@@ -2,6 +2,7 @@ package model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MaxHeap<T extends Comparable<T>> {
     private ArrayList<T> heap;
@@ -15,7 +16,7 @@ public class MaxHeap<T extends Comparable<T>> {
         int index = heap.size() - 1;
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
-            if (heap.get(index).compareTo(heap.get(parentIndex)) > 0) {
+            if (heap.get(index).compareTo(heap.get(parentIndex)) < 0) {
                 // Swap with parent
                 T temp = heap.get(index);
                 heap.set(index, heap.get(parentIndex));
@@ -27,6 +28,23 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
+
+    public T peekMax() {
+        if (heap.isEmpty()) {
+            return null;
+        }
+        return heap.get(0);
+    }
+
+    public boolean isEmpty() {
+        return heap.isEmpty();
+    }
+
+    public void addElements(ArrayList<T> elements) {
+        for (T element : elements) {
+            insert(element);
+        }
+    }
     public T extractMax() {
         if (heap.isEmpty()) {
             return null;
@@ -67,24 +85,7 @@ public class MaxHeap<T extends Comparable<T>> {
         return max;
     }
 
-    public T peekMax() {
-        if (heap.isEmpty()) {
-            return null;
-        }
-        return heap.get(0);
-    }
-
-    public boolean isEmpty() {
-        return heap.isEmpty();
-    }
-
-    public void addElements(ArrayList<T> elements) {
-        for (T element : elements) {
-            insert(element);
-        }
-    }
-
-    public T[] getSortedArray(Class<T> clazz) {
+/*    public T[] getSortedArray(Class<T> clazz) {
         T[] sortedArray = (T[]) Array.newInstance(clazz, heap.size());
 
         int index = 0;
@@ -97,6 +98,13 @@ public class MaxHeap<T extends Comparable<T>> {
         }
 
         return sortedArray;
+    }*/
+
+    public ArrayList<T> getHeap() {
+        return heap;
     }
 
+    public void setHeap(ArrayList<T> heap) {
+        this.heap = heap;
+    }
 }
