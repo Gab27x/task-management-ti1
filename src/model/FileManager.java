@@ -9,13 +9,27 @@ import java.util.ArrayList;
 
 public class FileManager<T> {
     private static FileManager<?> instance;
-    private File dataFolder = new File(System.getProperty("user.dir"));
+
+
+    private final File dataFolder;
+    private final File jsonFile;
+
+    private FileManager() {
+        // Obtiene la carpeta de datos en el directorio de usuario
+        String userDir = System.getProperty("user.dir");
+
+        // Construye la ruta de la carpeta de datos y el archivo JSON
+        dataFolder = new File(userDir, "data");
+        jsonFile = new File(dataFolder, "persistence.json");
+    }
+
+/*    private File dataFolder = new File(System.getProperty("user.dir"));
     private File jsonFile;
 
     private FileManager() {
         dataFolder = new File(dataFolder + "./data");
         jsonFile = new File(dataFolder, "persistence.json");
-    }
+    }*/
 
     public static FileManager<?> getInstance() {
         if (instance == null) {

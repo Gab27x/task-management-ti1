@@ -1,4 +1,7 @@
 package model;
+
+import java.util.ArrayList;
+
 public class Queue<T> {
 	private QueueNode<T> top;
 	private QueueNode<T> last;
@@ -77,6 +80,16 @@ public class Queue<T> {
 		else{
 			return "\n" + node.getContent() + "\n" + showQueue(node.getNext());
 		}
+	}
+
+	public ArrayList<T> getQueueContent(){
+		ArrayList<T> elements = new ArrayList<>();
+		QueueNode<T> current = top;
+		while(current != null){
+			elements.add(current.getContent());
+			current = current.getNext();
+		}
+		return elements;
 	}
 
 

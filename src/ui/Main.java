@@ -1,18 +1,16 @@
 package ui;
 
+import model.Controller;
 import java.io.IOException;
-import java.util.Calendar;
 import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import model.Controller;
 
 
-import java.text.SimpleDateFormat;
 
 public class Main {
-    private Scanner cin;
-    private Controller controller;
+    private final Scanner cin;
+    private final Controller controller;
 
 
     public Main() {
@@ -24,6 +22,8 @@ public class Main {
     public static void main(String[] args) {
         int option = -1;
         Main view = new Main();
+
+        view.controller.loadFromJson();
 
         do {
             try {
@@ -66,8 +66,8 @@ public class Main {
         showHashTable();
         System.out.println("\tIs empty: " + controller.getActivities().isEmpty());
         System.out.println("\tNum of Nodes " + controller.getActivities().getExistingNodes());
-/*        showArray();*/
-        showArray2();
+
+/*        showArray2();*/
 
         System.out.println("""
                 \t╔══════════════════════════════╗
@@ -129,18 +129,27 @@ public class Main {
             case 4 -> {
                 System.out.println("""
                         \t╔══════════════════════════════╗
-                        \t║          FILTER       1      ║
+                        \t║       FILTER BY PRIORITY     ║
                         \t╚══════════════════════════════╝
                         """);
+                showByPriority();
+                System.out.print("\n\tENTER TO CONTINUE: ");
+                cin.nextLine();
+                String next = cin.nextLine();
 
 
             }
             case 5 -> {
                 System.out.println("""
                         \t╔══════════════════════════════╗
-                        \t║          FILTER      2       ║
+                        \t║      FILTER BY DUE DATE      ║
                         \t╚══════════════════════════════╝
                         """);
+
+                    showByDate();
+                System.out.print("\n\tENTER TO CONTINUE: ");
+                cin.nextLine();
+                String next = cin.nextLine();
 
             }
             case 6 -> {
@@ -206,13 +215,7 @@ public class Main {
 
         dueDate = createdate2();
 
-        if(priority == 1){
-            controller.addActivity(id, title, description, dueDate, location,true);
-
-        }else{
-            controller.addActivity(id, title, description, dueDate, location,false);
-
-        }
+        controller.addActivity(id, title, description, dueDate, location, priority == 1);
 
 
     }
@@ -294,9 +297,14 @@ public class Main {
     }
 
     // Case 4
-
+    public  void showByPriority(){
+        System.out.println(controller.showByPriority());
+    }
 
     // Case 5
+    public  void showByDate(){
+        System.out.println(controller.showByDate());
+    }
 
 
     // Case 6
@@ -393,14 +401,9 @@ public class Main {
         }
 
 
-
-
-
         return LocalDate.of(year, month, day);
 
     }
-
-
 
 
     public void save() {
@@ -418,44 +421,3 @@ public class Main {
 
 
 }
-/*    public Calendar createdate(){
-        Calendar newDate =  Calendar.getInstance();
-
-        System.out.println("Enter year:");
-        int year =0;
-        do{
-            year = cin.nextInt();
-            if(year<=0){
-                System.out.println("Enter a valid input");
-            }
-
-        }while(year<=0);
-
-        System.out.println("Enter month (1-12):");
-        int month = 0;
-        do{
-            month = (cin.nextInt()) - 1;
-            if(month<0 || month>11){
-                System.out.println("Enter a valid input");
-            }
-
-
-        }while(!(month>=0 && month<=11));
-
-
-        System.out.println("Enter day of the month:");
-        int day =0;
-        do{
-            day = cin.nextInt();
-            if(day<1 || day>31){
-                System.out.println("Enter a valid input");
-            }
-
-        }while(!(day>=1 && day<=31));
-
-
-        newDate.set(year, month, day);
-
-        return newDate;
-
-    }*/
