@@ -30,10 +30,9 @@ public class HashTable<K,V> {
 
 		}else{
 			while(current.getNext()!=null){//O(n)
-
 				current=current.getNext(); //O(n-1)
 			}
-
+No
 			current.setNext(newEntry);//O(1)
 			newEntry.setPrev(current);//O(1)
 			newEntry.setNext(null);//O(1)
