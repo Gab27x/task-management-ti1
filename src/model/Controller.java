@@ -3,73 +3,177 @@ package model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class Controller {
     private HashTable<Integer, Activity> activities;
     private Stack<Action> actionsStack;
 
     private Queue<Activity> activitiesQueue;
-    private Heap<Activity> activitiesHeap;
+
+    private MaxHeap<Activity> priorityActivities;
 
 
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
+        priorityActivities = new MaxHeap<Activity>();
 
     }
+/*    public void saveToJson() throws IOException {
+        FileManager<?> fileManager = FileManager.getInstance();
+        HashEntry<Integer,Activity>[] arr = activities.getElementsAsArray2();
+
+        ArrayList<Activity> saveAct = new ArrayList<>();
+
+        for (HashEntry<Integer,Activity> entry: arr) {
+            saveAct.add(entry.getValue());
+        }
+
+        fileManager.saveToJson(saveAct);
+
+    }*/
     public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
-        ArrayList<HashEntry> arr = new ArrayList<HashEntry>(Arrays.asList(activities.getElementsAsArray2()));
-        fileManager.saveToJson(arr);
 
+
+        ArrayList<Activity> arr = priorityActivities.getHeap();
+
+        ArrayList<Activity> arr2 = activitiesQueue.getQueueContent();
+
+        ArrayList<Activity> saveAct = new ArrayList<>();
+        saveAct.addAll(arr);
+        saveAct.addAll(arr2);
+
+        fileManager.saveToJson(saveAct);
     }
 
     public void loadFromJson(){
-        FileManager<?> fileManager = FileManager.getInstance();
 
+        FileManager<?> fileManager = FileManager.getInstance();
+        try {
+            ArrayList<Activity> loadAct = fileManager.loadFromJson(Activity.class);
+            if(loadAct != null){
+                for (Activity activity: loadAct) {
+                    addActivity(activity.getId(),activity);
+                }
+
+            }
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 
 
     // Case 1
     public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
-        //FIXME complete method in  main
+
         Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
 
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
         activities.add(id,newActivity);
 
+        if(priority)
+            priorityActivities.insert(newActivity);
+        else
+            activitiesQueue.add(newActivity);
 
     }
 
-    // Case 2
-    public boolean deleteActivity(Integer id){
-        Activity deleted = activities.findValue(id);
-        if(deleted != null){
-            actionsStack.push(new Action(deleted,3));
-            activities.delete(id,deleted);
-            return true;
+    public void addActivity(Integer key,Activity activity){
+        //FIXME complete method in  main
+
+        actionsStack.push(new Action(activity,1));//created an action and added it to the stack
+
+        activities.add(key,activity);
+
+        if(activity.getPriority()){
+            priorityActivities.insert(activity);
+        }else{
+            activitiesQueue.add(activity);
         }
-        else{
-            return false;
-        }
+
 
     }
 
     // Case 3
+    public boolean deleteActivity(Integer id){
+        Activity deleted = activities.findValue(id);
+        if(deleted != null){
+            boolean priority= deleted.getPriority();
+            if(priority && !priorityActivities.isEmpty()) {
+                if(priorityActivities.peekMax().getId().equals(id)){
+                    priorityActivities.extractMax();
+                    actionsStack.push(new Action(deleted,3));
+                    activities.delete(id,deleted);
+                    return true;
+                }else{
+                    return false;
+                }
+            }else if(!priority && !activitiesQueue.isEmpty()){
+                if(activitiesQueue.peek().getId().equals(id)){
+                    activitiesQueue.poll();
+                    actionsStack.push(new Action(deleted,3));
+                    activities.delete(id,deleted);
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        return false;
+
+    }
+    // Case 2
+
+    public boolean ableToModify(Integer id){
+        Activity modified = activities.findValue(id);
+        if(modified!=null) {
+            boolean priority = modified.getPriority();
+            if (priority && !priorityActivities.isEmpty()) {
+                if (priorityActivities.peekMax().getId().equals(id)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else if(!priority && !activitiesQueue.isEmpty()){
+                if(activitiesQueue.peek().getId().equals(id)){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+
+            } else {
+                return false;
+            }
+
+            return false;
+        }
+
+
 
     // Modify 1
     public void modifyActivityTitle(Integer id, String newTitle){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setTitle(newTitle);
+            if(modified.getPriority()){
+                priorityActivities.peekMax().setTitle(newTitle);
+            }else{
+                activitiesQueue.peek().setTitle(newTitle);
+            }
         }
 
     }
@@ -77,12 +181,17 @@ public class Controller {
 
     // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setLocation(newLocation);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setLocation(newLocation);
+            }else{
+                activitiesQueue.peek().setLocation(newLocation);
+            }
         }
 
     }
@@ -90,77 +199,118 @@ public class Controller {
 
     // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able = ableToModify(id);
+        if(modified!=null && able){
             modified.setDescription(newDescription);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setDescription(newDescription);
+            }else{
+                activitiesQueue.peek().setDescription(newDescription);
+            }
         }
+
 
     }
 
 
     // Modify 4
     public void modifyActivityDate(Integer id, LocalDate newDueDate){
-        //FIXME CREAR ACTION Y HACER EL PUSH AL STACK
+        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        if(modified!=null){
-
+        boolean able=ableToModify(id);
+        if(modified!=null && able){
             modified.setDueDate(newDueDate);
+            if(modified.getPriority()) {
+                priorityActivities.peekMax().setDueDate(newDueDate);
+            }else{
+                activitiesQueue.peek().setDueDate(newDueDate);
+            }
         }
 
 
     }
 
+
     public ArrayList<Activity> listActivities() {
         HashEntry<Integer, Activity>[] activitiesArray = activities.getElementsAsArray2();
+
         ArrayList<Activity> found = new ArrayList<>();
-        int i = 0;
+
         for (HashEntry<Integer, Activity> actividad : activitiesArray) {
             Activity content = actividad.getValue();
             if (content.getPriority()) {
                 found.add(content);
-                i++;
+
             }
 
         }
         return found;
     }
 
-    public String showPriority() {
-        ArrayList<Activity> found= listActivities();
-        String msg = "";
-        for (Activity activity : found) {
-            if (activity != null) {
-                msg += "\n" + activity.toString();
-            }
+    /**
+     * Returns a string with all the task sorted by date
+     * @return msg with all the activities sorted by date (only the priority ones, the non-priority ones are shown as they come)
+     */
+
+/*    public String showByDate(){
+        MaxHeap<Activity> heap = new MaxHeap<>();
+        Activity[] priority = heap.getSortedArray(Activity.class);
+
+        StringBuilder msg= new StringBuilder();
+
+        for(Activity actual: priority){
+            msg.append("\n\t").append(actual.toString());
         }
-        return msg;
-    }
+*//*        msg.append("\n\t").append(activitiesQueue.showQueue());*//*
+        return msg.toString();
+    }*/
 
     public String showByDate(){
-        MaxHeap<Activity> heap=new MaxHeap<>();
-        heap.addElements(listActivities());
-        //activitiesHeap = new Heap<Activity>(listActivities());
-        //activitiesHeap.designMaxHeap();
-        Activity[] priority=heap.getSortedArray(Activity.class);
-        String msg="";
-        for(Activity actual: priority){
-            msg+="\n"+actual.toString();
+/*        MaxHeap<Activity> heap = new MaxHeap<>();
+        Activity[] priority = heap.getSortedArray(Activity.class);  */
+
+        StringBuilder msg= new StringBuilder();
+
+
+        for(Activity actual: priorityActivities.getHeap()){
+            msg.append("\n\t").append(actual.toString());
         }
-        return msg;
+        /*        msg.append("\n\t").append(activitiesQueue.showQueue());*/
+        return msg.toString();
+    }
+    /**
+     * Returns a string with all the task sorted by priority
+     * @return msg with all the activities sorted by priority (the prioriy ones first, then the non priority ones)
+     */
+ /*   public String showByPriority(){
+        StringBuilder msg= new StringBuilder();
+
+        ArrayList<Activity> prioritarias = listActivities();
+
+        for(Activity actual: prioritarias){
+            msg.append("\n\t").append(actual.toString());
+        }
+*//*        msg.append("\n\t").append(activitiesQueue.showQueue());*//*
+        return msg.toString();
+    }*/
+    public String showByPriority(){
+        StringBuilder msg= new StringBuilder();
+
+        ArrayList<Activity> prioritarias = listActivities();
+
+        for(Activity actual: prioritarias){
+            msg.append("\n\t").append(actual.toString());
+        }
+/*        msg.append("\n\t").append(activitiesQueue.showQueue());*/
+        return msg.toString();
     }
 
-    // Case 4
-    public String showActivities(){
-        return activitiesQueue.showQueue();
-
-    }
     // Case 5
     public void undo(){//FIXME cambiar este metodo a String o boolean para saber si la ultima actividad fue nula o no
-        //FIXME necesito trabajar con los encargados de los metodos delete, modify y add para construir este metodo bien
         Action lastAction = actionsStack.pop();
         if(lastAction != null){
             Activity activity = lastAction.getActivity();
@@ -184,6 +334,7 @@ public class Controller {
     public String showArray(){
         return activities.showArray2();
     }
+
     public String showArray2(){
         return activities.showArray2();
     }
