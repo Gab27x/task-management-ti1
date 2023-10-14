@@ -22,22 +22,23 @@ public class HashTable<K,V> {
 	}
 
 	public void add(K key, V value){
-		int index= hashFunction(key);
-		HashEntry<K,V> newEntry= new HashEntry<>(key, value);
-		HashEntry<K,V> current=table[index];
-		if(current==null){
-			table[index]=newEntry;
+		int index= hashFunction(key); //O(1)
+		HashEntry<K,V> newEntry= new HashEntry<>(key, value); //O(1)
+		HashEntry<K,V> current=table[index]; //O(1)
+		if(current==null){//O(1)
+			table[index]=newEntry;//O(1)
 
 		}else{
-			while(current.getNext()!=null){
-				current=current.getNext();
+			while(current.getNext()!=null){//O(n)
+
+				current=current.getNext(); //O(n-1)
 			}
 
-			current.setNext(newEntry);
-			newEntry.setPrev(current);
-			newEntry.setNext(null);
+			current.setNext(newEntry);//O(1)
+			newEntry.setPrev(current);//O(1)
+			newEntry.setNext(null);//O(1)
 		}
-		this.existingNodes++;
+		this.existingNodes++;//O(1)
 	}
 	public HashEntry<K,V> getFirst(K key){
 		if(table==null){
@@ -53,6 +54,9 @@ public class HashTable<K,V> {
 			return null;
 		}
 		int index= hashFunction(key);
+		if(table[index].getValue()==null){
+			return null;
+		}
 		return table[index].getValue();
 
 	}
@@ -90,26 +94,32 @@ public class HashTable<K,V> {
 
 	public void delete(K key, V value) {
 		int index = hashFunction(key);
-		HashEntry<K, V> current = table[index];
+		if(table[index]==null){
+			System.out.println("Node not found!");
 
-		while (current != null) {
-			if (current.getKey().equals(key) && current.getValue().equals(value)) {
-				if (current.getPrev() != null) {
-					current.getPrev().setNext(current.getNext());
+		}else{
+			HashEntry<K, V> current = table[index];
+			while (current != null) {
+				if (current.getKey().equals(key) && current.getValue().equals(value)) {
+					if (current.getPrev() != null) {
+						current.getPrev().setNext(current.getNext());
+					}
+					if (current.getNext() != null) {
+						current.getNext().setPrev(current.getPrev());
+					}
+					if (current == table[index]) {
+						table[index] = current.getNext();
+					}
+					current.setNext(null);
+					current.setPrev(null);
+					this.existingNodes --;
+					return;
 				}
-				if (current.getNext() != null) {
-					current.getNext().setPrev(current.getPrev());
-				}
-				if (current == table[index]) {
-					table[index] = current.getNext();
-				}
-				current.setNext(null);
-				current.setPrev(null);
-				this.existingNodes --;
-				return;
+				current = current.getNext();
 			}
-			current = current.getNext();
+
 		}
+
 	}
 
 
