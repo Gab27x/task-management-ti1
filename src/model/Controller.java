@@ -70,21 +70,21 @@ public class Controller {
 
     // Case 1
     public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
-        //FIXME complete method in  main
+
         Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
 
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
         activities.add(id,newActivity);
 
-        if(priority){
+        if(priority)
             priorityActivities.insert(newActivity);
-        }else{
+        else
             activitiesQueue.add(newActivity);
-        }
 
+    }
 
-    }    public void addActivity(Integer key,Activity activity){
+    public void addActivity(Integer key,Activity activity){
         //FIXME complete method in  main
 
         actionsStack.push(new Action(activity,1));//created an action and added it to the stack

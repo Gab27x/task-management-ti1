@@ -45,6 +45,7 @@ public class MaxHeap<T extends Comparable<T>> {
             insert(element);
         }
     }
+
     public T extractMax() {
         if (heap.isEmpty()) {
             return null;
@@ -84,21 +85,6 @@ public class MaxHeap<T extends Comparable<T>> {
 
         return max;
     }
-
-/*    public T[] getSortedArray(Class<T> clazz) {
-        T[] sortedArray = (T[]) Array.newInstance(clazz, heap.size());
-
-        int index = 0;
-
-        MaxHeap<T> tempHeap = new MaxHeap<>();
-        tempHeap.heap.addAll(heap);
-
-        while (!tempHeap.isEmpty()) {
-            sortedArray[index++] = tempHeap.extractMax();
-        }
-
-        return sortedArray;
-    }*/
 
     public ArrayList<T> getHeap() {
         return heap;

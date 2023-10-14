@@ -104,6 +104,18 @@ class MaxHeapTest {
     }
 
     @Test
+    public void peekMaxTest2(){
+        //set Up
+        MaxHeapTest();
+
+        //act
+        Integer result = maxHeapTest.peekMax();
+
+        //assert
+        assertNull(result);
+    }
+
+    @Test
     public void extractMaxTest(){
         //set Up
         MaxHeapTest();
@@ -140,21 +152,28 @@ class MaxHeapTest {
     }
 
     @Test
-    public void getSortedArray(){
+    public void getHeapTest(){
+        //set Up
+        MaxHeapTest();
+
+        //act
+        ArrayList<Integer> result = maxHeapTest.getHeap();
+
+        //assert
+        assertEquals(0,result.size());
+    }
+
+    @Test
+    public void getHeapTest1(){
         //set Up
         setUp1();
 
         //act
-        Integer[] result = maxHeapTest.getSortedArray(Integer.class);
+        ArrayList<Integer> result = maxHeapTest.getHeap();
 
         //assert
-        assertEquals(5,result[0]);
-        assertEquals(4,result[1]);
-        assertEquals(3,result[2]);
-        assertEquals(2,result[3]);
-        assertEquals(1,result[4]);
+        assertEquals(5,result.size());
     }
-
 
 
 }
