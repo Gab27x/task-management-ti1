@@ -62,7 +62,4 @@ public class Stack<T> {
 		this.top = top;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
 }
