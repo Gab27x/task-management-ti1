@@ -1,30 +1,30 @@
-import model.MaxHeap;
+import model.MinHeap;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MaxHeapTest {
+class MinHeapTest {
 
-    private MaxHeap<Integer> maxHeapTest;
+    private MinHeap<Integer> minHeapTest;
 
     public void MaxHeapTest(){
-        maxHeapTest = new MaxHeap<>();
+        minHeapTest = new MinHeap<>();
     }
 
     public void setUp(){
         MaxHeapTest();
-        maxHeapTest.insert(1);
+        minHeapTest.insert(1);
     }
 
     public void setUp1(){
         MaxHeapTest();
-        maxHeapTest.insert(1);
-        maxHeapTest.insert(3);
-        maxHeapTest.insert(2);
-        maxHeapTest.insert(5);
-        maxHeapTest.insert(4);
+        minHeapTest.insert(1);
+        minHeapTest.insert(3);
+        minHeapTest.insert(2);
+        minHeapTest.insert(5);
+        minHeapTest.insert(4);
     }
 
     @Test
@@ -33,7 +33,7 @@ class MaxHeapTest {
         MaxHeapTest();
 
         //act
-        boolean result = maxHeapTest.isEmpty();
+        boolean result = minHeapTest.isEmpty();
 
         //assert
         assertTrue(result);
@@ -45,7 +45,7 @@ class MaxHeapTest {
         setUp();
 
         //act
-        boolean result = maxHeapTest.isEmpty();
+        boolean result = minHeapTest.isEmpty();
 
         //assert
         assertFalse(result);
@@ -57,10 +57,10 @@ class MaxHeapTest {
         MaxHeapTest();
 
         //act
-        maxHeapTest.insert(2);
+        minHeapTest.insert(2);
 
         //assert
-        assertFalse(maxHeapTest.isEmpty());
+        assertFalse(minHeapTest.isEmpty());
     }
 
     @Test
@@ -73,10 +73,10 @@ class MaxHeapTest {
         elements.add(1);
         elements.add(2);
         elements.add(3);
-        maxHeapTest.addElements(elements);
+        minHeapTest.addElements(elements);
 
         //assert
-        assertFalse(maxHeapTest.isEmpty());
+        assertFalse(minHeapTest.isEmpty());
     }
 
     @Test
@@ -85,7 +85,7 @@ class MaxHeapTest {
         setUp();
 
         //act
-        Integer result = maxHeapTest.peekMax();
+        Integer result = minHeapTest.peekMin();
 
         //assert
         assertEquals(1,result);
@@ -97,7 +97,7 @@ class MaxHeapTest {
         setUp1();
 
         //act
-        Integer result = maxHeapTest.peekMax();
+        Integer result = minHeapTest.peekMin();
 
         //assert
         assertEquals(5,result);
@@ -109,7 +109,7 @@ class MaxHeapTest {
         MaxHeapTest();
 
         //act
-        Integer result = maxHeapTest.peekMax();
+        Integer result = minHeapTest.peekMin();
 
         //assert
         assertNull(result);
@@ -121,7 +121,7 @@ class MaxHeapTest {
         MaxHeapTest();
 
         //act
-        Integer result = maxHeapTest.extractMax();
+        Integer result = minHeapTest.extractMin();
 
         //assert
         assertNull(result);
@@ -133,7 +133,7 @@ class MaxHeapTest {
         setUp();
 
         //act
-        Integer result = maxHeapTest.extractMax();
+        Integer result = minHeapTest.extractMin();
 
         //assert
         assertEquals(1,result);
@@ -145,7 +145,7 @@ class MaxHeapTest {
         setUp1();
 
         //act
-        Integer result = maxHeapTest.extractMax();
+        Integer result = minHeapTest.extractMin();
 
         //assert
         assertEquals(5,result);
@@ -157,7 +157,7 @@ class MaxHeapTest {
         MaxHeapTest();
 
         //act
-        ArrayList<Integer> result = maxHeapTest.getHeap();
+        ArrayList<Integer> result = minHeapTest.getHeap();
 
         //assert
         assertEquals(0,result.size());
@@ -169,7 +169,7 @@ class MaxHeapTest {
         setUp1();
 
         //act
-        ArrayList<Integer> result = maxHeapTest.getHeap();
+        ArrayList<Integer> result = minHeapTest.getHeap();
 
         //assert
         assertEquals(5,result.size());
