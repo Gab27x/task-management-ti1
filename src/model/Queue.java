@@ -41,14 +41,10 @@ public class Queue<T> {
 			}
 			else {
 				QueueNode<T> newTop = top.getNext();
-
 				newTop.setPrevious(null);
 				top.setNext(null);
-
 				top = newTop;
-
 			}
-
 			size--;
 			return firstOut;
 		}
