@@ -10,14 +10,14 @@ public class Controller {
 
     private Queue<Activity> activitiesQueue;
 
-    private MaxHeap<Activity> priorityActivities;
+    private MinHeap<Activity> priorityActivities;
 
 
     public Controller(){
         activities = new HashTable<Integer, Activity>();
         actionsStack = new Stack<Action>();
         activitiesQueue = new Queue<Activity>();
-        priorityActivities = new MaxHeap<Activity>();
+        priorityActivities = new MinHeap<Activity>();
 
     }
     public void saveToJson() throws IOException {
@@ -93,8 +93,8 @@ public class Controller {
         if(deleted != null){
             boolean priority= deleted.getPriority();
             if(priority && !priorityActivities.isEmpty()) {
-                if(priorityActivities.peekMax().getId().equals(id)){
-                    priorityActivities.extractMax();
+                if(priorityActivities.peekMin().getId().equals(id)){
+                    priorityActivities.extractMin();
                     actionsStack.push(new Action(deleted,3));
                     activities.delete(id,deleted);
                     return true;
@@ -125,7 +125,7 @@ public class Controller {
         if(modified!=null) {
             boolean priority = modified.getPriority();
             if (priority && !priorityActivities.isEmpty()) {
-                if (priorityActivities.peekMax().getId().equals(id)) {
+                if (priorityActivities.peekMin().getId().equals(id)) {
                     return true;
                 } else {
                     return false;
@@ -163,7 +163,7 @@ public class Controller {
 
             if(modified.getPriority()){
 
-                priorityActivities.peekMax().setTitle(newTitle);
+                priorityActivities.peekMin().setTitle(newTitle);
                 actionsStack.push(new Action(toSave,2));
 
             }else{
@@ -186,7 +186,7 @@ public class Controller {
                     ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
 
             if(modified.getPriority()) {
-                priorityActivities.peekMax().setLocation(newLocation);
+                priorityActivities.peekMin().setLocation(newLocation);
                 actionsStack.push(new Action(toSave,2));
 
             }else{
@@ -210,7 +210,7 @@ public class Controller {
 
 
             if(modified.getPriority()) {
-                priorityActivities.peekMax().setDescription(newDescription);
+                priorityActivities.peekMin().setDescription(newDescription);
                 actionsStack.push(new Action(toSave,2));
             }else{
                 activitiesQueue.peek().setDescription(newDescription);
@@ -232,7 +232,7 @@ public class Controller {
                     ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
 
             if(modified.getPriority()) {
-                priorityActivities.peekMax().setDueDate(newDueDate);
+                priorityActivities.peekMin().setDueDate(newDueDate);
                 actionsStack.push(new Action(toSave,2));
             }else{
                 activitiesQueue.peek().setDueDate(newDueDate);
