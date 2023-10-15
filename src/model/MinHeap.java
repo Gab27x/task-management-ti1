@@ -1,13 +1,10 @@
 package model;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
-public class MaxHeap<T extends Comparable<T>> {
+public class MinHeap<T extends Comparable<T>> {
     private ArrayList<T> heap;
 
-    public MaxHeap() {
+    public MinHeap() {
         heap = new ArrayList<>();
     }
 
@@ -29,7 +26,7 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
 
-    public T peekMax() {
+    public T peekMin() {
         if (heap.isEmpty()) {
             return null;
         }
@@ -46,12 +43,12 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
-    public T extractMax() {
+    public T extractMin() {
         if (heap.isEmpty()) {
             return null;
         }
 
-        T max = heap.get(0);
+        T min = heap.get(0);
 
         heap.set(0, heap.get(heap.size() - 1));
 
@@ -83,7 +80,7 @@ public class MaxHeap<T extends Comparable<T>> {
             }
         }
 
-        return max;
+        return min;
     }
 
     public ArrayList<T> getHeap() {
