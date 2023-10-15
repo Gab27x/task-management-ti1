@@ -72,7 +72,7 @@ public class Controller {
     }
 
     public void addActivity(Integer key,Activity activity){
-        //FIXME complete method in  main
+
 
         actionsStack.push(new Action(activity,1));//created an action and added it to the stack
 
@@ -150,7 +150,7 @@ public class Controller {
 
     // Modify 1
     public void modifyActivityTitle(Integer id, String newTitle){
-        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
+
 
         Activity modified = activities.findValue(id);
 
@@ -177,7 +177,7 @@ public class Controller {
 
     // Modify 2
     public void modifyActivityLocation(Integer id, String newLocation){
-        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
+
 
         Activity modified = activities.findValue(id);
         boolean able=ableToModify(id);
@@ -199,7 +199,6 @@ public class Controller {
 
     // Modify 3
     public void modifyActivityDescription(Integer id, String newDescription){
-        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
         boolean able = ableToModify(id);
@@ -223,7 +222,7 @@ public class Controller {
 
     // Modify 4
     public void modifyActivityDate(Integer id, LocalDate newDueDate){
-        //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
+
 
         Activity modified = activities.findValue(id);
         boolean able=ableToModify(id);
