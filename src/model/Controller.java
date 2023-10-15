@@ -20,19 +20,6 @@ public class Controller {
         priorityActivities = new MaxHeap<Activity>();
 
     }
-/*    public void saveToJson() throws IOException {
-        FileManager<?> fileManager = FileManager.getInstance();
-        HashEntry<Integer,Activity>[] arr = activities.getElementsAsArray2();
-
-        ArrayList<Activity> saveAct = new ArrayList<>();
-
-        for (HashEntry<Integer,Activity> entry: arr) {
-            saveAct.add(entry.getValue());
-        }
-
-        fileManager.saveToJson(saveAct);
-
-    }*/
     public void saveToJson() throws IOException {
         FileManager<?> fileManager = FileManager.getInstance();
 
@@ -71,7 +58,7 @@ public class Controller {
     // Case 1
     public void addActivity(Integer id,String title ,String description, LocalDate dueDate, String location, boolean priority){
 
-        Activity newActivity=new Activity(id,title,description,dueDate,location,priority);//created this activity
+        Activity newActivity = new Activity(id,title,description,dueDate,location,priority);//created this activity
 
         actionsStack.push(new Action(newActivity,1));//created an action and added it to the stack
 
@@ -166,12 +153,21 @@ public class Controller {
         //FIXME CAMBIAR METODO A BOOLEAN PARA DECIRLE AL USER SI SE PUDO MODIFICAR O NO
 
         Activity modified = activities.findValue(id);
-        boolean able=ableToModify(id);
-        if(modified!=null && able){
-            modified.setTitle(newTitle);
+
+
+        boolean able = ableToModify(id);
+
+        if(modified != null && able){
+            Activity toSave = new Activity(modified.getId(),modified.getTitle(),modified.getDescription()
+                    ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
+
             if(modified.getPriority()){
+
                 priorityActivities.peekMax().setTitle(newTitle);
+                actionsStack.push(new Action(toSave,2));
+
             }else{
+
                 activitiesQueue.peek().setTitle(newTitle);
             }
         }
@@ -186,9 +182,13 @@ public class Controller {
         Activity modified = activities.findValue(id);
         boolean able=ableToModify(id);
         if(modified!=null && able){
-            modified.setLocation(newLocation);
+            Activity toSave = new Activity(modified.getId(),modified.getTitle(),modified.getDescription()
+                    ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
+
             if(modified.getPriority()) {
                 priorityActivities.peekMax().setLocation(newLocation);
+                actionsStack.push(new Action(toSave,2));
+
             }else{
                 activitiesQueue.peek().setLocation(newLocation);
             }
@@ -204,9 +204,14 @@ public class Controller {
         Activity modified = activities.findValue(id);
         boolean able = ableToModify(id);
         if(modified!=null && able){
-            modified.setDescription(newDescription);
+
+            Activity toSave = new Activity(modified.getId(),modified.getTitle(),modified.getDescription()
+                    ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
+
+
             if(modified.getPriority()) {
                 priorityActivities.peekMax().setDescription(newDescription);
+                actionsStack.push(new Action(toSave,2));
             }else{
                 activitiesQueue.peek().setDescription(newDescription);
             }
@@ -223,9 +228,12 @@ public class Controller {
         Activity modified = activities.findValue(id);
         boolean able=ableToModify(id);
         if(modified!=null && able){
-            modified.setDueDate(newDueDate);
+            Activity toSave = new Activity(modified.getId(),modified.getTitle(),modified.getDescription()
+                    ,modified.getDueDate(),modified.getLocation(),modified.getPriority());
+
             if(modified.getPriority()) {
                 priorityActivities.peekMax().setDueDate(newDueDate);
+                actionsStack.push(new Action(toSave,2));
             }else{
                 activitiesQueue.peek().setDueDate(newDueDate);
             }
@@ -256,47 +264,21 @@ public class Controller {
      * @return msg with all the activities sorted by date (only the priority ones, the non-priority ones are shown as they come)
      */
 
-/*    public String showByDate(){
-        MaxHeap<Activity> heap = new MaxHeap<>();
-        Activity[] priority = heap.getSortedArray(Activity.class);
-
-        StringBuilder msg= new StringBuilder();
-
-        for(Activity actual: priority){
-            msg.append("\n\t").append(actual.toString());
-        }
-*//*        msg.append("\n\t").append(activitiesQueue.showQueue());*//*
-        return msg.toString();
-    }*/
 
     public String showByDate(){
-/*        MaxHeap<Activity> heap = new MaxHeap<>();
-        Activity[] priority = heap.getSortedArray(Activity.class);  */
-
         StringBuilder msg= new StringBuilder();
 
 
         for(Activity actual: priorityActivities.getHeap()){
             msg.append("\n\t").append(actual.toString());
         }
-        /*        msg.append("\n\t").append(activitiesQueue.showQueue());*/
+
         return msg.toString();
     }
     /**
      * Returns a string with all the task sorted by priority
      * @return msg with all the activities sorted by priority (the prioriy ones first, then the non priority ones)
      */
- /*   public String showByPriority(){
-        StringBuilder msg= new StringBuilder();
-
-        ArrayList<Activity> prioritarias = listActivities();
-
-        for(Activity actual: prioritarias){
-            msg.append("\n\t").append(actual.toString());
-        }
-*//*        msg.append("\n\t").append(activitiesQueue.showQueue());*//*
-        return msg.toString();
-    }*/
     public String showByPriority(){
         StringBuilder msg= new StringBuilder();
 
@@ -305,7 +287,7 @@ public class Controller {
         for(Activity actual: prioritarias){
             msg.append("\n\t").append(actual.toString());
         }
-/*        msg.append("\n\t").append(activitiesQueue.showQueue());*/
+        msg.append("\n\t").append(activitiesQueue.showQueue());
         return msg.toString();
     }
 
@@ -319,6 +301,7 @@ public class Controller {
                     deleteActivity(activity.getId());
                     break;
                 case MODIFY:
+                    modifyActivityTitle(activity.getId(),activity.getTitle());
                     modifyActivityLocation(activity.getId(),activity.getLocation());
                     modifyActivityDescription(activity.getId(),activity.getDescription());
                     modifyActivityDate(activity.getId(),activity.getDueDate());
