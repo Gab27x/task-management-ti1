@@ -48,7 +48,7 @@ public class MinHeap<T extends Comparable<T>> {
             return null;
         }
 
-        T max = heap.get(0);
+        T min = heap.get(0);
 
         heap.set(0, heap.get(heap.size() - 1));
 
@@ -80,7 +80,7 @@ public class MinHeap<T extends Comparable<T>> {
             }
         }
 
-        return max;
+        return min;
     }
 
     public ArrayList<T> getHeap() {
